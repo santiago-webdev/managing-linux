@@ -10,7 +10,7 @@ makepkg -si
 cd
 
 paru -S systemd-boot-pacman-hook \
-	neovide-git \
 	neovim-git \
+	neovide-git \
 	brave-bin \
 	librewolf-bin \
