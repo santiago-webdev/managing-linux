@@ -8,3 +8,7 @@ paru -S zsh-autopair-git \
 	zsh-fast-syntax-highlighting-git \
 
 chsh -s /bin/zsh
+cd
+git clone https://github.com/santiagogonzalezbogado/Dotfiles
+cd Dotfiles
+cp .zshrc .zshenv ..
