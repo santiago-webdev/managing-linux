@@ -1,8 +1,32 @@
 #!/bin/bash
 
-sudo pacman -S rustup
+sudo pacman -S rustup \
+	cmake \
+	make \
+	qbittorrent \
+	python \
+	python-pip \
+	python-wheel \
+	ruby \
+	nodejs \
+	npm \
+	bat \
+	exa \
+	wget \
+	sshfs \
+	openssh \
+	man \
+	dash \
+	zsh \
+	tar \
+	unzip \
+	unrar \
+	ntfs-3g \
+	xclip \
 
 rustup default stable
+
+pip install pynvim
 
 git clone https://aur.archlinux.org/paru.git
 cd paru
