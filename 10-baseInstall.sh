@@ -3,11 +3,10 @@
 #10-baseInstall.sh
 
 timedatectl set-ntp true
+sleep 6
 
-lsblk
 echo "Enter the drive: "
 read drive
-lsblk
 echo "Enter the root partition: "
 read rootpartition
 echo "Enter the boot partition: "
