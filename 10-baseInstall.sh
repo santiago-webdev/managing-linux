@@ -52,32 +52,10 @@ pacstrap /mnt base \
 	neovim \
 	btrfs-progs \
 	git \
-	cmake \
-	make \
-	qbittorrent \
-	python \
-	python-pip \
-	python-wheel \
-	ruby \
-	nodejs \
-	npm \
 	tlp \
 	tlp-rdw \
-	bat \
-	exa \
-	wget \
-	sshfs \
-	openssh \
-	man \
 	bluez \
 	bluez-utils \
-	dash \
-	zsh \
-	tar \
-	unzip \
-	unrar \
-	ntfs-3g \
-	xclip \
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
