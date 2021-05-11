@@ -117,4 +117,3 @@ echo -e "title\tArch Linux LTS\nlinux\t/vmlinuz-linux-lts\ninitrd\t/intel-ucode.
 echo -e "default\tarch.conf\ntimeout\t3\nconsole-mode max\neditor\tno" > /boot/loader/loader.conf
 
 umount -R /mnt
-reboot
