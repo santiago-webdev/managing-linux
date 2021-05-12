@@ -51,6 +51,7 @@ pacstrap /mnt base \
 	neovim \
 	btrfs-progs \
 	git \
+	wget \
 	tlp \
 	tlp-rdw \
 	bluez \
