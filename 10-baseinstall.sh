@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#10-baseInstall.sh
+#10-baseinstall.sh
 
 timedatectl set-ntp true
 sleep 6
@@ -58,7 +58,7 @@ pacstrap /mnt base \
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed '1,/^#13-Chroot$/d' 10-baseInstall.sh > /mnt/13-Chroot.sh
+sed '1,/^#13-Chroot$/d' 10-baseinstall.sh > /mnt/13-Chroot.sh
 chmod +x /mnt/13-Chroot.sh
 arch-chroot /mnt ./13-Chroot.sh
 exit
