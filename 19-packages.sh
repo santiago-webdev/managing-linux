@@ -52,6 +52,7 @@ sudo pacman -S --needed inter-font \
 	ttf-droid \
 	ttf-fira-mono \
 	ttf-font-awesome \
+	otf-font-awesome \
 	ttf-hanazono \
 	ttf-cascadia-code \
 	ttf-dejavu \
