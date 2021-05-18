@@ -114,6 +114,8 @@ paru -S kwin-scripts-krohnkite-git
 # lightly-git
 # cherry-kde-theme
 
+journalctl --vacuum-size=100M
+journalctl --vacuum-time=2weeks
 systemctl enable tlp.service bluetooth.service sddm.service
 
 # Sometime I will add this if I go to Wayland
