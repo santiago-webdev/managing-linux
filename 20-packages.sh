@@ -20,7 +20,6 @@ sudo pacman -S rustup \
 	sshfs \
 	openssh \
 	man \
-	dash \
 	zsh \
 	tar \
 	unzip \
@@ -41,7 +40,10 @@ cd
 paru -S systemd-boot-pacman-hook \
 	neovim-git \
 	neovide-git \
+	brave--bin \
 	librewolf-bin \
+
+echo "Fonts"
 
 sudo pacman -S --needed inter-font \
 	noto-fonts \
@@ -64,8 +66,23 @@ sudo pacman -S --needed inter-font \
 paru -S nerd-fonts-hack \
 	nerd-fonts-iosevka \
 	nerd-fonts-mononoki \
-	nerd-fonts-roboto-mono \
 	nerd-fonts-ubuntu-mono \
 	nerd-fonts-jetbrains-mono \
 	nerd-fonts-source-code-pro \
 	nerd-fonts-fantasque-sans-mono \
+
+echo "Installing zshell and plugins"
+
+sudo pacman -S z \
+	zsh-history-substring-search \
+	zsh-autosuggestions \
+
+paru -S zsh-autopair-git \
+	zsh-completions-git \
+	zsh-fast-syntax-highlighting-git \
+
+chsh -s /bin/zsh
+cd
+git clone https://github.com/santiagogonzalezbogado/Dotfiles
+cd Dotfiles
+cp .zshrc .zshenv ..
