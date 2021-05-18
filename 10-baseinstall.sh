@@ -85,10 +85,9 @@ sed -i 's/#UseSyslog/UseSyslog/g; s/#Color/Color/g; s/#TotalDownload/TotalDownlo
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 echo "KEYMAP=dvorak" > /etc/vconsole.conf
 echo $hostname > /etc/hostname
-echo "127.0.0.1       localhost" >> /etc/hosts
-echo "::1             localhost" >> /etc/hosts
-echo "127.0.1.1       $hostname.localdomain $hostname" >> /etc/hosts
-
+echo -e "127.0.0.1\tlocalhost" >> /etc/hosts
+echo -e "::1\t\tlocalhost" >> /etc/hosts
+echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "Defaults !tty_tickets" >> /etc/sudoers
@@ -108,7 +107,6 @@ sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 
 bootctl --path=/boot/ install
-
 
 echo -e "title\tArch Linux\nlinux\t/vmlinuz-linux\ninitrd\t/intel-ucode.img\ninitrd\t/initramfs-linux.img\noptions cryptdevice=UUID=$(blkid -s UUID -o value $rootpartition):luks:allow-discards root=/dev/mapper/luks rootflags=subvol=@ rd.luks.options=discard rw" > /boot/loader/entries/arch.conf
 
