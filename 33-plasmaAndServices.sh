@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# TODO
+# Change kde-applications to only needed
 sudo pacman -S --needed plasma \
 	plasma-wayland-protocols \
 	plasma-wayland-session \
