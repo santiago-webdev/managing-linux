@@ -76,6 +76,7 @@ paru -S nerd-fonts-hack \
 	nerd-fonts-jetbrains-mono \
 	nerd-fonts-source-code-pro \
 	nerd-fonts-fantasque-sans-mono \
+	otf-san-franscisco \
 
 echo "Installing zshell and plugins"
 
@@ -98,7 +99,6 @@ cp .zshrc .zshenv ..
 # TODO
 # Change kde-applications to only needed
 sudo pacman -S --needed plasma \
-	kde-applications \
 	krusader \
 	breeze-gtk \
 	libappindicator-gtk2 \
@@ -106,6 +106,51 @@ sudo pacman -S --needed plasma \
 	kde-gtk-config \
 	xdg-desktop-portal \
 	xdg-desktop-portal-kde \
+	dolphin \
+	kde-cli-tools \
+	ffmpegthumbs \
+	kdegraphics-thumbnailers \
+	kgpg \
+	purpose \
+	packagekit-qt5 \
+	keditbookmarks \
+	ebook-tools \
+	kdegraphics-mobipocket \
+	libzip \
+	khtml \
+	chmlib \
+	calligra \
+	gwenview \
+	qt5-imageformats \
+	kimageformats \
+	ark \
+	p7zip \
+	unarchiver \
+	lzop \
+	lrzip \
+	kdeconnect \
+	qt5-tools \
+	clang \
+	textlab \
+	spectacle \
+	filelight \
+	juk \
+	akregator \
+	kdepim-addons \
+	kdewallet \
+	kwalletmanager \
+	ktimer \
+	kalarm \
+	kontrast \
+	kompare \
+	kfind \
+	kdenetwork-filesharing \
+	partitionmanager \
+	kcolorchooser \
+	kcalc \
+	markdownpart \
+
+#kde-applications
 
 paru -S kwin-scripts-krohnkite-git
 
