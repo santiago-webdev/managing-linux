@@ -96,8 +96,6 @@ git clone https://github.com/santiagogonzalezbogado/Dotfiles
 cd Dotfiles
 cp .zshrc .zshenv ..
 
-# TODO
-# Change kde-applications to only needed
 sudo pacman -S --needed plasma \
 	krusader \
 	breeze-gtk \
