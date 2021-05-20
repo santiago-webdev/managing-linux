@@ -129,13 +129,12 @@ sudo pacman -S --needed plasma \
 	kdeconnect \
 	qt5-tools \
 	clang \
-	textlab \
+	kate \
 	spectacle \
 	filelight \
 	juk \
 	akregator \
 	kdepim-addons \
-	kdewallet \
 	kwalletmanager \
 	ktimer \
 	kalarm \
