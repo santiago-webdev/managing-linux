@@ -5,3 +5,4 @@ sleep 3
 sed -i '/General/a \font=Inter, 14, -1,5,50,0,0,0,0,0' .config/krunnerrc
 sudo pacman -Rscn discover oxygen plasma-vault
 kwriteconfig5 --file startkderc --group General --key systemdBoot true
+sudo sysctl dev.i915.perf_stream_paranoid=0
