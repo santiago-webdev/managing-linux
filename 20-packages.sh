@@ -76,7 +76,7 @@ paru -S nerd-fonts-hack \
 	nerd-fonts-jetbrains-mono \
 	nerd-fonts-source-code-pro \
 	nerd-fonts-fantasque-sans-mono \
-	otf-san-franscisco \
+	otf-san-francisco \
 
 echo "Installing zshell and plugins"
 
