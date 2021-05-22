@@ -8,7 +8,7 @@ echo "Enter the root partition: "
 read rootpartition
 echo "Enter the boot partition: "
 read bootpartition
-
+sed -i 's/#UseSyslog/UseSyslog/g; s/#Color/Color/g; s/#TotalDownload/TotalDownload/g; s/#CheckSpace/CheckSpace/g' /etc/pacman.conf
 sgdisk --zap-all $drive
 
 timedatectl set-ntp true
