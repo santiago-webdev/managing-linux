@@ -144,6 +144,7 @@ sudo pacman -S --needed plasma \
 	kontrast \
 	kompare \
 	kfind \
+	kdialog \
 	kdenetwork-filesharing \
 	partitionmanager \
 	kcolorchooser \
