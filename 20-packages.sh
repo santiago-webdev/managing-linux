@@ -6,10 +6,13 @@
 wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/36-kconfigs.sh
 chmod +x 36-kconfigs.sh
 
-sudo mkdir /datos
-sudo -s <<EOF
-echo -e "\n# /datos\nUUID=084c5be3-ad98-4203-ad97-44b68b483901\t/datos\t\text4\t\tdefaults\t0\t2" >> /etc/fstab
+read -p "Add secondary drive? [y/n]" secondarydrive
+if [[ $secondarydrive = y ]] ; then
+	sudo mkdir /datos
+	sudo -s <<EOF
+	echo -e "\n# /datos\nUUID=$(blkid -s UUID -o value /dev/sda1)\t/datos\t\text4\t\tdefaults\t0\t2" >> /etc/fstab
 EOF
+fi
 
 sudo pacman -S rustup \
 	cmake \
