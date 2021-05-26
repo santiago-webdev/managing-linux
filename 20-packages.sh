@@ -142,6 +142,7 @@ sudo pacman -S --needed plasma \
 	ktimer \
 	kalarm \
 	kontrast \
+	konsole \
 	kompare \
 	kfind \
 	kdialog \
