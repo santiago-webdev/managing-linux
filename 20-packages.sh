@@ -47,10 +47,11 @@ makepkg -si
 cd
 
 paru -S systemd-boot-pacman-hook \
-	neovim-git \
-	neovide-git \
 	brave-bin \
-	librewolf-bin \
+
+#neovim-git \
+#neovide-git \	
+#librewolf-bin \
 
 echo "Fonts"
 
