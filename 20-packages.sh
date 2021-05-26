@@ -152,6 +152,7 @@ sudo pacman -S --needed plasma \
 	kcolorchooser \
 	kcalc \
 	markdownpart \
+	xcursor-bluecurve \
 
 #kde-applications
 
