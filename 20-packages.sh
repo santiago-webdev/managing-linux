@@ -71,6 +71,7 @@ sudo pacman -S --needed inter-font \
 	ttf-opensans \
 	adobe-source-code-pro-fonts \
 	gnu-free-fonts \
+	otf-overpass \
 
 paru -S nerd-fonts-hack \
 	nerd-fonts-iosevka \
