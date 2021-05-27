@@ -13,6 +13,8 @@ sudo sysctl dev.i915.perf_stream_paranoid=0
 journalctl --vacuum-size=100M
 journalctl --vacuum-time=2weeks
 
+systemctl enable fstrim.timer
+
 mkdir -p /etc/pacman.d/hooks/
 touch /etc/pacman.d/hooks/100-systemd-boot.hook
 tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
