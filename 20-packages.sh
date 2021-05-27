@@ -102,6 +102,7 @@ cd
 git clone https://github.com/santiagogonzalezbogado/Dotfiles
 cd Dotfiles
 cp .zshrc .zshenv ..
+cp starship.toml ~/.config/
 
 sudo pacman -S --needed plasma \
 	krusader \
