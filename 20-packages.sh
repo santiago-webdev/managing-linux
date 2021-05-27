@@ -31,18 +31,5 @@ paru -S - < packagesAUR.txt
 chsh -s /bin/zsh
 cd
 git clone https://github.com/santiagogonzalezbogado/Dotfiles
-cd Dotfiles
-cp .zshrc .zshenv ..
 
-journalctl --vacuum-size=100M
-journalctl --vacuum-time=2weeks
 systemctl enable tlp.service bluetooth.service sddm.service
-
-# kwin-scripts-krohnkite-git
-# lightly-git
-# cherry-kde-theme
-# Sometime I will add this if I go to Wayland
-# ~/.config/kwinrc under Windows
-# BorderlessMaximizedWindows=true
-# plasma-wayland-protocols
-# plasma-wayland-session
