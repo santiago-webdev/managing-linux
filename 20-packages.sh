@@ -73,6 +73,7 @@ sudo pacman -S --needed inter-font \
 	adobe-source-code-pro-fonts \
 	gnu-free-fonts \
 	otf-overpass \
+	powerline-fonts \
 
 paru -S nerd-fonts-hack \
 	nerd-fonts-iosevka \
@@ -155,6 +156,7 @@ sudo pacman -S --needed plasma \
 	kcalc \
 	markdownpart \
 	xcursor-bluecurve \
+	starship \
 
 #kde-applications
 
