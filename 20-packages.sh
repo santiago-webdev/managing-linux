@@ -161,7 +161,8 @@ sudo pacman -S --needed plasma \
 
 #kde-applications
 
-paru -S kwin-scripts-krohnkite-git
+paru -S kwin-scripts-krohnkite-git \
+	unclutter-xfixes-git \
 
 # plasma-theme-moe-git
 # kwin-scripts-krohnkite-git
