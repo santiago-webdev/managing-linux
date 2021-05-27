@@ -1,4 +1,3 @@
-systemd-boot-pacman-hook
 brave-bin
 unclutter-xfixes-git
 
