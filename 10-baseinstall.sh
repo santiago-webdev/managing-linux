@@ -28,14 +28,14 @@ btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@btrfs
 umount /mnt
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,discard=async,subvol=@ /dev/mapper/luks /mnt
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/luks /mnt
 mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,discard=async,subvol=@home /dev/mapper/luks /mnt/home
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,discard=async,subvol=@pkg /dev/mapper/luks /mnt/var/cache/pacman/pkg
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,discard=async,subvol=@srv /dev/mapper/luks /mnt/srv
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,discard=async,subvol=@log /dev/mapper/luks /mnt/log
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,discard=async,subvol=@tmp /dev/mapper/luks /mnt/tmp
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,discard=async,subvolid=5 /dev/mapper/luks /mnt/btrfs
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/luks /mnt/home
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/luks /mnt/var/cache/pacman/pkg
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/luks /mnt/srv
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/luks /mnt/log
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/luks /mnt/tmp
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvolid=5 /dev/mapper/luks /mnt/btrfs
 mount $bootpartition /mnt/boot
 pacstrap /mnt base \
 	base-devel \
