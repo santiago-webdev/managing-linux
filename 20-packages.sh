@@ -1,6 +1,8 @@
 #!/bin/bash
 
 wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/36-kconfigs.sh
+wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/packagesAUR.txt
+wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/packagesPacman.txt
 chmod +x 36-kconfigs.sh
 
 read -p "Add secondary drive? [y/n]" secondarydrive
