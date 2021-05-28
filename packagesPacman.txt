@@ -92,6 +92,7 @@ kalarm
 kontrast
 konsole
 kompare
+okular
 kfind
 kdialog
 kdenetwork-filesharing
