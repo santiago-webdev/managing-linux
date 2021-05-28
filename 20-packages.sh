@@ -25,8 +25,15 @@ cd paru
 makepkg -si
 cd
 
+echo "Install packages from the AUR?"
+read packaur
+
 # Packages from the AUR
-paru -S - < packagesAUR.txt
+if [[ "$packaur" = y ]]; then
+	paru -S - < packagesAUR.txt
+else
+	echo = "Not installing AUR packages"
+fi
 
 chsh -s /bin/zsh
 cd
