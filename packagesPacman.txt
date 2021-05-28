@@ -55,7 +55,6 @@ ffmpegthumbs
 kdegraphics-thumbnailers
 kgpg
 purpose
-packagekit-qt5
 keditbookmarks
 gwenview
 qt5-imageformats
