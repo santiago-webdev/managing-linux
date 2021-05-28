@@ -19,8 +19,6 @@ unzip
 unrar
 ntfs-3g
 xclip
-
-
 inter-font
 noto-fonts
 noto-fonts-cjk
@@ -40,13 +38,9 @@ adobe-source-code-pro-fonts
 gnu-free-fonts
 otf-overpass
 powerline-fonts
-
-
 z
 zsh-history-substring-search
 zsh-autosuggestions
-
-
 plasma
 krusader
 breeze-gtk

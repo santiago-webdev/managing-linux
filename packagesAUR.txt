@@ -1,6 +1,5 @@
 brave-bin
 unclutter-xfixes-git
-
 nerd-fonts-hack
 nerd-fonts-iosevka
 nerd-fonts-mononoki
@@ -10,9 +9,7 @@ nerd-fonts-source-code-pro
 nerd-fonts-fantasque-sans-mono
 otf-san-francisco
 redhat-fonts
-
 zsh-autopair-git
 zsh-completions-git
 zsh-fast-syntax-highlighting-git
-
-kwin-scripts-krohnkite-g
+kwin-scripts-krohnkite-git
