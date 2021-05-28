@@ -14,7 +14,7 @@ sgdisk --zap-all $drive
 timedatectl set-ntp true
 sleep 3
 
-printf "n\n1\n\n+666M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk $drive
+printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk $drive
 cryptsetup luksFormat $rootpartition
 cryptsetup luksOpen $rootpartition luks
 mkfs.vfat -F32 $bootpartition
@@ -27,7 +27,9 @@ btrfs subvolume create /mnt/@srv
 btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@btrfs
+
 umount /mnt
+
 mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/luks /mnt
 mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}
 mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/luks /mnt/home
@@ -36,7 +38,9 @@ mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@srv /de
 mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/luks /mnt/log
 mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/luks /mnt/tmp
 mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvolid=5 /dev/mapper/luks /mnt/btrfs
+
 mount $bootpartition /mnt/boot
+
 pacstrap /mnt base \
 	base-devel \
 	linux \
@@ -98,9 +102,6 @@ sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
 locale-gen
 
 systemctl enable tlp.service bluetooth.service NetworkManager.service
-
-# echo "Activate conservation of battery"
-# echo 1 >/sys/bus/platform/drivers/ideapad_acpi/VPC2004\:00/conservation_mode
 
 sed -i "s/^HOOKS.*/HOOKS=(base keyboard udev autodetect modconf block keymap encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
