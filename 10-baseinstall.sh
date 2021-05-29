@@ -44,8 +44,6 @@ mount $bootpartition /mnt/boot
 pacstrap /mnt base \
 	base-devel \
 	linux \
-	linux-zen \
-	linux-lts \
 	linux-firmware \
 	intel-media-driver \
 	vulkan-intel \
@@ -55,12 +53,7 @@ pacstrap /mnt base \
 	intel-ucode \
 	neovim \
 	btrfs-progs \
-	git \
 	wget \
-	tlp \
-	tlp-rdw \
-	bluez \
-	bluez-utils \
 
 genfstab -U /mnt >> /mnt/etc/fstab
 

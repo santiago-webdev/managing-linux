@@ -1,3 +1,9 @@
+git
+tlp
+bluez
+bluez-utils
+linux-zen
+linux-lts
 rustup
 cmake
 make
@@ -86,6 +92,3 @@ kdenetwork-filesharing
 partitionmanager
 kcolorchooser
 kcalc
-markdownpart
-xcursor-bluecurve
-starship
