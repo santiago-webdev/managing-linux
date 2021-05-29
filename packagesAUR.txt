@@ -1,5 +1,4 @@
 brave-bin
-unclutter-xfixes-git
 nerd-fonts-hack
 nerd-fonts-iosevka
 nerd-fonts-mononoki
