@@ -4,6 +4,9 @@
 
 set -e
 
+timedatectl set-ntp true
+sleep 10
+
 echo "Enter the drive: "
 read drive
 echo "Enter the root partition: "
@@ -12,9 +15,6 @@ echo "Enter the boot partition: "
 read bootpartition
 sed -i 's/#UseSyslog/UseSyslog/g; s/#Color/Color/g; s/#TotalDownload/TotalDownload/g; s/#CheckSpace/CheckSpace/g' /etc/pacman.conf
 sgdisk --zap-all $drive
-
-timedatectl set-ntp true
-sleep 3
 
 printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk $drive
 cryptsetup luksFormat $rootpartition
@@ -64,7 +64,7 @@ chmod +x /mnt/13-chroot.sh
 arch-chroot /mnt ./13-chroot.sh
 exit
 
-######################################################################################
+#######################################################################################################################
 #13-Chroot
 
 set -e
