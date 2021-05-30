@@ -1,7 +1,7 @@
 #!/bin/bash
 
-wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/36-kconfigs.sh
-chmod +x 36-kconfigs.sh
+wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/36-configs.sh
+chmod +x 36-configs.sh
 
 read -p "Add secondary drive? [y/n]" secondarydrive
 if [[ $secondarydrive = y ]] ; then
@@ -14,21 +14,29 @@ fi
 sudo pacman -Syu
 
 # Packages from Pacman
-sudo pacman -S --needed - < packagesPacman.txt
+echo "Install packages from the repos?"
+read packrepos
 
-rustup default stable
+if [[ "$packrepos" = y ]]; then
+	sudo pacman -S --needed - < packagesPacman.txt
+else
+	echo = "Not installing packages"
+fi
+
+[ "$?" -eq 0 ] && echo "test"
 
 pip install pynvim
+rustup default stable
 
 git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
 cd
 
+# Packages from the AUR
 echo "Install packages from the AUR?"
 read packaur
 
-# Packages from the AUR
 if [[ "$packaur" = y ]]; then
 	paru -S - < packagesAUR.txt
 else

@@ -94,7 +94,7 @@ hwclock --systohc
 sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
 locale-gen
 
-systemctl enable tlp.service bluetooth.service NetworkManager.service
+systemctl enable NetworkManager.service
 
 sed -i "s/^HOOKS.*/HOOKS=(base keyboard udev autodetect modconf block keymap encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
