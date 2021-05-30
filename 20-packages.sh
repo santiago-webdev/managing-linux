@@ -1,5 +1,9 @@
 #!/bin/bash
 
+set -e
+
+sudo pacman -Syu
+
 wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/36-configs.sh
 chmod +x 36-configs.sh
 
@@ -11,8 +15,6 @@ if [[ $secondarydrive = y ]] ; then
 EOF
 fi
 
-sudo pacman -Syu
-
 # Packages from Pacman
 echo "Install packages from the repos?"
 read packrepos
@@ -22,8 +24,6 @@ if [[ "$packrepos" = y ]]; then
 else
 	echo = "Not installing packages"
 fi
-
-[ "$?" -eq 0 ] && echo "test"
 
 pip install pynvim
 rustup default stable

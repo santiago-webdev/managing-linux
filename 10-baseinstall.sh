@@ -2,6 +2,8 @@
 
 #10-baseinstall.sh
 
+set -e
+
 echo "Enter the drive: "
 read drive
 echo "Enter the root partition: "
@@ -57,13 +59,16 @@ pacstrap /mnt base \
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-sed '1,/^#13-Chroot$/d' 10-baseinstall.sh > /mnt/13-Chroot.sh
-chmod +x /mnt/13-Chroot.sh
-arch-chroot /mnt ./13-Chroot.sh
+sed '1,/^#13-Chroot$/d' 10-baseinstall.sh > /mnt/13-chroot.sh
+chmod +x /mnt/13-chroot.sh
+arch-chroot /mnt ./13-chroot.sh
 exit
 
 ######################################################################################
 #13-Chroot
+
+set -e
+
 echo "Hostname: "
 read hostname
 echo "User: "
