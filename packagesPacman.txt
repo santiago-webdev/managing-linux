@@ -48,6 +48,8 @@ z
 zsh-history-substring-search
 zsh-autosuggestions
 plasma
+plasma-wayland-session
+plasma-wayland-protocols
 krusader
 breeze-gtk
 libappindicator-gtk2

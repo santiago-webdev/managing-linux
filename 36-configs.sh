@@ -2,7 +2,7 @@
 
 kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,display"
 
-sed -i '/General/a \font=Inter, 14, -1,5,50,0,0,0,0,0' .config/krunnerrc
+sed -i '/General/a \font=Inter, 13, -1,5,50,0,0,0,0,0' .config/krunnerrc
 
 sudo pacman -Rscn discover oxygen plasma-vault
 
