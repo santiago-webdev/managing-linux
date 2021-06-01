@@ -90,7 +90,7 @@ When = PostTransaction
 Exec = /usr/bin/bootctl update
 END
 
-sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt sd-lvm2 filesystems fsck)/g" /etc/mkinitcpio.conf
+sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt filesystems fsck)/g" /etc/mkinitcpio.conf
 sed -i 's/^MODULES.*/MODULES=(btrfs intel_agp i915)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 bootctl --path=/boot/ install
