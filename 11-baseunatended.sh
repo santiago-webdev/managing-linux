@@ -12,12 +12,12 @@ timedatectl set-ntp true
 pacman -Sy
 
 sgdisk --zap-all /dev/nvme0n1
-printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/nvme0n1 # ADD SWAP
+printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/nvme0n1
 mkdir -p -m0700 /run/cryptsetup
-cryptsetup luksFormat /dev/nvme0n1p2
+cryptsetup luksFormat --type luks2 /dev/nvme0n1p2
 cryptsetup luksOpen /dev/nvme0n1p2 crypt_root
-yes | mkfs.vfat -F32 /dev/nvme0n1p1
-yes | mkfs.btrfs /dev/mapper/crypt_root
+mkfs.vfat -F32 /dev/nvme0n1p1
+mkfs.btrfs /dev/mapper/crypt_root
 mount /dev/mapper/crypt_root /mnt
 
 btrfs subvolume create /mnt/@
