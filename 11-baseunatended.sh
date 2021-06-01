@@ -39,8 +39,8 @@ mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvolid=5 /dev
 mount /dev/nvme0n1p1 /mnt/boot
 
 pacstrap /mnt base base-devel linux linux-firmware \
-	intel-media-driver vulkan-intel \
-	bluez bluez-utils tlp networkmanager efibootmgr intel-ucode \
+	intel-media-driver vulkan-intel intel-ucode\
+	bluez bluez-utils tlp networkmanager efibootmgr \
 	neovim btrfs-progs wget
 
 genfstab -U /mnt >> /mnt/etc/fstab
