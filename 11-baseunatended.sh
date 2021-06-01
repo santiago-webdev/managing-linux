@@ -7,6 +7,8 @@ username=""
 read -p "Enter encryption passphrase: " encryption_passphrase
 read -p "Enter hostname: " hostname
 read -p "Enter username: " username
+read -p "Enter userpass: " user_password
+read -p "Enter rootpass: " root_password
 continent_city="America/Argentina/Mendoza"
 
 timedatectl set-ntp true
