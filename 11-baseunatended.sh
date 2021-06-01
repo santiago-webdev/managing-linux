@@ -40,9 +40,8 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 pacstrap /mnt base base-devel linux linux-firmware \
 	intel-media-driver vulkan-intel \
-	bluez bluez-utils tlp cryptsetup \
-	plasma konsole okular gwenview dolphin \
-	networkmanager efibootmgr intel-ucode neovim btrfs-progs wget
+	bluez bluez-utils tlp networkmanager efibootmgr intel-ucode \
+	neovim btrfs-progs wget
 
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt /bin/bash << EOF
