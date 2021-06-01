@@ -19,8 +19,8 @@ mkdir -p -m0700 /run/cryptsetup
 echo "$encryption_passphrase" | cryptsetup -q --align-payload=8192 -h sha512 -s 512 --use-random --type luks2 -c aes-xts-plain64 luksFormat /dev/nvme0n1p2 # SEE CRYPT OPTIONS
 echo "$encryption_passphrase" | cryptsetup luksOpen /dev/nvme0n1p2 crypt_root # OR LUKS
 yes | mkfs.vfat -F32 /dev/nvme0n1p1
-yes | mkfs.btrfs /dev/mapper/luks
-mount /dev/mapper/luks /mnt
+yes | mkfs.btrfs /dev/mapper/crypt_root
+mount /dev/mapper/crypt_root /mnt
 
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
