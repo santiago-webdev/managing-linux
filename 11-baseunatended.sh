@@ -46,8 +46,8 @@ pacstrap /mnt base base-devel linux linux-zen linux-lts linux-firmware \
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt /bin/bash << EOF
 timedatectl set-ntp true
-timedatectl set-timezone $continent_city
-hwclock --systohc --localtime
+ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime
+hwclock --systohc
 sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
 locale-gen
