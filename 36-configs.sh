@@ -10,11 +10,6 @@ sudo pacman -Rscn discover oxygen plasma-vault
 
 kwriteconfig5 --file startkderc --group General --key systemdBoot true
 
-pacman -Q neovide
-if [ $? -eq 0 ]; then
-    sudo sysctl dev.i915.perf_stream_paranoid=0
-fi
-
 journalctl --vacuum-size=100M
 journalctl --vacuum-time=2weeks
 
