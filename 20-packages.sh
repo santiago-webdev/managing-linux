@@ -107,7 +107,7 @@ if [[ "$packrepos" = y ]]; then
 		kcalc \
 		
 else
-	echo = "Not installing packages"
+	echo "Not installing packages"
 fi
 
 pip install pynvim
@@ -139,7 +139,7 @@ if [[ "$packaur" = y ]]; then
 		kwin-scripts-krohnkite-git \
 		
 else
-	echo = "Not installing AUR packages"
+	echo "Not installing AUR packages"
 fi
 
 chsh -s /bin/zsh
