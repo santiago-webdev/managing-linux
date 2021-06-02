@@ -45,7 +45,6 @@ if [[ "$packrepos" = y ]]; then
 		ttf-roboto-mono \
 		ttf-droid \
 		ttf-fira-mono \
-		ttf-font-awesome \
 		otf-font-awesome \
 		ttf-hanazono \
 		ttf-cascadia-code \
