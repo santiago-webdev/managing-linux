@@ -105,6 +105,7 @@ if [[ "$packrepos" = y ]]; then
 		partitionmanager \
 		kcolorchooser \
 		kcalc \
+		
 else
 	echo = "Not installing packages"
 fi
@@ -136,6 +137,7 @@ if [[ "$packaur" = y ]]; then
 		zsh-completions-git \
 		zsh-fast-syntax-highlighting-git \
 		kwin-scripts-krohnkite-git \
+		
 else
 	echo = "Not installing AUR packages"
 fi
