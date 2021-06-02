@@ -40,8 +40,8 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 pacstrap /mnt base base-devel linux linux-firmware \
 	intel-media-driver vulkan-intel intel-ucode\
-	bluez bluez-utils tlp networkmanager efibootmgr \
-	neovim btrfs-progs wget
+	tlp networkmanager efibootmgr \
+	neovim btrfs-progs wget \
 
 genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -65,9 +65,7 @@ echo -en "$user_password\n$user_password" | passwd $username
 
 systemctl enable NetworkManager.service
 systemctl enable fstrim.timer
-systemctl enable bluetooth.service
 systemctl enable tlp.service
-systemctl enable sddm.service
 
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
