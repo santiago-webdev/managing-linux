@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
 read -p "Enter hostname: " hostname
@@ -10,7 +9,6 @@ continent_city="America/Argentina/Mendoza"
 
 timedatectl set-ntp true
 pacman -Sy
-
 sgdisk --zap-all /dev/nvme0n1
 printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/nvme0n1
 mkdir -p -m0700 /run/cryptsetup
@@ -123,7 +121,5 @@ initrd /intel-ucode.img
 initrd /initramfs-linux-lts.img
 options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
-
 EOF
 umount -R /mnt
-swapoff -a
