@@ -38,9 +38,9 @@ mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /de
 mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvolid=5 /dev/mapper/cryptroot /mnt/btrfs
 mount /dev/nvme0n1p1 /mnt/boot
 
-pacstrap /mnt base base-devel linux linux-firmware \
+pacstrap /mnt base base-devel linux linux-zen linux-lts linux-firmware \
 	intel-media-driver vulkan-intel intel-ucode\
-	tlp networkmanager efibootmgr \
+	networkmanager efibootmgr \
 	neovim btrfs-progs wget \
 
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -65,7 +65,6 @@ echo -en "$user_password\n$user_password" | passwd $username
 
 systemctl enable NetworkManager.service
 systemctl enable fstrim.timer
-systemctl enable tlp.service
 
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
@@ -106,6 +105,25 @@ initrd /intel-ucode.img
 initrd /initramfs-linux.img
 options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
+
+touch /boot/loader/entries/arch-zen.conf
+tee -a /boot/loader/entries/arch-zen.conf << END
+title Arch Linux Zen
+linux /vmlinuz-linux-zen
+initrd /intel-ucode.img
+initrd /initramfs-linux-zen.img
+options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+END
+
+touch /boot/loader/entries/arch-lts.conf
+tee -a /boot/loader/entries/arch-lts.conf << END
+title Arch Linux LTS
+linux /vmlinuz-linux-lts
+initrd /intel-ucode.img
+initrd /initramfs-linux-lts.img
+options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+END
+
 EOF
 umount -R /mnt
 swapoff -a
