@@ -12,13 +12,13 @@ timedatectl set-ntp true
 pacman -Sy
 
 sgdisk --zap-all /dev/nvme0n1
-printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/nvme0n1
+printf "o\nn\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/nvme0n1
 mkdir -p -m0700 /run/cryptsetup
 cryptsetup luksFormat --type luks2 /dev/nvme0n1p2
-cryptsetup luksOpen /dev/nvme0n1p2 crypt_root
+cryptsetup luksOpen /dev/nvme0n1p2 cryptroot
 mkfs.vfat -F32 /dev/nvme0n1p1
-mkfs.btrfs /dev/mapper/crypt_root
-mount /dev/mapper/crypt_root /mnt
+mkfs.btrfs /dev/mapper/cryptroot
+mount /dev/mapper/cryptroot /mnt
 
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
@@ -28,14 +28,14 @@ btrfs subvolume create /mnt/@log
 btrfs subvolume create /mnt/@tmp
 btrfs subvolume create /mnt/@btrfs
 umount /mnt
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/crypt_root /mnt
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
 mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/crypt_root /mnt/home
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/crypt_root /mnt/var/cache/pacman/pkg
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/crypt_root /mnt/srv
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/crypt_root /mnt/log
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/crypt_root /mnt/tmp
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvolid=5 /dev/mapper/crypt_root /mnt/btrfs
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/cryptroot /mnt/log
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvolid=5 /dev/mapper/cryptroot /mnt/btrfs
 mount /dev/nvme0n1p1 /mnt/boot
 
 pacstrap /mnt base base-devel linux linux-firmware \
@@ -106,7 +106,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=crypt_root root=/dev/mapper/crypt_root rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
 EOF
 umount -R /mnt
