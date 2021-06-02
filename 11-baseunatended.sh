@@ -2,10 +2,10 @@
 
 set -e
 
-read -p "Enter hostname: " hostname
-read -p "Enter username: " username
-read -p "Enter userpass: " user_password
-read -p "Enter rootpass: " root_password
+read -s -p "Enter hostname: " hostname
+read -s -p "Enter username: " username
+read -s -p "Enter userpass: " user_password
+read -s -p "Enter rootpass: " root_password
 continent_city="America/Argentina/Mendoza"
 
 timedatectl set-ntp true
