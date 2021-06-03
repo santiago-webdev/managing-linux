@@ -115,6 +115,7 @@ if [[ "$packaur" = y ]]; then
 		kwin-scripts-krohnkite-git \
 		auto-cpufreq-git \
 		preload \
+		grml-zsh-config \
 		
 else
 	echo "Not installing AUR packages"
