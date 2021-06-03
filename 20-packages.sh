@@ -60,50 +60,28 @@ if [[ "$packrepos" = y ]]; then
 		plasma \
 		plasma-wayland-session \
 		plasma-wayland-protocols \
-		krusader \
 		breeze-gtk \
 		libappindicator-gtk2 \
 		libappindicator-gtk3 \
 		kde-gtk-config \
 		xdg-desktop-portal \
 		xdg-desktop-portal-kde \
-		dolphin \
-		kde-cli-tools \
-		ffmpegthumbs \
-		kdegraphics-thumbnailers \
-		kgpg \
-		purpose \
-		keditbookmarks \
 		gwenview \
-		qt5-imageformats \
-		kimageformats \
 		ark \
-		p7zip \
-		unarchiver \
-		lzop \
-		lrzip \
+		dolphin \
+		krusader \
 		kdeconnect \
-		qt5-tools \
-		clang \
 		kate \
+		kcalc \
+		konsole \
+		ktimer \
+		kalarm \
+		kwalletmanager \
+		partitionmanager \
+		okular \
 		spectacle \
 		filelight \
 		juk \
-		akregator \
-		kdepim-addons \
-		kwalletmanager \
-		ktimer \
-		kalarm \
-		kontrast \
-		konsole \
-		kompare \
-		okular \
-		kfind \
-		kdialog \
-		kdenetwork-filesharing \
-		partitionmanager \
-		kcolorchooser \
-		kcalc \
 		
 else
 	echo "Not installing packages"
