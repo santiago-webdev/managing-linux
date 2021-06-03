@@ -10,8 +10,8 @@ sed -i '/General/a \font=Inter, 14, -1,5,50,0,0,0,0,0' .config/krunnerrc
 
 kwriteconfig5 --file startkderc --group General --key systemdBoot true
 
-journalctl --vacuum-size=100M
-journalctl --vacuum-time=2weeks
+sudo journalctl --vacuum-size=100M
+sudo journalctl --vacuum-time=2weeks
 
 # kwin-scripts-krohnkite-git
 # lightly-git
