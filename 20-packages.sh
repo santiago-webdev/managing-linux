@@ -135,10 +135,16 @@ if [[ "$packaur" = y ]]; then
 		zsh-completions-git \
 		zsh-fast-syntax-highlighting-git \
 		kwin-scripts-krohnkite-git \
+		auto-cpufreq-git \
 		
 else
 	echo "Not installing AUR packages"
 fi
+
+systemctl enable sddm.service
+systemctl enable bluetooth.service
+systemctl enable tlp.service
+systemctl enable auto-cpufreq.service
 
 chsh -s /bin/zsh
 cd
