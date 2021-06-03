@@ -114,6 +114,7 @@ if [[ "$packaur" = y ]]; then
 		zsh-fast-syntax-highlighting-git \
 		kwin-scripts-krohnkite-git \
 		auto-cpufreq-git \
+		preload \
 		
 else
 	echo "Not installing AUR packages"
@@ -123,6 +124,7 @@ systemctl enable sddm.service
 systemctl enable bluetooth.service
 systemctl enable tlp.service
 systemctl enable auto-cpufreq.service
+systemctl enable preload.service
 
 chsh -s /bin/zsh
 cd
