@@ -36,7 +36,9 @@ mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /de
 mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvolid=5 /dev/mapper/cryptroot /mnt/btrfs
 mount /dev/nvme0n1p1 /mnt/boot
 
-pacstrap /mnt base base-devel linux linux-zen linux-lts linux-firmware \
+pacstrap /mnt \
+	base base-devel \
+	linux linux-zen linux-lts linux-firmware \
 	intel-media-driver vulkan-intel intel-ucode\
 	networkmanager efibootmgr \
 	neovim btrfs-progs wget \
