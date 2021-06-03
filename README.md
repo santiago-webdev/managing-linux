@@ -20,34 +20,22 @@ pacman -Sy wget
 ```
 
 ``` bash
-wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/10-baseinstall.sh
+wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/10-unattended.sh
 ```
 
 ``` bash
-chmod +x 10-baseinstall.sh
+chmod +x 10-unattended.sh
 ```
 
 ## Now run the script
-It will ask you for the drive that it needs to wipe of. And you should now suppose the partitions, so for example it would be
-something like /dev/sda, /dev/sda2, /dev/sda1. After this you will need to confirm and enter the password for the encryption, 
-and after that you should just wait for the script to ask you for hostname, name, password for the user and root, it will
-eventually ask you again for the root partition.
-
+It will install everything on the NVMe at /dev/nvme0n1
 ``` bash
-./10-baseinstall.sh
+./10-unattended.sh
 ```
 
 ## After this you should reboot and download the second script
-This script will install fonts, paru as an AUR helper, KDE Plasma, and my Dotfiles repo for zsh as well.
-
-``` bash
-wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/20-packages.sh
-```
-
-``` bash
-chmod +x 20-packages.sh
-```
-
+The 20-packages.sh script will be pulled by the first script, and put this one on the home of the user that you created, and
+will install fonts, paru as an AUR helper, KDE Plasma, and my Dotfiles.
 ``` bash
 ./20-packages.sh
 ```

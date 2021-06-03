@@ -64,6 +64,7 @@ useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,
 echo -en "$user_password\n$user_password" | passwd $username
 
 wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/20-packages.sh -P /home/$username
+chmod +x 20-packages.sh
 
 systemctl enable NetworkManager.service
 systemctl enable fstrim.timer
