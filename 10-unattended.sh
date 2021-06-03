@@ -63,7 +63,7 @@ echo -en "$root_password\n$root_password" | passwd
 useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users $username
 echo -en "$user_password\n$user_password" | passwd $username
 
-wget https://github.com/santiagogonzalezbogado/csjarchlinux/blob/master/20-packages.sh -P /home/$username
+wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/20-packages.sh -P /home/$username
 
 systemctl enable NetworkManager.service
 systemctl enable fstrim.timer
