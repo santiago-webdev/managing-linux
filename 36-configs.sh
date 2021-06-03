@@ -13,11 +13,5 @@ kwriteconfig5 --file startkderc --group General --key systemdBoot true
 sudo journalctl --vacuum-size=100M
 sudo journalctl --vacuum-time=2weeks
 
-# kwin-scripts-krohnkite-git
-# lightly-git
-# cherry-kde-theme
-# Sometime I will add this if I go to Wayland
 # ~/.config/kwinrc under Windows
 # BorderlessMaximizedWindows=true
-# plasma-wayland-protocols
-# plasma-wayland-session
