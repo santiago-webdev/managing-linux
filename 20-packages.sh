@@ -123,8 +123,8 @@ fi
 
 systemctl enable sddm.service
 systemctl enable bluetooth.service
-systemctl enable tlp.service
-systemctl enable auto-cpufreq.service
+#systemctl enable tlp.service
+#systemctl enable auto-cpufreq.service
 systemctl enable preload.service
 
 chsh -s /bin/zsh
