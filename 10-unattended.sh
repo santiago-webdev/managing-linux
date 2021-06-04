@@ -67,7 +67,6 @@ wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/maste
 chmod +x /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service
-systemctl enable fstrim.timer
 
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
