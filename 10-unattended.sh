@@ -93,8 +93,7 @@ bootctl --path=/boot/ install
 
 mkdir -p /boot/loader/
 tee -a /boot/loader/loader.conf << END
-default arch.conf
-timeout 3
+default arch-zen.conf
 console-mode max
 editor no
 END
