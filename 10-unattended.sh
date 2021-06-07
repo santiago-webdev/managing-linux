@@ -7,7 +7,8 @@ read -s -p "Enter userpass: " user_password
 read -s -p "Enter rootpass: " root_password
 continent_city="America/Argentina/Mendoza"
 
-sed -i "s/#Color/Color/g; s/#Parall/Parall/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
+sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
+sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
 timedatectl set-ntp true
 pacman -Sy
 sgdisk --zap-all /dev/nvme0n1
@@ -58,6 +59,8 @@ echo -e "::1\t\tlocalhost" >> /etc/hosts
 echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "Defaults !tty_tickets" >> /etc/sudoers
+sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
+sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
 sed -i 's/-)/--threads=0 -)/g; s/gzip/pigz/g; s/bzip2/pbzip2/g' /etc/makepkg.conf
 echo $hostname > /etc/hostname
 echo -en "$root_password\n$root_password" | passwd
