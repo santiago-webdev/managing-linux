@@ -7,6 +7,7 @@ read -s -p "Enter userpass: " user_password
 read -s -p "Enter rootpass: " root_password
 continent_city="America/Argentina/Mendoza"
 
+sed -i "s/#Color/Color/g; s/#Parall/Parall/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
 timedatectl set-ntp true
 pacman -Sy
 sgdisk --zap-all /dev/nvme0n1
