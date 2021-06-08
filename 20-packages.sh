@@ -22,38 +22,17 @@ if [[ "$packrepos" = y ]]; then
 		python \
 		python-pip \
 		python-wheel \
-		ruby \
 		nodejs \
 		npm \
 		bat \
 		exa \
 		sshfs \
 		openssh \
-		man \
-		zsh \
-		tar \
-		unzip \
-		unrar \
 		ntfs-3g \
-		xclip \
+		wl-clipboard \
 		inter-font \
-		noto-fonts \
-		noto-fonts-cjk \
-		noto-fonts-emoji \
-		ttf-roboto \
-		ttf-roboto-mono \
-		ttf-droid \
-		ttf-fira-mono \
-		otf-font-awesome \
-		ttf-hanazono \
-		ttf-cascadia-code \
-		ttf-dejavu \
-		ttf-liberation \
-		ttf-opensans \
-		adobe-source-code-pro-fonts \
-		gnu-free-fonts \
 		otf-overpass \
-		powerline-fonts \
+		zsh \
 		z \
 		zsh-history-substring-search \
 		zsh-autosuggestions \
@@ -66,23 +45,9 @@ if [[ "$packrepos" = y ]]; then
 		kde-gtk-config \
 		xdg-desktop-portal \
 		xdg-desktop-portal-kde \
-		gwenview \
-		ark \
+		alacritty \
 		dolphin \
-		krusader \
-		kdeconnect \
-		kate \
-		kcalc \
-		konsole \
-		ktimer \
-		kalarm \
-		kwalletmanager \
-		partitionmanager \
-		okular \
-		spectacle \
-		filelight \
-		juk \
-		
+	
 else
 	echo "Not installing packages"
 fi
