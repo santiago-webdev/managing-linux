@@ -50,6 +50,7 @@ if [[ "$packrepos" = y ]]; then
 		kate \
 		okular \
 		gwenview \
+		kwalletmanager \
 		pipewire \
 		pipewire-alsa \
 		pipewire-pulse \
