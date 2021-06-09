@@ -47,6 +47,9 @@ if [[ "$packrepos" = y ]]; then
 		xdg-desktop-portal-kde \
 		alacritty \
 		dolphin \
+		kate \
+		okular \
+		gwenview \
 		pipewire \
 		pipewire-alsa \
 		pipewire-pulse \
