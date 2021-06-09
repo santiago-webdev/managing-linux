@@ -98,7 +98,7 @@ END
 
 sudo touch /etc/udev/rules.d/99-zram.rules
 sudo tee -a /etc/udev/rules.d/99-zram.rules << END
-KERNEL=="zram0", ATTR{disksize}="512",TAG+="systemd"
+KERNEL=="zram0", ATTR{disksize}="512M",TAG+="systemd"
 END
 
 sudo touch /etc/systemd/system/zram.service
