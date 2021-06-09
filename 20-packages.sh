@@ -47,6 +47,9 @@ if [[ "$packrepos" = y ]]; then
 		xdg-desktop-portal-kde \
 		alacritty \
 		dolphin \
+		pipewire \
+		pipewire-alsa \
+		pipewire-pulse \
 	
 else
 	echo "Not installing packages"
