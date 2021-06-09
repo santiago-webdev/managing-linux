@@ -69,7 +69,6 @@ if [[ "$packaur" = y ]]; then
 		zsh-autopair-git \
 		zsh-completions-git \
 		zsh-fast-syntax-highlighting-git \
-		kwin-scripts-krohnkite-git \
 		auto-cpufreq-git \
 		grml-zsh-config \
 		
