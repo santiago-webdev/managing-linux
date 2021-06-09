@@ -45,6 +45,8 @@ if [[ "$packrepos" = y ]]; then
 		kde-gtk-config \
 		xdg-desktop-portal \
 		xdg-desktop-portal-kde \
+		konsole \
+		firefox \
 		alacritty \
 		dolphin \
 		kate \
