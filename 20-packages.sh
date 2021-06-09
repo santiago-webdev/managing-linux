@@ -65,14 +65,6 @@ read -p "Install packages from the AUR?" packaur
 if [[ "$packaur" = y ]]; then
 	paru -S \
 		brave-bin \
-		nerd-fonts-hack \
-		nerd-fonts-iosevka \
-		nerd-fonts-mononoki \
-		nerd-fonts-ubuntu-mono \
-		nerd-fonts-jetbrains-mono \
-		nerd-fonts-source-code-pro \
-		nerd-fonts-fantasque-sans-mono \
-		otf-san-francisco \
 		redhat-fonts \
 		zsh-autopair-git \
 		zsh-completions-git \
@@ -87,8 +79,8 @@ fi
 
 systemctl enable sddm.service
 systemctl enable bluetooth.service
-#systemctl enable tlp.service
-#systemctl enable auto-cpufreq.service
+systemctl enable tlp.service
+systemctl enable auto-cpufreq.service
 
 chsh -s /bin/zsh
 cd
