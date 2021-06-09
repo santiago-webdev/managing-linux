@@ -48,6 +48,7 @@ if [[ "$packrepos" = y ]]; then
 		alacritty \
 		dolphin \
 		kate \
+		ark \
 		okular \
 		gwenview \
 		kwalletmanager \
