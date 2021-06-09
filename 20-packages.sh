@@ -7,7 +7,7 @@ sudo pacman -Syu
 wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/36-configs.sh
 chmod +x 36-configs.sh
 
-read -q -p "Install packages from the repos?" packrepos
+read -p "Install packages from the repos?" packrepos
 
 if [[ "$packrepos" = y ]]; then
 	sudo pacman -S --needed \
@@ -60,7 +60,7 @@ cd paru
 makepkg -si
 cd
 
-read -q -p "Install packages from the AUR?" packaur
+read -p "Install packages from the AUR?" packaur
 
 if [[ "$packaur" = y ]]; then
 	paru -S \
