@@ -31,6 +31,8 @@ if [[ "$packrepos" = y ]]; then
 		ntfs-3g \
 		wl-clipboard \
 		inter-font \
+		noto-fonts-cjk \
+		noto-fonts-emoji \
 		otf-overpass \
 		zsh \
 		z \
@@ -57,7 +59,7 @@ if [[ "$packrepos" = y ]]; then
 		pipewire \
 		pipewire-alsa \
 		pipewire-pulse \
-	
+		
 else
 	echo "Not installing packages"
 fi
