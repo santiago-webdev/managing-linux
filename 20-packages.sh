@@ -49,7 +49,6 @@ if [[ "$packrepos" = y ]]; then
 		xdg-desktop-portal-kde \
 		konsole \
 		firefox \
-		alacritty \
 		dolphin \
 		kate \
 		ark \
