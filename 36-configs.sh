@@ -13,5 +13,4 @@ kwriteconfig5 --file startkderc --group General --key systemdBoot true
 sudo journalctl --vacuum-size=100M
 sudo journalctl --vacuum-time=2weeks
 
-# ~/.config/kwinrc under Windows
-# BorderlessMaximizedWindows=true
+sed -i '/\[Windows\]/a BorderlessMaximizedWindows=true' .config/kwinrc
