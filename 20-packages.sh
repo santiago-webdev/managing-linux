@@ -88,39 +88,7 @@ else
 	echo "Not installing AUR packages"
 fi
 
-sudo touch /etc/modules-load.d/zram.conf
-sudo tee -a /etc/modules-load.d/zram.conf << END
-zram
-END
-
-sudo touch /etc/modprobe.d/zram.conf
-sudo tee -a /etc/modprobe.d/zram.conf << END
-options zram num_devices=1
-END
-
-sudo touch /etc/udev/rules.d/99-zram.rules
-sudo tee -a /etc/udev/rules.d/99-zram.rules << END
-KERNEL=="zram0", ATTR{disksize}="512M",TAG+="systemd"
-END
-
-sudo touch /etc/systemd/system/zram.service
-sudo tee -a /etc/systemd/system/zram.service << END
-[Unit]
-Description=Swap with zram
-After=multi-user.target
-
-[Service]
-Type=oneshot 
-RemainAfterExit=true
-ExecStartPre=/sbin/mkswap /dev/zram0
-ExecStart=/sbin/swapon -p 3 /dev/zram0
-ExecStop=/sbin/swapoff /dev/zram0
-
-[Install]
-WantedBy=multi-user.target
-END
-
-systemctl enable zram sddm.service bluetooth.service tlp.service auto-cpufreq.service
+systemctl enable sddm.service tlp.service auto-cpufreq.service
 
 chsh -s /bin/zsh
 cd
