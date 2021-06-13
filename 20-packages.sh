@@ -38,26 +38,60 @@ if [[ "$packrepos" = y ]]; then
 		z \
 		zsh-history-substring-search \
 		zsh-autosuggestions \
-		plasma \
+		pipewire \
+		pipewire-alsa \
+		pipewire-pulse \
+		bluedevil \
+		breeze \
+		breeze-gtk \
+		kactivitymanagerd \
+		kde-cli-tools \
+		kde-gtk-config \
+		kdeplasma-addons \
+		khotkeys \
+		kinfocenter \
+		kmenuedit \
+		kscreen \
+		kscreenlocker \
+		ksshaskpass \
+		ksystemstats \
+		kwallet-pam \
+		kwalletmanager \
+		kwayland-integration \
+		kwayland-server \
 		plasma-wayland-session \
 		plasma-wayland-protocols \
-		breeze-gtk \
+		kwin \
+		layer-shell-qt \
+		libkscreen \
+		libksysguard \
+		milou \
+		plasma-browser-integration \
+		plasma-desktop \
+		plasma-disks \
+		plasma-firewall \
+		plasma-integration \
+		plasma-nm \
+		plasma-pa \
+		plasma-systemmonitor \
+		plasma-workspace \
+		polkit-kde-agent \
+		powerdevil \
+		sddm \
+		sddm-kcm \
+		systemsettings \
+		xdg-desktop-portal \
+		xdg-desktop-portal-kde \
+		ark \
 		libappindicator-gtk2 \
 		libappindicator-gtk3 \
 		kde-gtk-config \
-		xdg-desktop-portal \
-		xdg-desktop-portal-kde \
 		konsole \
 		kdeconnect \
 		dolphin \
 		kate \
-		ark \
 		okular \
 		gwenview \
-		kwalletmanager \
-		pipewire \
-		pipewire-alsa \
-		pipewire-pulse \
 		
 else
 	echo "Not installing packages"
