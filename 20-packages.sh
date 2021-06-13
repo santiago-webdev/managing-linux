@@ -49,7 +49,6 @@ if [[ "$packrepos" = y ]]; then
 		xdg-desktop-portal-kde \
 		konsole \
 		kdeconnect \
-		firefox \
 		dolphin \
 		kate \
 		ark \
