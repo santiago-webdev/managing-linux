@@ -83,7 +83,6 @@ if [[ "$packaur" = y ]]; then
 		zsh-fast-syntax-highlighting-git \
 		auto-cpufreq-git \
 		grml-zsh-config \
-		zramd \
 		
 else
 	echo "Not installing AUR packages"
