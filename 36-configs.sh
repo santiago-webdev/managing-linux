@@ -6,7 +6,6 @@ sed -i '/General/a \font=Inter, 14, -1,5,50,0,0,0,0,0' .config/krunnerrc
 kwriteconfig5 --file startkderc --group General --key systemdBoot true
 sudo journalctl --vacuum-size=100M
 sudo journalctl --vacuum-time=2weeks
-sed -i '/\[Windows\]/a BorderlessMaximizedWindows=true' .config/kwinrc
 
 sudo mkdir -p /etc/sddm.conf.d/
 sudo touch /etc/sddm.conf.d/autologin.conf
@@ -15,3 +14,5 @@ sudo tee -a /etc/sddm.conf.d/autologin.conf << EOF
 User=$USER
 Session=plasmawayland.desktop
 EOF
+
+echo -e "\n[Windows]\nBorderlessMaximizedWindows=true" >> .config/kwinrc
