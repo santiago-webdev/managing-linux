@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
-
+sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
+sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
 read -p "Enter hostname: " hostname
 read -p "Enter username: " username
 read -s -p "Enter userpass: " user_password
