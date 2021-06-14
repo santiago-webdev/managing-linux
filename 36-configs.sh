@@ -6,6 +6,7 @@ kwriteconfig5 --file startkderc --group General --key systemdBoot true
 sudo journalctl --vacuum-size=100M
 sudo journalctl --vacuum-time=2weeks
 
+echo -e "\n[Windows]\nBorderlessMaximizedWindows=true" >> .config/kwinrc
 sudo mkdir -p /etc/sddm.conf.d/
 sudo touch /etc/sddm.conf.d/autologin.conf
 sudo tee -a /etc/sddm.conf.d/autologin.conf << EOF
@@ -13,8 +14,6 @@ sudo tee -a /etc/sddm.conf.d/autologin.conf << EOF
 User=$USER
 Session=plasmawayland.desktop
 EOF
-
- echo -e "\n[Windows]\nBorderlessMaximizedWindows=true" >> .config/kwinrc
 
 sudo mkdir /usr/share/backgrounds
 sudo chmod 750 /usr/share/backgrounds
