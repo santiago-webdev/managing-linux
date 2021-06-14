@@ -63,6 +63,11 @@ if [[ "$packrepos" = y ]]; then
 		plasma-wayland-session \
 		plasma-wayland-protocols \
 		kwin \
+		filelight \
+		kcron \
+		kcalc \
+		kalarm \
+		kdegraphics-thumbnailers \
 		layer-shell-qt \
 		libkscreen \
 		libksysguard \
