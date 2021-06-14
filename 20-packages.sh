@@ -64,6 +64,7 @@ if [[ "$packrepos" = y ]]; then
 		plasma-wayland-protocols \
 		kwin \
 		filelight \
+		partitionmanager \
 		kcron \
 		kcalc \
 		kalarm \
