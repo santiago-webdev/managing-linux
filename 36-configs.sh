@@ -15,3 +15,7 @@ Session=plasmawayland.desktop
 EOF
 
 echo -e "\n[Windows]\nBorderlessMaximizedWindows=true" >> .config/kwinrc
+
+sudo mkdir /usr/share/backgrounds
+sudo chmod 750 /usr/share/backgrounds
+sudo chown $USER /usr/share/backgrounds
