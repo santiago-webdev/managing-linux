@@ -111,6 +111,9 @@ if [[ "$packaur" = y ]]; then
 	paru -S \
 		brave-bin \
 		redhat-fonts \
+		nerd-fonts-mononoki \
+		nerd-fonts-iosevka \
+		nerd-fonts-jetbrains-mono \
 		zsh-autopair-git \
 		zsh-completions-git \
 		zsh-fast-syntax-highlighting-git \
