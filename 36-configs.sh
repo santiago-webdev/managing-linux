@@ -18,6 +18,6 @@ EOF
 sudo mkdir /usr/share/backgrounds
 sudo chmod 750 /usr/share/backgrounds
 sudo chown $USER /usr/share/backgrounds
-sudo mkdir /mnt/extdrive
+sudo mkdir /run/extdrive
 mkdir workspace
 mkdir kdeconnect
