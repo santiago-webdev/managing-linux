@@ -42,6 +42,7 @@ if [[ "$packrepos" = y ]]; then
 		pipewire \
 		pipewire-alsa \
 		pipewire-pulse \
+		firewalld \
 		bluedevil \
 		breeze \
 		breeze-gtk \
@@ -132,7 +133,7 @@ else
 	echo "Not installing AUR packages"
 fi
 
-systemctl enable sddm.service tlp.service auto-cpufreq.service
+systemctl enable sddm.service tlp.service auto-cpufreq.service firewalld.service
 
 chsh -s /bin/zsh
 cd
