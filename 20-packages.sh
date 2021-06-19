@@ -127,15 +127,16 @@ if [[ "$packaur" = y ]]; then
 		zsh-completions-git \
 		zsh-fast-syntax-highlighting-git \
 		plasma5-applets-todolist \
+		plasma5-applets-plasma-pstate \
 		auto-cpufreq-git \
 		grml-zsh-config \
-		plasma5-applets-plasma-pstate \
 		
 else
 	echo "Not installing AUR packages"
 fi
 
-systemctl enable sddm.service tlp.service auto-cpufreq.service firewalld.service
+systemctl enable bluetooth.service sddm.service firewalld.service
+# systemctl enable tlp.service auto-cpufreq.service
 
 chsh -s /bin/zsh
 cd
