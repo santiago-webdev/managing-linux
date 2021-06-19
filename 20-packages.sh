@@ -126,8 +126,6 @@ if [[ "$packaur" = y ]]; then
 		zsh-autopair-git \
 		zsh-completions-git \
 		zsh-fast-syntax-highlighting-git \
-		plasma5-applets-todolist \
-		plasma5-applets-plasma-pstate \
 		auto-cpufreq-git \
 		grml-zsh-config \
 		
@@ -136,7 +134,7 @@ else
 fi
 
 systemctl enable bluetooth.service sddm.service firewalld.service
-# systemctl enable tlp.service auto-cpufreq.service
+systemctl enable tlp.service auto-cpufreq.service
 
 chsh -s /bin/zsh
 cd
