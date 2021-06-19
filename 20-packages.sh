@@ -129,6 +129,7 @@ if [[ "$packaur" = y ]]; then
 		plasma5-applets-todolist \
 		auto-cpufreq-git \
 		grml-zsh-config \
+		plasma5-applets-plasma-pstate \
 		
 else
 	echo "Not installing AUR packages"
