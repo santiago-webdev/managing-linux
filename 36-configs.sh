@@ -11,8 +11,3 @@ sudo chmod 750 /usr/share/backgrounds
 sudo chown $USER /usr/share/backgrounds
 mkdir kdeconnect
 mkdir workspace
-cd workspace
-git clone git@github.com:santiagogonzalezbogado/Dotfiles.git
-cd Dotfiles
-stow -t ~/ zsh
-stow -t ~/ kwin
