@@ -39,8 +39,8 @@ mount /dev/nvme0n1p1 /mnt/boot
 
 pacstrap /mnt \
 	base base-devel \
-	linux linux-zen linux-lts linux-firmware \
-	intel-media-driver vulkan-intel intel-ucode\
+	linux linux-firmware \
+	intel-ucode\
 	networkmanager efibootmgr \
 	neovim btrfs-progs wget \
 
@@ -95,7 +95,7 @@ bootctl --path=/boot/ install
 
 mkdir -p /boot/loader/
 tee -a /boot/loader/loader.conf << END
-default arch-zen.conf
+default arch.conf
 console-mode max
 editor no
 END
