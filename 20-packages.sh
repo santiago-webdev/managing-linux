@@ -15,6 +15,10 @@ if [[ "$packrepos" = y ]]; then
 		tlp \
 		bluez \
 		bluez-utils \
+		intel-media-driver \
+		vulkan-intel \
+		linux-zen \
+		linux-lts \
 		rustup \
 		cmake \
 		make \
