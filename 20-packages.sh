@@ -28,6 +28,7 @@ if [[ "$packrepos" = y ]]; then
 		exa \
 		sshfs \
 		openssh \
+		stow \
 		ntfs-3g \
 		wl-clipboard \
 		inter-font \

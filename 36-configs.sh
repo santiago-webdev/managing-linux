@@ -6,17 +6,13 @@ kwriteconfig5 --file startkderc --group General --key systemdBoot true
 sudo journalctl --vacuum-size=100M
 sudo journalctl --vacuum-time=2weeks
 
-#echo -e "\n[Windows]\nBorderlessMaximizedWindows=true" >> .config/kwinrc
-#sudo mkdir -p /etc/sddm.conf.d/
-#sudo touch /etc/sddm.conf.d/autologin.conf
-#sudo tee -a /etc/sddm.conf.d/autologin.conf << EOF
-#[Autologin]
-#User=$USER
-#Session=plasmawayland.desktop
-#EOF
-
 sudo mkdir /usr/share/backgrounds
 sudo chmod 750 /usr/share/backgrounds
 sudo chown $USER /usr/share/backgrounds
-mkdir workspace
 mkdir kdeconnect
+mkdir workspace
+cd workspace
+git clone git@github.com:santiagogonzalezbogado/Dotfiles.git
+cd Dotfiles
+stow -t ~/ zsh
+stow -t ~/ kwin
