@@ -50,7 +50,6 @@ if [[ "$packrepos" = y ]]; then
 		bluedevil \
 		breeze \
 		breeze-gtk \
-		xcursor-bluecurve \
 		kactivitymanagerd \
 		kde-cli-tools \
 		kde-gtk-config \
