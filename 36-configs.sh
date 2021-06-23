@@ -10,4 +10,4 @@ sudo mkdir /usr/share/backgrounds
 sudo chmod 750 /usr/share/backgrounds
 sudo chown $USER /usr/share/backgrounds
 mkdir kdeconnect
-mkdir workspace
+mkdir -p workspace/scripts
