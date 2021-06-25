@@ -39,6 +39,7 @@ if [[ "$packrepos" = y ]]; then
 		noto-fonts-emoji \
 		otf-overpass \
 		firefox \
+		dash \
 		zsh \
 		z \
 		zsh-history-substring-search \
