@@ -12,4 +12,4 @@ sudo chown $USER /usr/share/backgrounds
 mkdir kdeconnect
 mkdir -p workspace/scripts
 
-firewall-cmd --zone=public --add-service=kdeconnect
+firewall-cmd --zone=public --add-service kdeconnect --permanent
