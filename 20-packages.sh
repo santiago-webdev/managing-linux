@@ -33,7 +33,7 @@ if [[ "$packrepos" = y ]]; then
 		sshfs \
 		openssh \
 		ntfs-3g \
-		xclip \
+		wl-clipboard \
 		inter-font \
 		noto-fonts-cjk \
 		noto-fonts-emoji \
@@ -64,6 +64,10 @@ if [[ "$packrepos" = y ]]; then
 		ksystemstats \
 		kwallet-pam \
 		kwalletmanager \
+		kwayland-integration \
+		kwayland-server \
+		plasma-wayland-session \
+		plasma-wayland-protocols \
 		kwin \
 		filelight \
 		partitionmanager \
