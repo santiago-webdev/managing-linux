@@ -140,8 +140,6 @@ fi
 systemctl enable bluetooth.service sddm.service firewalld.service
 systemctl enable tlp.service auto-cpufreq.service
 
-firewall-cmd --zone=public --add-service=kdeconnect
-
 chsh -s /bin/zsh
 cd
 git clone https://github.com/santiagogonzalezbogado/Dotfiles
