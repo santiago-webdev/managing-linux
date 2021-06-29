@@ -101,6 +101,8 @@ if [[ "$packrepos" = y ]]; then
 		kde-gtk-config \
 		konsole \
 		kdeconnect \
+		spectacle \
+		kdialog \
 		dolphin \
 		kate \
 		okular \
