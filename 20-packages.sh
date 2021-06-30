@@ -129,6 +129,7 @@ if [[ "$packaur" = y ]]; then
 		nerd-fonts-mononoki \
 		nerd-fonts-iosevka \
 		nerd-fonts-jetbrains-mono \
+		kwin-script-grid-tiling-git \
 		zsh-autopair-git \
 		zsh-completions-git \
 		zsh-fast-syntax-highlighting-git \
