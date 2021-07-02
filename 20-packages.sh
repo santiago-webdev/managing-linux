@@ -4,7 +4,7 @@ set -e
 
 sudo pacman -Syu
 
-wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/36-configs.sh
+wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/36-configs.sh
 chmod +x 36-configs.sh
 
 read -p "Install packages from the repos?" packrepos
