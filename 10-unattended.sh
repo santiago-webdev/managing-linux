@@ -34,7 +34,7 @@ mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,s
 mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
 mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@log /dev/mapper/cryptroot /mnt/log
 mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
-mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvolid=5 /dev/mapper/cryptroot /mnt/btrfs
+mount -o noatime,nodiratime,compress=zstd,space_cache,subvolid=5 /dev/mapper/cryptroot /mnt/btrfs
 mount /dev/nvme0n1p1 /mnt/boot
 
 pacstrap /mnt \
