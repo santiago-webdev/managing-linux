@@ -66,7 +66,7 @@ echo -en "$root_password\n$root_password" | passwd
 useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users $username
 echo -en "$user_password\n$user_password" | passwd $username
 
-wget https://raw.githubusercontent.com/santiagogonzalezbogado/csjarchlinux/master/20-packages.sh -P /home/$username
+wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh -P /home/$username
 chmod +x /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service
