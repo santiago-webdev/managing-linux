@@ -23,6 +23,7 @@ if [[ "$packrepos" = y ]]; then
 		cmake \
 		make \
 		qbittorrent \
+		man \
 		python \
 		python-pip \
 		python-wheel \
