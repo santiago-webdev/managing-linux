@@ -12,6 +12,7 @@ read -p "Install packages from the repos?" packrepos
 if [[ "$packrepos" = y ]]; then
 	sudo pacman -S --needed \
 		git \
+		rsync \
 		tlp \
 		bluez \
 		bluez-utils \
