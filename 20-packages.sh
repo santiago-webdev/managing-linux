@@ -10,107 +10,106 @@ chmod +x 36-configs.sh
 read -p "Install packages from the repos?" packrepos
 
 if [[ "$packrepos" = y ]]; then
-	sudo pacman -S --needed \
-		git \
-		rsync \
-		tlp \
-		bluez \
-		bluez-utils \
-		intel-media-driver \
-		vulkan-intel \
-		linux-zen \
-		linux-lts \
-		rustup \
-		cmake \
-		make \
-		qbittorrent \
-		man \
-		python \
-		python-pip \
-		python-wheel \
-		nodejs \
-		npm \
-		bat \
-		exa \
-		sshfs \
-		openssh \
-		ntfs-3g \
-		wl-clipboard \
-		inter-font \
-		noto-fonts-cjk \
-		noto-fonts-emoji \
-		otf-overpass \
-		firefox \
-		dash \
-		z \
-		zsh-history-substring-search \
-		zsh-autosuggestions \
-		pipewire \
-		pipewire-alsa \
-		pipewire-pulse \
-		firewalld \
-		bluedevil \
-		breeze \
-		breeze-gtk \
-		kactivitymanagerd \
-		kde-cli-tools \
-		kde-gtk-config \
-		kdeplasma-addons \
-		khotkeys \
-		kinfocenter \
-		kmenuedit \
-		kscreen \
-		kscreenlocker \
-		ksshaskpass \
-		ksystemstats \
-		kwallet-pam \
-		kwalletmanager \
-		kwayland-integration \
-		kwayland-server \
-		plasma-wayland-session \
-		plasma-wayland-protocols \
-		kwin \
-		filelight \
-		partitionmanager \
-		kcron \
-		kcalc \
-		kalarm \
-		kdegraphics-thumbnailers \
-		layer-shell-qt \
-		libkscreen \
-		libksysguard \
-		milou \
-		plasma-browser-integration \
-		plasma-desktop \
-		plasma-disks \
-		plasma-firewall \
-		plasma-integration \
-		plasma-nm \
-		plasma-pa \
-		plasma-systemmonitor \
-		plasma-workspace \
-		polkit-kde-agent \
-		powerdevil \
-		sddm \
-		sddm-kcm \
-		systemsettings \
-		xdg-desktop-portal \
-		xdg-desktop-portal-kde \
-		ark \
-		libappindicator-gtk2 \
-		libappindicator-gtk3 \
-		kde-gtk-config \
-		konsole \
-		kdeconnect \
-		spectacle \
-		kdialog \
-		dolphin \
-		kate \
-		okular \
-		gwenview \
-		
+    sudo pacman -S --needed \
+        tlp \
+        bluez \
+        bluez-utils \
+        intel-media-driver \
+        vulkan-intel \
+        linux-zen \
+        linux-lts \
+        rustup \
+        cmake \
+        make \
+        qbittorrent \
+        man \
+        python \
+        python-pip \
+        python-wheel \
+        nodejs \
+        npm \
+        bat \
+        exa \
+        sshfs \
+        openssh \
+        ntfs-3g \
+        wl-clipboard \
+        inter-font \
+        noto-fonts-cjk \
+        noto-fonts-emoji \
+        otf-overpass \
+        firefox \
+        dash \
+        z \
+        zsh-history-substring-search \
+        zsh-autosuggestions \
+        zsh-completions \
+        pipewire \
+        pipewire-alsa \
+        pipewire-pulse \
+        firewalld \
+        bluedevil \
+        breeze \
+        breeze-gtk \
+        kactivitymanagerd \
+        kde-cli-tools \
+        kde-gtk-config \
+        kdeplasma-addons \
+        khotkeys \
+        kinfocenter \
+        kmenuedit \
+        kscreen \
+        kscreenlocker \
+        ksshaskpass \
+        ksystemstats \
+        kwallet-pam \
+        kwalletmanager \
+        kwayland-integration \
+        kwayland-server \
+        plasma-wayland-session \
+        plasma-wayland-protocols \
+        kwin \
+        filelight \
+        partitionmanager \
+        kcron \
+        kcalc \
+        kalarm \
+        kdegraphics-thumbnailers \
+        layer-shell-qt \
+        libkscreen \
+        libksysguard \
+        milou \
+        plasma-browser-integration \
+        plasma-desktop \
+        plasma-disks \
+        plasma-firewall \
+        plasma-integration \
+        plasma-nm \
+        plasma-pa \
+        plasma-systemmonitor \
+        plasma-workspace \
+        polkit-kde-agent \
+        powerdevil \
+        sddm \
+        sddm-kcm \
+        systemsettings \
+        xdg-desktop-portal \
+        xdg-desktop-portal-kde \
+        ark \
+        libappindicator-gtk2 \
+        libappindicator-gtk3 \
+        kde-gtk-config \
+        konsole \
+        kdeconnect \
+        spectacle \
+        kdialog \
+        dolphin \
+        kate \
+        okular \
+        gwenview \
+
 else
-	echo "Not installing packages"
+    echo "Not installing packages"
 fi
 
 pip install pynvim
@@ -124,20 +123,19 @@ cd
 read -p "Install packages from the AUR?" packaur
 
 if [[ "$packaur" = y ]]; then
-	paru -S \
-		brave-bin \
-		redhat-fonts \
-		nerd-fonts-mononoki \
-		nerd-fonts-iosevka \
-		nerd-fonts-jetbrains-mono \
-		kwin-script-grid-tiling-git \
-		zsh-autopair-git \
-		zsh-completions-git \
-		zsh-fast-syntax-highlighting-git \
-		auto-cpufreq-git \
-		
+    paru -S \
+        brave-bin \
+        redhat-fonts \
+        nerd-fonts-mononoki \
+        nerd-fonts-iosevka \
+        nerd-fonts-jetbrains-mono \
+        kwin-script-grid-tiling-git \
+        zsh-autopair-git \
+        zsh-fast-syntax-highlighting-git \
+        auto-cpufreq-git \
+
 else
-	echo "Not installing AUR packages"
+    echo "Not installing AUR packages"
 fi
 
 systemctl enable bluetooth.service sddm.service tlp.service auto-cpufreq.service
