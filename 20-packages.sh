@@ -42,7 +42,6 @@ if [[ "$packrepos" = y ]]; then
 		otf-overpass \
 		firefox \
 		dash \
-		zsh \
 		z \
 		zsh-history-substring-search \
 		zsh-autosuggestions \
@@ -141,9 +140,7 @@ else
 	echo "Not installing AUR packages"
 fi
 
-systemctl enable bluetooth.service sddm.service firewalld.service
-systemctl enable tlp.service auto-cpufreq.service
-
-chsh -s /bin/zsh
-cd
-git clone https://github.com/santiagogonzalezbogado/Dotfiles
+systemctl enable bluetooth.service sddm.service tlp.service auto-cpufreq.service
+# Configure firewall
+systemctl enable --now firewalld.service
+firewall-cmd --zone=public --add-service kdeconnect --permanent
