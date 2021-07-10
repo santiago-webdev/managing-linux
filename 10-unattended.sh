@@ -52,17 +52,17 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 8/g" /etc/pacman.conf  # Parallel downloads
 
-pacstrap /mnt base base-devel linux linux-firmware \  # Basic packages
-    intel-ucode \  # I only have Intel machines at the moment
-    networkmanager \  # NetworkManager for internet access
-    efibootmgr \  # To manage boot entries I use this
-    btrfs-progs \ # btrfs-progs is needed if you use BTRFS
-    wget git rsync \ # I pull my second script with this
-    neovim \  # Default editor
-    zsh \  # Default shell for the default user
+pacstrap /mnt base base-devel linux linux-firmware \
+    intel-ucode \
+    networkmanager \
+    efibootmgr \
+    btrfs-progs \
+    wget git rsync \
+    neovim \
+    zsh \
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
-#arch-chroot /mnt /bin/bash << EOF
+arch-chroot /mnt /bin/bash << EOF
 timedatectl set-ntp true  # Synchronize 
 ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime  # Configure locale
 hwclock --systohc  # Synchronize the clock
