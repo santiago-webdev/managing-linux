@@ -127,7 +127,7 @@ cd
 if [[ "$packaur" = y ]]; then
     paru -S \
         brave-bin \
-	neovide-git \
+        neovide-git \
         redhat-fonts \
         nerd-fonts-mononoki \
         nerd-fonts-iosevka \
