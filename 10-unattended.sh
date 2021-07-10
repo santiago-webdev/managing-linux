@@ -56,7 +56,7 @@ pacstrap /mnt base base-devel linux linux-firmware \
     networkmanager \
     efibootmgr \
     btrfs-progs \
-    wget git rsync \
+    wget \
     neovim \
     zsh \
 
@@ -84,10 +84,6 @@ echo -e "$hostname" > /etc/hostname
 useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users -s /bin/zsh $username  
 echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
-
-git clone https://github.com/santigo-zero/Dotfiles.git
-rsync --recursive --verbose --exclude '.git' --exclude 'README.md' Dotfiles/ /home/$username
-rm -rf Dotfiles
 
 mkdir /usr/share/backgrounds
 chmod 750 /usr/share/backgrounds
