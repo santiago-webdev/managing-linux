@@ -61,7 +61,7 @@ pacstrap /mnt base base-devel linux linux-firmware \
     zsh \
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
-#arch-chroot /mnt /bin/bash << EOF
+arch-chroot /mnt /bin/bash << EOF
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime
 hwclock --systohc
