@@ -14,7 +14,7 @@ if [[ "$packrepos" = y ]]; then
         python \
         python-pip \
         python-wheel \
-        java \
+	jdk-openjdk \
 	lua \
         nodejs \
         npm \
