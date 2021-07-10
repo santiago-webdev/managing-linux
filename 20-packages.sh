@@ -2,83 +2,92 @@
 
 set -e
 
-sudo pacman -Syu
-
-wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/36-configs.sh
-chmod +x 36-configs.sh
-
 read -p "Install packages from the repos?" packrepos
+read -p "Install packages from the AUR?" packaur
+
+sudo pacman -Syu
 
 if [[ "$packrepos" = y ]]; then
     sudo pacman -S --needed \
-        tlp \
-        bluez \
-        bluez-utils \
         intel-media-driver \
         vulkan-intel \
-        linux-zen \
-        linux-lts \
-        rustup \
-        cmake \
-        make \
-        qbittorrent \
-        man \
         python \
         python-pip \
         python-wheel \
+        java \
         nodejs \
         npm \
+        rustup \
         bat \
-        exa \
-        sshfs \
-        openssh \
+        make \
+        cmake \
+        man \
         ntfs-3g \
-        wl-clipboard \
-        inter-font \
-        noto-fonts-cjk \
-        noto-fonts-emoji \
-        otf-overpass \
-        firefox \
+        tlp \
         dash \
         z \
-        zsh-history-substring-search \
         zsh-autosuggestions \
         zsh-completions \
-        pipewire \
-        pipewire-alsa \
-        pipewire-pulse \
+        zsh-history-substring-search \
+        qbittorrent \
         firewalld \
-        bluedevil \
-        breeze \
-        breeze-gtk \
+        noto-fonts-cjk \
+        noto-fonts-emoji \
+        inter-font \
+        otf-overpass \
+        exa \
+        filelight \
+        spectacle \
+        gwenview \
         kactivitymanagerd \
+        kalarm \
+        kate \
+        kcalc \
+        kcron \
         kde-cli-tools \
         kde-gtk-config \
+        kde-gtk-config \
+        kdeconnect \
+        kdegraphics-thumbnailers \
         kdeplasma-addons \
+        kdialog \
         khotkeys \
         kinfocenter \
         kmenuedit \
+        konsole \
         kscreen \
         kscreenlocker \
         ksshaskpass \
+        openssh \
+        sshfs \
         ksystemstats \
         kwallet-pam \
         kwalletmanager \
         kwayland-integration \
         kwayland-server \
-        plasma-wayland-session \
-        plasma-wayland-protocols \
         kwin \
-        filelight \
-        partitionmanager \
-        kcron \
-        kcalc \
-        kalarm \
-        kdegraphics-thumbnailers \
         layer-shell-qt \
         libkscreen \
         libksysguard \
+        linux-lts \
+        linux-zen \
         milou \
+        okular \
+        partitionmanager \
+        pipewire \
+        pipewire-alsa \
+        pipewire-pulse \
+        libappindicator-gtk2 \
+        libappindicator-gtk3 \
+        xdg-desktop-portal \
+        xdg-desktop-portal-kde \
+        dolphin \
+        ark \
+        breeze \
+        breeze-gtk \
+        bluedevil \
+        bluez \
+        bluez-utils \
         plasma-browser-integration \
         plasma-desktop \
         plasma-disks \
@@ -87,30 +96,22 @@ if [[ "$packrepos" = y ]]; then
         plasma-nm \
         plasma-pa \
         plasma-systemmonitor \
+        plasma-wayland-protocols \
+        plasma-wayland-session \
         plasma-workspace \
         polkit-kde-agent \
         powerdevil \
         sddm \
         sddm-kcm \
         systemsettings \
-        xdg-desktop-portal \
-        xdg-desktop-portal-kde \
-        ark \
-        libappindicator-gtk2 \
-        libappindicator-gtk3 \
-        kde-gtk-config \
-        konsole \
-        kdeconnect \
-        spectacle \
-        kdialog \
-        dolphin \
-        kate \
-        okular \
-        gwenview \
+        wl-clipboard \
 
 else
     echo "Not installing packages"
 fi
+
+wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/36-configs.sh
+chmod +x 36-configs.sh
 
 pip install pynvim
 rustup default stable
@@ -119,8 +120,6 @@ git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
 cd
-
-read -p "Install packages from the AUR?" packaur
 
 if [[ "$packaur" = y ]]; then
     paru -S \
