@@ -15,6 +15,7 @@ if [[ "$packrepos" = y ]]; then
         python-pip \
         python-wheel \
         java \
+	lua \
         nodejs \
         npm \
         rustup \
