@@ -85,22 +85,8 @@ useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,
 echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
 
-mkdir /usr/share/backgrounds
-chmod 750 /usr/share/backgrounds
-chown $username /usr/share/backgrounds
-
-mkdir /home/$username/kdeconnect
-chmod 750 /home/$username/kdeconnect
-chown $username /home/$username/kdeconnect
-
-mkdir /home/$username/workspace
-chmod 750 /home/$username/workspace
-chown $username /home/$username/workspace
-
 wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh -P /home/$username
 chmod +x /home/$username/20-packages.sh
-chmod 750 /home/$username/20-packages.sh
-chown $username /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service
 
