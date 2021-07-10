@@ -11,11 +11,13 @@ if [[ "$packrepos" = y ]]; then
     sudo pacman -S --needed \
         intel-media-driver \
         vulkan-intel \
+        git \
+        rsync \
         python \
         python-pip \
         python-wheel \
-	jdk-openjdk \
-	lua \
+        jdk-openjdk \
+        lua \
         nodejs \
         npm \
         rustup \
