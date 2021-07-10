@@ -15,7 +15,6 @@ username=st
 keymap=dvorak
 read -s -p "Enter userpass: " user_password
 read -s -p "Enter rootpass: " root_password
-echo -e "\n"
 
 timedatectl set-ntp true  # Synchronize motherboard clock
 sgdisk --zap-all /dev/nvme0n1  # Delete tables
@@ -62,48 +61,43 @@ pacstrap /mnt base base-devel linux linux-firmware \
     zsh \
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
-arch-chroot /mnt /bin/bash << EOF
-timedatectl set-ntp true  # Synchronize 
-ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime  # Configure locale
-hwclock --systohc  # Synchronize the clock
-sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen  # Add locales
-echo "LANG=en_US.UTF-8" > /etc/locale.conf  # Default lang locale
-locale-gen  # Generate locale
+#arch-chroot /mnt /bin/bash << EOF
+timedatectl set-ntp true
+ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime
+hwclock --systohc
+sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
+echo "LANG=en_US.UTF-8" > /etc/locale.conf
+locale-gen
 
-echo -e "127.0.0.1\tlocalhost" >> /etc/hosts  # The next three lines will configure the localhost
-echo -e "::1\t\tlocalhost" >> /etc/hosts  # And the name other computers will see you with as well
+echo -e "127.0.0.1\tlocalhost" >> /etc/hosts
+echo -e "::1\t\tlocalhost" >> /etc/hosts
 echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 
-echo -e "KEYMAP=$keymap" > /etc/vconsole.conf  # Default keymap in TTY
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers  # Add the wheel group
-echo "Defaults !tty_tickets" >> /etc/sudoers  # You don't need to put your password again on another terminal
-# These two next lines are configs for pacman
+echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
+echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+echo "Defaults !tty_tickets" >> /etc/sudoers
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  
 sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
-# Use all threads of your CPU and utilize multiple cores on compression
 sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g; s/-)/--threads=0 -)/g; s/gzip/pigz/g; s/bzip2/pbzip2/g' /etc/makepkg.conf
 
-# This is the name of your computer and is the same that is being used for localhost config
 echo $hostname > /etc/hostname  
-# Add multiple groups  and change the shell for the default user
 useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users -s /bin/zsh $username  
-echo -en "$root_password\n$root_password" | passwd  # Configure password for root
-echo -en "$user_password\n$user_password" | passwd $username  # Configure password for the default user
+echo -en "$root_password\n$root_password" | passwd
+echo -en "$user_password\n$user_password" | passwd $username
 
 git clone https://github.com/santigo-zero/Dotfiles.git
 rsync --recursive --verbose --exclude '.git' --exclude 'README.md' Dotfiles/ /home/$username
 rm -rf Dotfiles
 
-# Add some folders for the default user and download the 20-script that will install KDE Plasma, fonts, AUR manager and other packages
-mkdir /usr/share/backgrounds  # Add a backgrounds folder for wallpapers and icons
+mkdir /usr/share/backgrounds
 chmod 750 /usr/share/backgrounds
 chown $username /usr/share/backgrounds
 
-mkdir /home/$username/kdeconnect  # To transfer things with kdeconnect
+mkdir /home/$username/kdeconnect
 chmod 750 /home/$username/kdeconnect
 chown $username /home/$username/kdeconnect
 
-mkdir /home/$username/workspace  # This is where everything goes, repos, scripts, exercises
+mkdir /home/$username/workspace
 chmod 750 /home/$username/workspace
 chown $username /home/$username/workspace
 
@@ -112,16 +106,16 @@ chmod +x /home/$username/20-packages.sh
 chmod 750 /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
 
-systemctl enable NetworkManager.service  # Enable NetworkManager
+systemctl enable NetworkManager.service
 
-journalctl --vacuum-size=100M  # Just make the journal smaller
-journalctl --vacuum-time=2weeks  # And clean it every two weaks
+journalctl --vacuum-size=100M
+journalctl --vacuum-time=2weeks
 
 touch /etc/sysctl.d/99-swappiness.conf
-echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf  # Lowers the value so that the kernel avoids swapping too much
+echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
 
 mkdir -p /etc/pacman.d/hooks/
-touch /etc/pacman.d/hooks/100-systemd-boot.hook  # This hook updates automatically the EFI boot manager
+touch /etc/pacman.d/hooks/100-systemd-boot.hook
 tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
 [Trigger]
 Type = Package
@@ -135,17 +129,17 @@ Exec = /usr/bin/bootctl update
 END
 
 sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
-sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf  # Configure systemd, btrfs module, encryption, keymap and graphics hooks
-mkinitcpio -P  # Regenarte images
-bootctl --path=/boot/ install  # Install systemd-boot
+sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
+mkinitcpio -P
+bootctl --path=/boot/ install
 
-mkdir -p /boot/loader/  # Bootloader configuration
+mkdir -p /boot/loader/
 tee -a /boot/loader/loader.conf << END
 default arch.conf
 console-mode max
 editor no
 END
-# The rest of this script just creates the files to manage Linux, Linux Zen and Linux LTS, you don't need to install all kernels
+
 mkdir -p /boot/loader/entries/
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch.conf << END
