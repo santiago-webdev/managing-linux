@@ -58,6 +58,7 @@ if [[ "$packrepos" = y ]]; then
         kinfocenter \
         kmenuedit \
         konsole \
+        yakuake \
         kscreen \
         kscreenlocker \
         ksshaskpass \
