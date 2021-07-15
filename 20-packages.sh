@@ -39,6 +39,7 @@ if [[ "$packrepos" = y ]]; then
         inter-font \
         otf-overpass \
         exa \
+        ripgrep \
         filelight \
         spectacle \
         gwenview \
@@ -128,8 +129,6 @@ cd
 if [[ "$packaur" = y ]]; then
     paru -S \
         brave-bin \
-        neovide-git \
-        redhat-fonts \
         nerd-fonts-mononoki \
         nerd-fonts-iosevka \
         nerd-fonts-jetbrains-mono \
