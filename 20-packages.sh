@@ -40,6 +40,7 @@ if [[ "$packrepos" = y ]]; then
         otf-overpass \
         exa \
         ripgrep \
+        youtube-dl \
         filelight \
         spectacle \
         gwenview \
