@@ -37,13 +37,13 @@ btrfs su cr /mnt/@tmp
 btrfs su cr /mnt/@btrfs
 umount /mnt
 # Unmount so that now we can mount the subvolumes
-mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
 mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}  # Create directories for their respective subvolumes
-mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
-mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@log /dev/mapper/cryptroot /mnt/log
-mount -o noatime,nodiratime,compress-force=zstd:1,discard=async,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/cryptroot /mnt/log
+mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
 mount -o noatime,nodiratime,compress=zstd,space_cache,subvolid=5 /dev/mapper/cryptroot /mnt/btrfs
 mount /dev/nvme0n1p1 /mnt/boot  # Mount the boot partition
 
@@ -76,12 +76,12 @@ echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
 echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "Defaults !tty_tickets" >> /etc/sudoers
-sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  
+sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
 sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
 sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g; s/-)/--threads=0 -)/g; s/gzip/pigz/g; s/bzip2/pbzip2/g' /etc/makepkg.conf
 
-echo -e "$hostname" > /etc/hostname  
-useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users -s /bin/zsh $username  
+echo -e "$hostname" > /etc/hostname
+useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users -s /bin/zsh $username
 echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
 
@@ -89,6 +89,7 @@ wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packa
 chmod +x /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service
+systemctl enable fstrim.timer
 
 journalctl --vacuum-size=100M
 journalctl --vacuum-time=2weeks
