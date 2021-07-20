@@ -36,13 +36,13 @@ btrfs su cr /mnt/@log
 btrfs su cr /mnt/@tmp
 umount /mnt
 # Unmount so that now we can mount the subvolumes
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
 mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}  # Create directories for their respective subvolumes
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/cryptroot /mnt/log
-mount -o noatime,nodiratime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/cryptroot /mnt/log
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
 mount /dev/nvme0n1p1 /mnt/boot  # Mount the boot partition
 
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
