@@ -144,6 +144,6 @@ else
 fi
 
 systemctl enable bluetooth.service sddm.service tlp.service auto-cpufreq.service
-# Configure firewall
+systemctl enable apparmor.service
 systemctl enable --now firewalld.service
 firewall-cmd --zone=public --add-service kdeconnect --permanent

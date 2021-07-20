@@ -88,7 +88,6 @@ chmod +x /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service
 systemctl enable fstrim.timer
-systemctl enable apparmor.service
 
 journalctl --vacuum-size=100M
 journalctl --vacuum-time=2weeks
