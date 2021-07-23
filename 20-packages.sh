@@ -39,8 +39,9 @@ if [[ "$packrepos" = y ]]; then
         inter-font \
         otf-overpass \
         exa \
+        unrar \
         ripgrep \
-	apparmor \
+        apparmor \
         youtube-dl \
         filelight \
         spectacle \
