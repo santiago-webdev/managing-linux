@@ -95,6 +95,17 @@ journalctl --vacuum-time=2weeks
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
 
+touch /etc/udev/rules.d/backlight.rules
+tee -a /etc/udev/rules.d/backlight.rules << END
+RUN+="/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+RUN+="/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+END
+
+touch /etc/udev/rules.d/81-backlight.rules
+tee -a /etc/udev/rules.d/81-backlight.rules << END
+SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="intel_backlight", ATTR{brightness}="9000"
+END
+
 mkdir -p /etc/pacman.d/hooks/
 touch /etc/pacman.d/hooks/100-systemd-boot.hook
 tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
