@@ -4,15 +4,12 @@ clear   # Clear the TTY
 set -e  # The script will not run if we CTRL + C, or in case of an error
 set -u  # Treat unset variables as an error when substituting
 
-# I commented everything for some reason
-# Default settings
-# /dev/nvme0n1 is the drive
-# /dev/nvme0n1p1 is boot
-# /dev/nvme0n1p2 is root
 continent_city=America/Argentina/Mendoza
-hostname=bebop
-username=st
+# hostname=bebop
+# username=st
 keymap=dvorak
+read -p "Enter name: " username
+read -p "Enter hostname: " hostname
 read -s -p "Enter userpass: " user_password
 read -s -p "Enter rootpass: " root_password
 
@@ -47,7 +44,7 @@ mount /dev/nvme0n1p1 /mnt/boot  # Mount the boot partition
 
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
-sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 8/g" /etc/pacman.conf  # Parallel downloads
+sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
 pacstrap /mnt base base-devel linux linux-firmware \
     intel-ucode \
@@ -56,7 +53,7 @@ pacstrap /mnt base base-devel linux linux-firmware \
     btrfs-progs \
     wget \
     neovim \
-    zsh \
+    zsh
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
