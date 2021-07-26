@@ -20,7 +20,7 @@ pacman -Sy wget
 ```
 
 ``` bash
-wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-unattended.sh
+curl -o 10-unattended.sh https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-unattended.sh
 ```
 
 ``` bash
