@@ -133,7 +133,5 @@ chmod +x 30-extras.sh
 
 systemctl enable bluetooth.service sddm.service apparmor.service
 systemctl enable --now firewalld.service
-firewall-cmd --zone=home --change-interface=wlp0s20f3
-firewall-cmd --zone=home --add-service kdeconnect --permanent
 
 rm $0 # Self delete

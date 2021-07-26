@@ -2,6 +2,9 @@
 
 set -e
 
+firewall-cmd --zone=home --change-interface=wlp0s20f3
+firewall-cmd --zone=home --add-service kdeconnect --permanent
+
 rustup default stable
 pip install pynvim
 
