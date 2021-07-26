@@ -17,7 +17,7 @@ paru -S \
     nerd-fonts-jetbrains-mono \
     kwin-script-grid-tiling-git \
     zsh-autopair-git \
-    zsh-fast-syntax-highlighting-git \
+    zsh-fast-syntax-highlighting \
     auto-cpufreq-git
 
 sudo pacman -S netbeans
