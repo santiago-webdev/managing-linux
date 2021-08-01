@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# Currently not working
-# Script currently not working, I don't know why
+# I guess it works now
 # Usage
 # ./40-encrypt-drive.sh wipe
 # ./40-encrypt-drive.sh add-disk
@@ -20,12 +19,12 @@ keys() {
     sudo chmod 400 /root/.keyfile
     sudo cryptsetup luksAddKey /dev/sda1 /root/.keyfile
     sudo tee -a /etc/crypttab <<EOT
-cryptdata UUID=$(blkid -s UUID -o value /dev/sda1) /root/.keyfile luks,discard
+cryptdata UUID=$(sudo blkid -s UUID -o value /dev/sda1) /root/.keyfile luks,discard
 EOT
     sudo tee -a /etc/fstab <<EOT
 
 # /data
-UUID=$(blkid -s UUID -o value /dev/mapper/cryptdata)      /data       	ext4        	defaults	0   2
+UUID=$(sudo blkid -s UUID -o value /dev/mapper/cryptdata)      /data       	ext4        	defaults	0   2
 EOT
 }
 
