@@ -5,11 +5,12 @@ set -e  # The script will not run if we CTRL + C, or in case of an error
 set -u  # Treat unset variables as an error when substituting
 
 continent_city=America/Argentina/Mendoza
-# hostname=bebop
-# username=st
 keymap=dvorak
+
 read -p "Enter name: " username
+# username=st
 read -p "Enter hostname: " hostname
+# hostname=bebop
 read -s -p "Enter userpass: " user_password
 read -s -p "Enter rootpass: " root_password
 
@@ -82,6 +83,7 @@ echo -en "$user_password\n$user_password" | passwd $username
 
 wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh -P /home/$username
 chmod +x /home/$username/20-packages.sh
+chown $username /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service
 systemctl enable fstrim.timer

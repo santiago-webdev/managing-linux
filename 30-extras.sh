@@ -28,4 +28,7 @@ sudo pacman -S netbeans
 kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,display"
 kwriteconfig5 --file krunnerrc --group General --key font 'Inter, 13, -1,5,50,0,0,0,0,0'
 
+sudo chmod 750 /usr/share/wallpapers
+sudo chown st /usr/share/wallpapers
+
 rm $0 # Self delete
