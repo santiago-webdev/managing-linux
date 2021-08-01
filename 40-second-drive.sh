@@ -35,8 +35,6 @@ case "${1}" in
         sudo cryptsetup luksFormat --type luks2 /dev/sda1
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
         sudo mkfs.ext4 /dev/mapper/cryptdata
-        mkdir_datos
-        keys
         ;;
     add-disk)
         sudo cryptsetup luksOpen /dev/sda cryptdata
