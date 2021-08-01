@@ -19,15 +19,13 @@ keys() {
     sudo dd if=/dev/urandom of=/root/.keyfile bs=1024 count=4
     sudo chmod 400 /root/.keyfile
     sudo cryptsetup luksAddKey /dev/sda1 /root/.keyfile
-    partition_uuid=$(blkid -s UUID -o value /dev/sda1)
     sudo tee -a /etc/crypttab <<EOT
-cryptdata UUID=$partition_uuid /root/.keyfile luks,discard
+cryptdata UUID=$(blkid -s UUID -o value /dev/sda1) /root/.keyfile luks,discard
 EOT
-    cryptdata_uuid=$(blkid -s UUID -o value /dev/mapper/cryptdata)
     sudo tee -a /etc/fstab <<EOT
 
 # /data
-UUID=$cryptdata_uuid      /data       	ext4        	defaults	0   2
+UUID=$(blkid -s UUID -o value /dev/mapper/cryptdata)      /data       	ext4        	defaults	0   2
 EOT
 }
 
