@@ -23,14 +23,13 @@ mkdir_datos() {
     fi
 }
 
-
 keys() {
     sudo dd if=/dev/urandom of=/root/.keyfile bs=1024 count=4
     sudo chmod 400 /root/.keyfile
     sudo cryptsetup luksAddKey /dev/$drive_partition /root/.keyfile
     drive_uuid=$(blkid -s UUID -o value /dev/$drive_partition)
     sudo tee -a /etc/crypttab <<EOT
-cryptdata UUID=$drive_uuid /.keyfile luks,discard
+cryptdata UUID=$drive_uuid /root/.keyfile luks,discard
 EOT
 }
 
