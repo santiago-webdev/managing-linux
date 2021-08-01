@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Currently not working
 # Script currently not working, I don't know why
 # Usage
 # ./40-encrypt-drive.sh wipe
@@ -24,6 +25,8 @@ cryptdata UUID=$partition_uuid /root/.keyfile luks,discard
 EOT
     cryptdata_uuid=$(blkid -s UUID -o value /dev/mapper/cryptdata)
     sudo tee -a /etc/fstab <<EOT
+
+# /data
 UUID=$cryptdata_uuid      /data       	ext4        	defaults	0   2
 EOT
 }
@@ -37,7 +40,7 @@ case "${1}" in
         sudo mkfs.ext4 /dev/mapper/cryptdata
         ;;
     add-disk)
-        sudo cryptsetup luksOpen /dev/sda cryptdata
+        sudo cryptsetup luksOpen /dev/sda1 cryptdata
         mkdir_datos
         keys
         ;;
