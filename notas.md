@@ -25,3 +25,9 @@ info
 man
 <command> --help-all
 ```
+# From https://stackoverflow.com/questions/62205627/using-bindkey-to-call-a-function-in-zsh-requires-pressing-enter-after-function-r
+To display messages in a zle widget, you're supposed to use zle -M rather than echo. echo will output your message at
+whatever the current cursor position is which isn't especially helpful. If you really want to use echo, calling zle
+reset-prompt afterwards will redraw a fresh prompt. If you don't want a potential mess in your terminal, consider
+starting with \r to move the cursor to the beginning of the line and ending with $termcap[ce] to clear to the end of
+the line.
