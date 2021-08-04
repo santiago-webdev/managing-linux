@@ -77,6 +77,7 @@ sudo pacman -S --needed \
 	make \
 	man \
 	milou \
+	mpv \
 	neovim \
 	networkmanager \
 	nodejs \
