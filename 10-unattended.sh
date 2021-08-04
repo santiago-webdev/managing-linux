@@ -19,12 +19,12 @@ sgdisk --zap-all /dev/nvme0n1  # Delete tables
 printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/nvme0n1  # Format the drive
 
 mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
-cryptsetup luksFormat --type luks2 /dev/nvme0n1p2  # Encrypt the drive with luks2
+cryptsetup luksFormat --type luks2 /dev/nvme0n1p2
 cryptsetup luksOpen /dev/nvme0n1p2 cryptroot  # Open the mapper
 
 mkfs.vfat -F32 /dev/nvme0n1p1  # Format the EFI partition
-mkfs.btrfs /dev/mapper/cryptroot  # Format the mapper
-# Mount to create the subvolumes
+mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
+
 mount /dev/mapper/cryptroot /mnt
 btrfs su cr /mnt/@
 btrfs su cr /mnt/@home
@@ -33,7 +33,7 @@ btrfs su cr /mnt/@srv
 btrfs su cr /mnt/@log
 btrfs su cr /mnt/@tmp
 umount /mnt
-# Unmount so that now we can mount the subvolumes
+
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
 mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}  # Create directories for their respective subvolumes
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
@@ -81,7 +81,7 @@ useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,
 echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
 
-wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh -P /home/$username
+curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh > /home/$username/20-packages.sh
 chmod +x /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
 
@@ -159,4 +159,5 @@ initrd /initramfs-linux-lts.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
 EOF
+
 umount -R /mnt

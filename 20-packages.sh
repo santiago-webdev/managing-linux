@@ -2,136 +2,138 @@
 
 set -e
 
-sudo pacman -Syu
-
-sudo pacman -S --needed \
-    git \
-    networkmanager \
-    efibootmgr \
-    btrfs-progs \
-    wget \
-    base \
-    base-devel \
-    linux \
-    linux-firmware \
-    intel-ucode \
-    neovim \
-    zsh \
-    rsync \
-    wget \
-    rustup \
-    intel-media-driver \
-    intel-ucode \
-    vulkan-intel \
-    jdk-openjdk \
-    lua \
-    nodejs \
-    npm \
-    bat \
-    make \
-    cmake \
-    man \
-    python \
-    python-pip \
-    python-wheel \
-    ntfs-3g \
-    tlp \
-    dash \
-    z \
-    zsh \
-    zsh-autosuggestions \
-    zsh-completions \
-    zsh-history-substring-search \
-    qbittorrent \
-    firewalld \
-    noto-fonts-cjk \
-    noto-fonts-emoji \
-    inter-font \
-    otf-overpass \
-    exa \
-    unrar \
-    ripgrep \
-    apparmor \
-    youtube-dl \
-    filelight \
-    spectacle \
-    gwenview \
-    kactivitymanagerd \
-    kalarm \
-    kate \
-    kcalc \
-    kcron \
-    kde-cli-tools \
-    kde-gtk-config \
-    kde-gtk-config \
-    kdeconnect \
-    kdegraphics-thumbnailers \
-    kdeplasma-addons \
-    kdialog \
-    khotkeys \
-    kinfocenter \
-    kmenuedit \
-    konsole \
-    yakuake \
-    kscreen \
-    kscreenlocker \
-    ksshaskpass \
-    openssh \
-    sshfs \
-    ksystemstats \
-    kwallet-pam \
-    kwalletmanager \
-    kwayland-integration \
-    kwayland-server \
-    kwin \
-    layer-shell-qt \
-    libkscreen \
-    libksysguard \
-    linux-lts \
-    linux-zen \
-    milou \
-    okular \
-    partitionmanager \
-    pipewire \
-    pipewire-alsa \
-    pipewire-pulse \
-    libappindicator-gtk2 \
-    libappindicator-gtk3 \
-    xdg-desktop-portal \
-    xdg-desktop-portal-kde \
-    dolphin \
-    ark \
-    breeze \
-    breeze-gtk \
-    bluedevil \
-    bluez \
-    bluez-utils \
-    plasma-browser-integration \
-    plasma-desktop \
-    plasma-disks \
-    plasma-firewall \
-    plasma-integration \
-    plasma-nm \
-    plasma-pa \
-    plasma-systemmonitor \
-    plasma-wayland-protocols \
-    plasma-wayland-session \
-    plasma-workspace \
-    polkit-kde-agent \
-    powerdevil \
-    sddm \
-    sddm-kcm \
-    systemsettings \
-    wl-clipboard
+sudo pacman -Syu git rsync curl
 
 git clone https://github.com/santigo-zero/Dotfiles.git
 rsync --recursive --verbose --exclude '.git' --exclude 'README.md' Dotfiles/ $HOME
 rm -rf Dotfiles
 
-wget https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-extras.sh
-chmod +x 30-extras.sh
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-drive.sh https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/40-extra.sh
+chmod +x 30-drive.sh
+chmod +x 40-extra.sh
 
-systemctl enable bluetooth.service sddm.service apparmor.service
-systemctl enable --now firewalld.service
+echo "You should use the 30-drive.sh script on another tty"
+
+sudo pacman -S --needed \
+	apparmor \
+	ark \
+	base \
+	base-devel \
+	bat \
+	bluedevil \
+	bluez \
+	bluez-utils \
+	breeze \
+	breeze-gtk \
+	btrfs-progs \
+	cmake \
+	curl \
+	dash \
+	dolphin \
+	efibootmgr \
+	exa \
+	filelight \
+	firewalld \
+	git \
+	gwenview \
+	intel-media-driver \
+	intel-ucode \
+	inter-font \
+	jdk-openjdk \
+	kactivitymanagerd \
+	kalarm \
+	kate \
+	kcalc \
+	kcron \
+	kde-cli-tools \
+	kde-gtk-config \
+	kdeconnect \
+	kdegraphics-thumbnailers \
+	kdeplasma-addons \
+	kdialog \
+	khotkeys \
+	kinfocenter \
+	kmenuedit \
+	konsole \
+	kscreen \
+	kscreenlocker \
+	ksshaskpass \
+	ksystemstats \
+	kwallet-pam \
+	kwalletmanager \
+	kwayland-integration \
+	kwayland-server \
+	kwin \
+	layer-shell-qt \
+	libappindicator-gtk2 \
+	libappindicator-gtk3 \
+	libkscreen \
+	libksysguard \
+	linux \
+	linux-firmware \
+	linux-lts \
+	linux-zen \
+	lua \
+	make \
+	man \
+	milou \
+	neovim \
+	networkmanager \
+	nodejs \
+	noto-fonts-cjk \
+	noto-fonts-emoji \
+	npm \
+	ntfs-3g \
+	okular \
+	openssh \
+	otf-overpass \
+	partitionmanager \
+	pipewire \
+	pipewire-alsa \
+	pipewire-pulse \
+	plasma-browser-integration \
+	plasma-desktop \
+	plasma-disks \
+	plasma-firewall \
+	plasma-integration \
+	plasma-nm \
+	plasma-pa \
+	plasma-systemmonitor \
+	plasma-wayland-protocols \
+	plasma-wayland-session \
+	plasma-workspace \
+	polkit-kde-agent \
+	powerdevil \
+	python \
+	python-pip \
+	python-wheel \
+	qbittorrent \
+	ripgrep \
+	rsync \
+	rustup \
+	sddm \
+	sddm-kcm \
+	spectacle \
+	sshfs \
+	systemsettings \
+	tlp \
+	unclutter \
+	unrar \
+	vulkan-intel \
+	wget \
+	wl-clipboard \
+	xdg-desktop-portal \
+	xdg-desktop-portal-kde \
+	yakuake \
+	youtube-dl \
+	z \
+	zsh \
+	zsh-autosuggestions \
+	zsh-completions \
+	zsh-history-substring-search
+
+systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
+
+echo "Restart the machine and then execute the number 40 script"
 
 rm $0 # Self delete

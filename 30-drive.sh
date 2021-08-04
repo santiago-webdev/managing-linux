@@ -36,13 +36,13 @@ case "${1}" in
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
         sudo mkfs.ext4 /dev/mapper/cryptdata
         ;;
-    add-disk)
+    add)
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
         mkdir_datos
         keys
         ;;
     *)
-        echo 'You need to enter a parameter, either wipe or add-disk'
+        echo 'You need to enter a parameter, either wipe or add'
         exit
         ;;
 esac

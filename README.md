@@ -10,17 +10,14 @@ loadkeys dvorak
 
 ``` bash
 iwctl
+```
+``` bash
 station wlan0 connect (wifi-ssid)
 ```
 
 ## Getting the script
-
 ``` bash
-pacman -Sy wget
-```
-
-``` bash
-curl -o 10-unattended.sh https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-unattended.sh
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-unattended.sh
 ```
 
 ``` bash
@@ -33,9 +30,9 @@ It will install everything on the NVMe at /dev/nvme0n1
 ./10-unattended.sh
 ```
 
-## After this you should reboot and download the second script
-The 20-packages.sh script will be pulled by the first script, and put this one on the home of the user that you created, and
-will install fonts, paru as an AUR helper, KDE Plasma, and my Dotfiles.
+## After this you should reboot and execute the second script
+The 20-packages.sh script will be pulled by the first script and leave it on home of the user that 
+you created.
 ``` bash
 ./20-packages.sh
 ```

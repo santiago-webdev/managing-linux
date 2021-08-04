@@ -31,3 +31,15 @@ whatever the current cursor position is which isn't especially helpful. If you r
 reset-prompt afterwards will redraw a fresh prompt. If you don't want a potential mess in your terminal, consider
 starting with \r to move the cursor to the beginning of the line and ending with $termcap[ce] to clear to the end of
 the line.
+
+# Ask kwin to reread its settings
+``` bash
+qdbus org.kde.kwin /KWin reconfigure
+```
+
+# How to do a confirmation in shell script
+``` bash
+read -p "Are you sure? y/N" -n 1 -r
+echo '' 
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+```
