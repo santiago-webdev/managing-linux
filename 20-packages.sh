@@ -76,10 +76,12 @@ sudo pacman -S --needed \
 	lua \
 	make \
 	man \
+	meson \
 	milou \
 	mpv \
 	neovim \
 	networkmanager \
+	ninja \
 	nodejs \
 	noto-fonts-cjk \
 	noto-fonts-emoji \

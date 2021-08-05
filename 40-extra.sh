@@ -16,7 +16,6 @@ git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
 cd 
-rm -rf paru
 
 paru -S \
     brave-bin \
@@ -27,15 +26,15 @@ paru -S \
     nerd-fonts-iosevka \
     nerd-fonts-mononoki
 
-# TODO, just add krunnerc to the Dotfiles repo
-kwriteconfig5 --file krunnerrc --group General --key font 'Inter, 13, -1,5,50,0,0,0,0,0'
-
 sudo chown $USER /data
 sudo chmod 750 /data
 sudo chown $USER /usr/share/wallpapers
 sudo chmod 750 /usr/share/wallpapers
 ln -s /data/wallpapers /usr/share/wallpapers
 ln -s /data/workspace ~/workspace
+
+rm -r .zshrc .bash_logout Documents Downloads Music Pictures Public Templates Videos paru 
+
 
 firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent
 firewall-cmd --zone=home --add-service kdeconnect --permanent
