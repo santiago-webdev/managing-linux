@@ -15,7 +15,7 @@ pip install pynvim
 git clone https://aur.archlinux.org/paru.git
 cd paru
 makepkg -si
-cd 
+cd
 
 paru -S \
     brave-bin \
@@ -32,8 +32,9 @@ sudo chown $USER /usr/share/wallpapers
 sudo chmod 750 /usr/share/wallpapers
 ln -s /data/wallpapers /usr/share/wallpapers
 ln -s /data/workspace ~/workspace
+mkdir -p ~/.local/share/kservices5
 
-rm -r .zshrc .bash_logout Documents Downloads Music Pictures Public Templates Videos paru 
+rm -r .zshrc .bash_logout Documents Downloads Music Pictures Public Templates Videos paru
 
 
 firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent
