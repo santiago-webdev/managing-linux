@@ -52,7 +52,6 @@ pacstrap /mnt base base-devel linux linux-firmware \
     networkmanager \
     efibootmgr \
     btrfs-progs \
-    wget \
     neovim \
     zsh
 
@@ -85,11 +84,9 @@ curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packa
 chmod +x /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
 
-systemctl enable NetworkManager.service
-systemctl enable fstrim.timer
+systemctl enable NetworkManager.service fstrim.timer
 
-journalctl --vacuum-size=100M
-journalctl --vacuum-time=2weeks
+journalctl --vacuum-size=100M --vacuum-time=2weeks
 
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf

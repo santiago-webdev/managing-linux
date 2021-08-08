@@ -20,7 +20,6 @@ cd
 paru -S \
     brave-bin \
     redhat-fonts \
-    zsh-autopair-git \
     zsh-fast-syntax-highlighting \
     nerd-fonts-jetbrains-mono \
     nerd-fonts-iosevka \
@@ -35,7 +34,6 @@ ln -s /data/workspace ~/workspace
 mkdir -p ~/.local/share/kservices5
 
 rm -r .zshrc .bash_logout Documents Downloads Music Pictures Public Templates Videos paru
-
 
 firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent
 firewall-cmd --zone=home --add-service kdeconnect --permanent
