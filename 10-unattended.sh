@@ -47,6 +47,10 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
+reflector --latest 20 --protocol https --sort rate --save /etc/pacman.d/mirrorlist
+
+pacman -Syy
+
 pacstrap /mnt base base-devel linux linux-firmware \
     intel-ucode \
     networkmanager \

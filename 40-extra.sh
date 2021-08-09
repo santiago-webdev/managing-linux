@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 pacman -Q netbeans
 if [[ $? == 0 ]]; then
 	echo "It's already installed"
