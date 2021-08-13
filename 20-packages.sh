@@ -35,6 +35,7 @@ sudo pacman -S --needed \
     exa \
     filelight \
     firewalld \
+    fzf \
     git \
     gwenview \
     intel-media-driver \
