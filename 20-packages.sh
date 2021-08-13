@@ -48,21 +48,22 @@ sudo pacman -S --needed \
     kcalc \
     kcron \
     kde-cli-tools \
+    kde-gtk-config \
     kdeconnect \
     kdegraphics-thumbnailers \
-    kde-gtk-config \
     kdeplasma-addons \
     kdialog \
     khotkeys \
     kinfocenter \
+    kitty \
     kmenuedit \
     konsole \
     kscreen \
     kscreenlocker \
     ksshaskpass \
     ksystemstats \
-    kwalletmanager \
     kwallet-pam \
+    kwalletmanager \
     kwayland-integration \
     kwayland-server \
     kwin \
