@@ -8,7 +8,6 @@ else
 fi
 
 rustup default stable
-pip install pynvim
 
 git clone https://aur.archlinux.org/paru.git
 cd paru
