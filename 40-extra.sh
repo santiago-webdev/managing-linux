@@ -7,21 +7,6 @@ else
 	sudo pacman -S --noconfirm netbeans
 fi
 
-rustup default stable
-
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-cd
-
-paru -S \
-    brave-bin \
-    redhat-fonts \
-    zsh-fast-syntax-highlighting \
-    nerd-fonts-jetbrains-mono \
-    nerd-fonts-iosevka \
-    nerd-fonts-mononoki
-
 sudo chown $USER /data
 sudo chmod 750 /data
 sudo chown $USER /usr/share/wallpapers

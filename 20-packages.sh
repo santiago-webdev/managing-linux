@@ -8,13 +8,6 @@ git clone https://github.com/santigo-zero/Dotfiles.git
 rsync --recursive --verbose --exclude '.git' --exclude 'README.md' Dotfiles/ $HOME
 rm -rf Dotfiles
 
-curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-drive.sh
-chmod +x 30-drive.sh
-curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/40-extra.sh
-chmod +x 40-extra.sh
-
-echo "You should use the 30-drive.sh script on another tty"
-
 sudo pacman -S --needed \
     apparmor \
     ark \
@@ -41,6 +34,7 @@ sudo pacman -S --needed \
     intel-media-driver \
     intel-ucode \
     inter-font \
+    ttf-dejavu \
     jdk-openjdk \
     kactivitymanagerd \
     kalarm \
@@ -140,6 +134,42 @@ sudo pacman -S --needed \
     zsh-history-substring-search \
 
 systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
+
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-drive.sh
+chmod +x 30-drive.sh
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/40-extra.sh
+chmod +x 40-extra.sh
+
+echo -e "For the 30-drive.sh script, do you want to: \n"
+read -p "skip, wipe or add?" use_script
+case "$use_script" in
+    add)
+        ./30-drive.sh add
+        ;;
+    wipe)
+        ./30-drive.sh wipe
+        ;;
+    * | skip)
+        echo "Skipping"
+        ;;
+esac
+
+export RUSTUP_HOME=$HOME/.local/share/rustup
+
+rustup default stable
+
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+cd
+
+paru -S \
+    brave-bin \
+    redhat-fonts \
+    zsh-fast-syntax-highlighting \
+    nerd-fonts-jetbrains-mono \
+    nerd-fonts-iosevka \
+    nerd-fonts-mononoki
 
 echo "Restart the machine and then execute the number 40 script"
 

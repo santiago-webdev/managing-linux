@@ -46,3 +46,5 @@ case "${1}" in
         exit
         ;;
 esac
+
+rm $0 # Self delete
