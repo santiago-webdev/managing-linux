@@ -132,7 +132,6 @@ sudo pacman -S --needed \
     zsh \
     zsh-autosuggestions \
     zsh-completions \
-    zsh-history-substring-search \
 
 systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
 
@@ -166,12 +165,12 @@ cd
 
 paru -S \
     brave-bin \
-    redhat-fonts \
     zsh-fast-syntax-highlighting \
+    nerd-fonts-fira-code \
     nerd-fonts-iosevka \
     nerd-fonts-jetbrains-mono \
     nerd-fonts-mononoki \
-    nerd-fonts-victor-mono
+    nerd-fonts-victor-mono \
 
 echo "Restart the machine and then execute the number 40 script"
 
