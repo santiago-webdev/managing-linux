@@ -21,6 +21,7 @@ sudo pacman -S --needed \
     breeze-gtk \
     btrfs-progs \
     cmake \
+    ctags \
     curl \
     dash \
     dolphin \
@@ -34,7 +35,6 @@ sudo pacman -S --needed \
     intel-media-driver \
     intel-ucode \
     inter-font \
-    ttf-dejavu \
     jdk-openjdk \
     kactivitymanagerd \
     kalarm \
@@ -118,6 +118,7 @@ sudo pacman -S --needed \
     sshfs \
     systemsettings \
     tlp \
+    ttf-dejavu \
     unclutter \
     unrar \
     vulkan-intel \
@@ -167,9 +168,10 @@ paru -S \
     brave-bin \
     redhat-fonts \
     zsh-fast-syntax-highlighting \
-    nerd-fonts-jetbrains-mono \
     nerd-fonts-iosevka \
-    nerd-fonts-mononoki
+    nerd-fonts-jetbrains-mono \
+    nerd-fonts-mononoki \
+    nerd-fonts-victor-mono
 
 echo "Restart the machine and then execute the number 40 script"
 
