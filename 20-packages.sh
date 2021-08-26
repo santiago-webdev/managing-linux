@@ -32,6 +32,8 @@ sudo pacman -S --needed \
     fzf \
     git \
     gwenview \
+    hunspell-en_us  \
+    hunspell-es_ar \
     intel-media-driver \
     intel-ucode \
     inter-font \
