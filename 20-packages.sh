@@ -128,7 +128,6 @@ sudo pacman -S --needed \
     xdg-desktop-portal-kde \
     yakuake \
     youtube-dl \
-    z \
     zsh \
     zsh-autosuggestions \
     zsh-completions \
