@@ -8,6 +8,34 @@ git clone https://github.com/santigo-zero/Dotfiles.git
 rsync --recursive --verbose --exclude '.git' --exclude 'README.md' Dotfiles/ $HOME
 rm -rf Dotfiles
 
+if [[ -f 25-aur.sh ]]; then
+    echo "File exists, skipping..."
+else
+    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/25-aur.sh
+    chmod +x 25-aur.sh
+fi
+
+if [[ -f 30-drive.sh ]]; then
+    echo "File exists, skipping..."
+else
+    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-drive.sh
+    chmod +x 30-drive.sh
+fi
+
+if [[ -f 40-extra.sh ]]; then
+    echo "File exists, skipping..."
+else
+    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/40-extra.sh
+    chmod +x 40-extra.sh
+fi
+
+if [[ -f 50-nvim.sh ]]; then
+    echo "File exists, skipping..."
+else
+    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/50-nvim.sh
+    chmod +x 50-nvim.sh
+fi
+
 sudo pacman -S --needed \
     apparmor \
     ark \
@@ -123,6 +151,7 @@ sudo pacman -S --needed \
     ttf-dejavu \
     unclutter \
     unrar \
+    unzip \
     vulkan-intel \
     wget \
     wl-clipboard \
@@ -135,11 +164,6 @@ sudo pacman -S --needed \
     zsh-completions \
 
 systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
-
-curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-drive.sh
-chmod +x 30-drive.sh
-curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/40-extra.sh
-chmod +x 40-extra.sh
 
 echo -e "For the 30-drive.sh script, do you want to: \n"
 read -p "skip, wipe or add?" use_script
@@ -154,25 +178,5 @@ case "$use_script" in
         echo "Skipping"
         ;;
 esac
-
-export RUSTUP_HOME=$HOME/.local/share/rustup
-
-rustup default stable
-
-git clone https://aur.archlinux.org/paru.git
-cd paru
-makepkg -si
-cd
-
-paru -S \
-    brave-bin \
-    zsh-fast-syntax-highlighting \
-    nerd-fonts-fira-code \
-    nerd-fonts-iosevka \
-    nerd-fonts-jetbrains-mono \
-    nerd-fonts-mononoki \
-    nerd-fonts-victor-mono \
-
-echo "Restart the machine and then execute the number 40 script"
 
 rm $0 # Self delete

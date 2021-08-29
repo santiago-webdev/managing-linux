@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# I guess it works now
-# Usage
+# Usage:
 # ./40-encrypt-drive.sh wipe
 # ./40-encrypt-drive.sh add-disk
 
