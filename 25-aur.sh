@@ -10,6 +10,7 @@ cd
 paru -S \
     brave-bin \
     zsh-fast-syntax-highlighting \
+    zsh-autopair-git \
     nerd-fonts-fira-code \
     nerd-fonts-iosevka \
     nerd-fonts-jetbrains-mono \
