@@ -144,6 +144,7 @@ sudo pacman -S --needed \
     rustup \
     sddm \
     sddm-kcm \
+    shellcheck \
     spectacle \
     sshfs \
     systemsettings \
