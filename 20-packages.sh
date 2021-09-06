@@ -150,7 +150,6 @@ sudo pacman -S --needed \
     zsh \
     zsh-autosuggestions \
     zsh-completions \
-    zsh-history-substring-search \
 
 systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
 
