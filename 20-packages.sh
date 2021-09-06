@@ -11,33 +11,17 @@ cd Dotfiles/not-home && ./global-files.sh
 cd
 rm -rf Dotfiles
 
-if [[ -f 25-aur.sh ]]; then
-    echo "File exists, skipping..."
-else
-    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/25-aur.sh
-    chmod +x 25-aur.sh
-fi
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/25-aur.sh
+chmod +x 25-aur.sh
 
-if [[ -f 30-drive.sh ]]; then
-    echo "File exists, skipping..."
-else
-    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-drive.sh
-    chmod +x 30-drive.sh
-fi
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/30-drive.sh
+chmod +x 30-drive.sh
 
-if [[ -f 40-extra.sh ]]; then
-    echo "File exists, skipping..."
-else
-    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/40-extra.sh
-    chmod +x 40-extra.sh
-fi
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/40-extra.sh
+chmod +x 40-extra.sh
 
-if [[ -f 50-nvim.sh ]]; then
-    echo "File exists, skipping..."
-else
-    curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/50-nvim.sh
-    chmod +x 50-nvim.sh
-fi
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/50-nvim.sh
+chmod +x 50-nvim.sh
 
 sudo pacman -S --needed \
     apparmor \
