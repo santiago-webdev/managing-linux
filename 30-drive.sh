@@ -41,8 +41,9 @@ case "${1}" in
         sudo mount -o defaults,noatime,autodefrag,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptdata /mnt
         ;;
     mount)
+        mkdir_datos
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
-        sudo mount -o defaults,noatime,autodefrag,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptdata /mnt
+        sudo mount -o defaults,noatime,autodefrag,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptdata /data
         ;;
     add)
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
