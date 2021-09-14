@@ -23,7 +23,7 @@ EOT
     sudo tee -a /etc/fstab <<EOT
 
 # /data
-UUID=$(sudo blkid -s UUID -o value /dev/mapper/cryptdata)      /data       	ext4        	defaults	0   2
+UUID=$(sudo blkid -s UUID -o value /dev/mapper/cryptdata)      /data        btrfs     	    defaults,noatime,autodefrag,compress-force=zstd:1,space_cache=v2,subvol=/@	0 2
 EOT
 }
 
@@ -33,7 +33,16 @@ case "${1}" in
         printf "n\n\n\n\n\nw\ny\n" | sudo gdisk /dev/sda
         sudo cryptsetup luksFormat --type luks2 /dev/sda1
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
-        sudo mkfs.ext4 /dev/mapper/cryptdata
+        sudo mkfs.btrfs /dev/mapper/cryptdata
+
+        sudo mount /dev/mapper/cryptroot /mnt
+        sudo btrfs su cr /mnt/@
+        sudo umount /mnt
+        sudo mount -o defaults,noatime,autodefrag,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptdata /mnt
+        ;;
+    mount)
+        sudo cryptsetup luksOpen /dev/sda1 cryptdata
+        sudo mount -o defaults,noatime,autodefrag,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptdata /mnt
         ;;
     add)
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
@@ -45,5 +54,3 @@ case "${1}" in
         exit
         ;;
 esac
-
-rm $0 # Self delete

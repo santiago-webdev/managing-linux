@@ -5,7 +5,7 @@ set -e
 sudo pacman -Syu git rsync curl
 
 git clone https://github.com/santigo-zero/Dotfiles.git
-rsync --recursive --verbose --exclude '.git' --exclude 'README.md' --exclude 'not-home' Dotfiles/ $HOME
+rsync --recursive --verbose --exclude '.git' --exclude 'backup.sh' --exclude 'README.md' --exclude 'not-home' Dotfiles/ $HOME
 cd Dotfiles/not-home && ./global-files.sh
 
 cd
