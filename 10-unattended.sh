@@ -54,6 +54,7 @@ pacstrap /mnt base base-devel linux linux-firmware \
     networkmanager \
     efibootmgr \
     btrfs-progs \
+    xfsprogs \
     neovim \
     zsh
 
