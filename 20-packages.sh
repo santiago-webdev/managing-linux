@@ -43,6 +43,7 @@ sudo pacman -S --needed \
     efibootmgr \
     exa \
     filelight \
+    firejail \
     firewalld \
     fzf \
     git \
@@ -145,7 +146,6 @@ sudo pacman -S --needed \
     wl-clipboard \
     xdg-desktop-portal \
     xdg-desktop-portal-kde \
-    yakuake \
     youtube-dl \
     zsh \
     zsh-autosuggestions \
