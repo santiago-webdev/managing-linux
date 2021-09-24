@@ -123,6 +123,7 @@ sudo pacman -S --needed \
     plasma-workspace \
     polkit-kde-agent \
     powerdevil \
+    power-profiles-daemon \
     python \
     python-pip \
     python-wheel \

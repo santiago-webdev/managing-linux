@@ -11,10 +11,6 @@ paru -S \
     brave-bin \
     zsh-fast-syntax-highlighting \
     zsh-autopair-git \
-    nerd-fonts-fira-code \
-    nerd-fonts-iosevka \
-    nerd-fonts-jetbrains-mono \
-    nerd-fonts-mononoki \
-    nerd-fonts-victor-mono \
+    zsh-vi-mode \
 
 rm $0 # Self delete
