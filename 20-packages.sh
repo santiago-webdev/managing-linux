@@ -139,6 +139,9 @@ sudo pacman -S --needed \
     systemsettings \
     tlp \
     ttf-dejavu \
+    ttf-nerd-fonts-symbols \
+    ttf-jetbrains-mono \
+    ttc-iosevka \
     unclutter \
     unrar \
     unzip \

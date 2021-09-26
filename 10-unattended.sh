@@ -49,7 +49,7 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # P
 
 pacman -Syy
 
-pacstrap /mnt base base-devel linux linux-firmware \
+pacstrap -i /mnt base base-devel linux linux-firmware \
     intel-ucode \
     networkmanager \
     efibootmgr \
