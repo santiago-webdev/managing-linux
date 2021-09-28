@@ -36,6 +36,7 @@ END
     echo "Adding and autostarting the bridge"
     sudo virsh net-define .config/br10.xml
     sudo virsh net-autostart br10
+    sudo virsh net-autostart --network default
 
     echo "Now reboot so that all hte services get started"
 fi
