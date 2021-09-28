@@ -48,6 +48,7 @@ sudo pacman -S --needed \
     fzf \
     git \
     gwenview \
+    gnome-keyring \
     hunspell-en_us  \
     hunspell-es_ar \
     intel-media-driver \
