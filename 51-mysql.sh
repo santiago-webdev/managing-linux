@@ -2,9 +2,6 @@
 
 cd $HOME
 
-# Disable Copy On Write
-sudo chattr +C /var/lib/mysql/
-
 case $1 in
     mariadb)
         # For MariaDB
