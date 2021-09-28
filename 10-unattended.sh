@@ -30,18 +30,18 @@ btrfs su cr /mnt/@
 btrfs su cr /mnt/@home
 btrfs su cr /mnt/@pkg
 btrfs su cr /mnt/@srv
-btrfs su cr /mnt/@log
+btrfs su cr /mnt/@var
 btrfs su cr /mnt/@tmp
 umount /mnt
 
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
-mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}  # Create directories for their respective subvolumes
+mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}  # Create directories for each subvolume
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@log /dev/mapper/cryptroot /mnt/var/log
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
-chattr +C /mnt/var/log
+chattr +C /mnt/var  # Copy on write disabled
 mount /dev/nvme0n1p1 /mnt/boot  # Mount the boot partition
 
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
