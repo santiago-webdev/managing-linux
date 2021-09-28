@@ -157,18 +157,4 @@ sudo pacman -S --needed \
 
 systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
 
-echo -e "For the 30-drive.sh script, do you want to: \n"
-read -p "skip, wipe or add?" use_script
-case "$use_script" in
-    add)
-        ./30-drive.sh add
-        ;;
-    wipe)
-        ./30-drive.sh wipe
-        ;;
-    * | skip)
-        echo "Skipping"
-        ;;
-esac
-
 rm $0 # Self delete
