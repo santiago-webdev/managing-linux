@@ -53,3 +53,14 @@ Without this environment variable rustup will put a directory in your $HOME
 cluttering it, if you export it, in this case it will get stored in
 .local/share/rustup so everything it's cleaner, don't forget to add it to your
 shell rc so after an update you don't have it again in your $HOME.
+
+
+### Things that I need to add to the project
+- [ ] Update the README with a description for each script.
+- [ ] Add snapper for rollback functionality #2.
+- [ ] Make the 10-unattended.sh script able to handle different drive names.
+- [ ] Make the 10-unattended.sh script able to handle different filesystems.
+- [ ] Make the 10-unattended.sh script able to install Arch Linux without encryption
+
+*If you want to add any of this or more just open an issue and I'll add it here
+or do a pull request*
