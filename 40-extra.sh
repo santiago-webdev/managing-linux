@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-pacman -Q netbeans
-if [[ $? == 0 ]]; then
-	echo "It's already installed"
-else
-	sudo pacman -S --noconfirm netbeans
-fi
+# I don't like to have stuff in my $HOME
+xdg-user-dirs-update --set DESKTOP      $HOME/.local/Desktop
+xdg-user-dirs-update --set DOWNLOAD     $HOME/.local/Downloads
+xdg-user-dirs-update --set TEMPLATES    $HOME/.local/Templates
+xdg-user-dirs-update --set PUBLICSHARE  $HOME/.local/PublicShare
+xdg-user-dirs-update --set DOCUMENTS    $HOME/.local/Documents
+xdg-user-dirs-update --set MUSIC        $HOME/.local/Music
+xdg-user-dirs-update --set PICTURES     $HOME/.local/Pictures
+xdg-user-dirs-update --set VIDEOS       $HOME/.local/Videos
 
-# TODO add all the entries like this and not just delete them
-# xdg-user-dirs-update --set DOWNLOAD $HOME/.local/Downloads
 rm -rf .zshrc .bash_logout Documents Downloads Music Pictures Public Templates Videos paru
 
 sudo firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent

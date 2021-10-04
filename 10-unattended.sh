@@ -4,13 +4,16 @@ clear   # Clear the TTY
 set -e  # The script will not run if we CTRL + C, or in case of an error
 set -u  # Treat unset variables as an error when substituting
 
+# TODO prompt the user to change this
 continent_city=America/Argentina/Mendoza
 keymap=dvorak
+# username=st
+# hostname=bebop
+
+# Detect firmware needed
 
 read -p "Enter name: " username
-# username=st
 read -p "Enter hostname: " hostname
-# hostname=bebop
 read -s -p "Enter userpass: " user_password
 read -s -p "Enter rootpass: " root_password
 
