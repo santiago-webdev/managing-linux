@@ -11,6 +11,5 @@ paru -S \
     brave-bin \
     zsh-fast-syntax-highlighting \
     zsh-autopair-git \
-    zsh-vi-mode \
 
 rm $0 # Self delete
