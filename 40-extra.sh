@@ -15,4 +15,6 @@ rm -rf .zshrc .bash_logout Documents Downloads Music Pictures Public Templates V
 sudo firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent
 sudo firewall-cmd --zone=home --add-service kdeconnect --permanent
 
+sudo sysctl dev.i915.perf_stream_paranoid=0 # For the browser
+
 rm $0 # Self delete
