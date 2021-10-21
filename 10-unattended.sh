@@ -4,18 +4,43 @@ clear   # Clear the TTY
 set -e  # The script will not run if we CTRL + C, or in case of an error
 set -u  # Treat unset variables as an error when substituting
 
-# TODO prompt the user to change this
-continent_city=America/Argentina/Mendoza
-keymap=dvorak
-# username=st
-# hostname=bebop
+## This are the defaults, so it's easier to test the script
+# continent_city=US/Central
+# keymap=us
+# username=csjarchlinux  # Can only be lowercase and no signs
+# hostname=desktop
+# user_password=csjarchlinux
+# root_password=csjarchlinux
 
-# Detect firmware needed
+read -p "Enter locale, or press enter to use defaults: " continent_city
+if [[ -z $continent_city ]]; then
+    continent_city=US/Central
+fi
 
-read -p "Enter name: " username
-read -p "Enter hostname: " hostname
-read -s -p "Enter userpass: " user_password
-read -s -p "Enter rootpass: " root_password
+read -p "Enter keymap, or press enter to use defaults: " keymap
+if [[ -z $keymap ]]; then
+    keymap=us
+fi
+
+read -p "Enter user name, or press enter to use defaults: " username
+if [[ -z $username ]]; then
+    username=csjarchlinux
+fi
+
+read -p "Enter host name, or press enter to use defaults: " hostname
+if [[ -z $hostname ]]; then
+    hostname=csjarchlinux
+fi
+
+read -p "Enter user password, or press enter to use defaults: " user_password
+if [[ -z $user_password ]]; then
+    user_password=csjarchlinux
+fi
+
+read -p "Enter root password, or press enter to use defaults: " root_password
+if [[ -z $root_password ]]; then
+    root_password=csjarchlinux
+fi
 
 timedatectl set-ntp true  # Synchronize motherboard clock
 sgdisk --zap-all /dev/nvme0n1  # Delete tables
@@ -29,20 +54,20 @@ mkfs.vfat -F32 /dev/nvme0n1p1  # Format the EFI partition
 mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
 
 mount /dev/mapper/cryptroot /mnt
-btrfs su cr /mnt/@
-btrfs su cr /mnt/@home
-btrfs su cr /mnt/@pkg
-btrfs su cr /mnt/@srv
-btrfs su cr /mnt/@var
-btrfs su cr /mnt/@tmp
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@pkg
+btrfs subvolume create /mnt/@var
+btrfs subvolume create /mnt/@srv
+btrfs subvolume create /mnt/@tmp
 umount /mnt
 
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
-mkdir -p /mnt/{home,var/cache/pacman/pkg,srv,log,tmp,btrfs,boot}  # Create directories for each subvolume
+mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
+mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
 chattr +C /mnt/var  # Copy on write disabled
 mount /dev/nvme0n1p1 /mnt/boot  # Mount the boot partition
@@ -51,7 +76,12 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
-pacman -Syy
+read -p "Do you want to update and sync the mirrors before proceeding?" -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist
+    pacman -Syy
+fi
 
 pacstrap -i /mnt base base-devel linux linux-firmware \
     intel-ucode \
@@ -64,104 +94,105 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
-timedatectl set-ntp true
-ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime
-hwclock --systohc
-sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
-echo "LANG=en_US.UTF-8" > /etc/locale.conf
-locale-gen
 
-echo -e "127.0.0.1\tlocalhost" > /etc/hosts
-echo -e "::1\t\tlocalhost" >> /etc/hosts
-echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
+    timedatectl set-ntp true
+    ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime
+    hwclock --systohc
+    sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
+    echo "LANG=en_US.UTF-8" > /etc/locale.conf
+    locale-gen
 
-echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
-echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-echo "Defaults !tty_tickets" >> /etc/sudoers
-sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
-sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
-sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g; s/-)/--threads=0 -)/g; s/gzip/pigz/g; s/bzip2/pbzip2/g' /etc/makepkg.conf
+    echo -e "127.0.0.1\tlocalhost" > /etc/hosts
+    echo -e "::1\t\tlocalhost" >> /etc/hosts
+    echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 
-echo -e "$hostname" > /etc/hostname
-useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users -s /bin/zsh $username
-echo -en "$root_password\n$root_password" | passwd
-echo -en "$user_password\n$user_password" | passwd $username
+    echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
+    echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+    echo "Defaults !tty_tickets" >> /etc/sudoers
+    sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
+    sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
+    sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g; s/-)/--threads=0 -)/g; s/gzip/pigz/g; s/bzip2/pbzip2/g' /etc/makepkg.conf
 
-curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh > /home/$username/20-packages.sh
-chmod +x /home/$username/20-packages.sh
-chown $username /home/$username/20-packages.sh
+    echo -e "$hostname" > /etc/hostname
+    useradd -m -g users -G wheel,libvirt,games,power,optical,storage,scanner,lp,audio,video,input,adm,users -s /bin/zsh $username
+    echo -en "$root_password\n$root_password" | passwd
+    echo -en "$user_password\n$user_password" | passwd $username
 
-systemctl enable NetworkManager.service fstrim.timer
+    curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh > /home/$username/20-packages.sh
+    chmod +x /home/$username/20-packages.sh
+    chown $username /home/$username/20-packages.sh
 
-journalctl --vacuum-size=100M --vacuum-time=2weeks
+    systemctl enable NetworkManager.service fstrim.timer
 
-touch /etc/sysctl.d/99-swappiness.conf
-echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
+    journalctl --vacuum-size=100M --vacuum-time=2weeks
 
-touch /etc/udev/rules.d/backlight.rules
-tee -a /etc/udev/rules.d/backlight.rules << END
-RUN+="/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
-RUN+="/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
-END
+    touch /etc/sysctl.d/99-swappiness.conf
+    echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
 
-touch /etc/udev/rules.d/81-backlight.rules
-tee -a /etc/udev/rules.d/81-backlight.rules << END
-SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="intel_backlight", ATTR{brightness}="9000"
-END
+    touch /etc/udev/rules.d/backlight.rules
+    tee -a /etc/udev/rules.d/backlight.rules << END
+    RUN+="/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+    RUN+="/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+    END
 
-mkdir -p /etc/pacman.d/hooks/
-touch /etc/pacman.d/hooks/100-systemd-boot.hook
-tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
-[Trigger]
-Type = Package
-Operation = Upgrade
-Target = systemd
+    touch /etc/udev/rules.d/81-backlight.rules
+    tee -a /etc/udev/rules.d/81-backlight.rules << END
+    SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="intel_backlight", ATTR{brightness}="9000"
+    END
 
-[Action]
-Description = Updating systemd-boot
-When = PostTransaction
-Exec = /usr/bin/bootctl update
-END
+    mkdir -p /etc/pacman.d/hooks/
+    touch /etc/pacman.d/hooks/100-systemd-boot.hook
+    tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
+    [Trigger]
+    Type = Package
+    Operation = Upgrade
+    Target = systemd
 
-sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
-sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
-mkinitcpio -P
-bootctl --path=/boot/ install
+    [Action]
+    Description = Updating systemd-boot
+    When = PostTransaction
+    Exec = /usr/bin/bootctl update
+    END
 
-mkdir -p /boot/loader/
-tee -a /boot/loader/loader.conf << END
-default arch.conf
-console-mode max
-editor no
-END
+    sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
+    sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
+    mkinitcpio -P
+    bootctl --path=/boot/ install
 
-mkdir -p /boot/loader/entries/
-touch /boot/loader/entries/arch.conf
-tee -a /boot/loader/entries/arch.conf << END
-title Arch Linux
-linux /vmlinuz-linux
-initrd /intel-ucode.img
-initrd /initramfs-linux.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
-END
+    mkdir -p /boot/loader/
+    tee -a /boot/loader/loader.conf << END
+    default arch.conf
+    console-mode max
+    editor no
+    END
 
-touch /boot/loader/entries/arch-zen.conf
-tee -a /boot/loader/entries/arch-zen.conf << END
-title Arch Linux Zen
-linux /vmlinuz-linux-zen
-initrd /intel-ucode.img
-initrd /initramfs-linux-zen.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
-END
+    mkdir -p /boot/loader/entries/
+    touch /boot/loader/entries/arch.conf
+    tee -a /boot/loader/entries/arch.conf << END
+    title Arch Linux
+    linux /vmlinuz-linux
+    initrd /intel-ucode.img
+    initrd /initramfs-linux.img
+    options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+    END
 
-touch /boot/loader/entries/arch-lts.conf
-tee -a /boot/loader/entries/arch-lts.conf << END
-title Arch Linux LTS
-linux /vmlinuz-linux-lts
-initrd /intel-ucode.img
-initrd /initramfs-linux-lts.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
-END
+    touch /boot/loader/entries/arch-zen.conf
+    tee -a /boot/loader/entries/arch-zen.conf << END
+    title Arch Linux Zen
+    linux /vmlinuz-linux-zen
+    initrd /intel-ucode.img
+    initrd /initramfs-linux-zen.img
+    options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+    END
+
+    touch /boot/loader/entries/arch-lts.conf
+    tee -a /boot/loader/entries/arch-lts.conf << END
+    title Arch Linux LTS
+    linux /vmlinuz-linux-lts
+    initrd /intel-ucode.img
+    initrd /initramfs-linux-lts.img
+    options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value /dev/nvme0n1p2)=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+    END
+
 EOF
-
 umount -R /mnt
