@@ -47,8 +47,8 @@ sudo pacman -S --needed \
     firewalld \
     fzf \
     git \
-    gwenview \
     gnome-keyring \
+    gwenview \
     hunspell-en_us  \
     hunspell-es_ar \
     intel-media-driver \
@@ -123,8 +123,8 @@ sudo pacman -S --needed \
     plasma-wayland-session \
     plasma-workspace \
     polkit-kde-agent \
-    powerdevil \
     power-profiles-daemon \
+    powerdevil \
     python \
     python-pip \
     python-wheel \
@@ -139,10 +139,11 @@ sudo pacman -S --needed \
     sshfs \
     systemsettings \
     tlp \
-    ttf-dejavu \
-    ttf-nerd-fonts-symbols \
-    ttf-jetbrains-mono \
     ttc-iosevka \
+    ttf-dejavu \
+    ttf-fira-code \
+    ttf-jetbrains-mono \
+    ttf-nerd-fonts-symbols \
     unclutter \
     unrar \
     unzip \
