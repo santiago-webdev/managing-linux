@@ -46,6 +46,11 @@ case "${1}" in
         mkdir_datos
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
         sudo mount -o defaults,noatime,autodefrag,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptdata /data
+        sudo hdparm -S 60 /dev/sda
+        ;;
+    unmount)
+        sudo umount /data
+        sudo cryptsetup luksClose /dev/mapper/crytdata
         ;;
     add)
         sudo cryptsetup luksOpen /dev/sda1 cryptdata
