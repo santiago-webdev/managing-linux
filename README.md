@@ -10,17 +10,12 @@ loadkeys dvorak
 
 ``` bash
 iwctl
-```
-``` bash
 station wlan0 connect (wifi-ssid)
 ```
 
 ## Getting the script
 ``` bash
 curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-unattended.sh
-```
-
-``` bash
 chmod +x 10-unattended.sh
 ```
 
@@ -42,7 +37,7 @@ that you may find useful so check them out.
 ./20-packages.sh
 ```
 
-If you want to use paru (so the 25-aur.sh script) and are picky as I am, make
+If you want to use paru (the 25-aur.sh script) and are picky as I am, make
 sure to export this variable before running it.
 
 ``` bash
@@ -58,9 +53,11 @@ shell rc so after an update you don't have it again in your $HOME.
 ### Things that I need to add to the project
 - [ ] Update the README with a description for each script.
 - [ ] Add snapper for rollback functionality #2.
+- [ ] Add the boot entry creation of snapshots for systemd-boot
 - [ ] Make the 10-unattended.sh script able to handle different drive names.
 - [ ] Make the 10-unattended.sh script able to handle different filesystems.
 - [ ] Make the 10-unattended.sh script able to install Arch Linux without encryption
+- [ ] Move to systemd-networkd
 
 *If you want to add any of this or more just open an issue and I'll add it here
 or do a pull request*
