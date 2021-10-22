@@ -24,6 +24,7 @@ curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/50-nv
 chmod +x 50-nvim.sh
 
 sudo pacman -S --needed \
+
     apparmor \
     ark \
     base \
@@ -39,6 +40,7 @@ sudo pacman -S --needed \
     ctags \
     curl \
     dash \
+    deno \
     dolphin \
     efibootmgr \
     exa \
@@ -144,6 +146,7 @@ sudo pacman -S --needed \
     ttf-fira-code \
     ttf-jetbrains-mono \
     ttf-nerd-fonts-symbols \
+    typescript \
     unclutter \
     unrar \
     unzip \
@@ -156,7 +159,6 @@ sudo pacman -S --needed \
     zsh \
     zsh-autosuggestions \
     zsh-completions \
-
 systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
 
 rm $0 # Self delete
