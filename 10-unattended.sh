@@ -32,12 +32,12 @@ if [[ -z $hostname ]]; then
     hostname=csjarchlinux
 fi
 
-read -p "Enter user password, or press enter to use defaults: " user_password
+read -s -p "Enter user password, or press enter to use defaults: " user_password
 if [[ -z $user_password ]]; then
     user_password=csjarchlinux
 fi
 
-read -p "Enter root password, or press enter to use defaults: " root_password
+read -s -p "Enter root password, or press enter to use defaults: " root_password
 if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
@@ -78,7 +78,7 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # P
 
 read -p "Do you want to update and sync the mirrors before proceeding?" -n 1 -r
 echo
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+if [[ $REPLY =~ ^[Yy]$ ]]; then
     reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist
     pacman -Syy
 fi
