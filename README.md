@@ -1,5 +1,8 @@
 # Arch Installation
 
+*If you are going to use this scripts, please, read them and
+test them on a VM first, all feedback is welcome*
+
 Basically boot to the arch live usb. Change layout, and connect to the Wi-Fi
 
 ## Change layout, and connect to the internet
