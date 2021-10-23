@@ -24,7 +24,6 @@ curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/50-nv
 chmod +x 50-nvim.sh
 
 sudo pacman -S --needed \
-
     apparmor \
     ark \
     base \
@@ -159,6 +158,7 @@ sudo pacman -S --needed \
     zsh \
     zsh-autosuggestions \
     zsh-completions \
+
 systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
 
 rm $0 # Self delete
