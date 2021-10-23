@@ -114,7 +114,7 @@ sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#U
 sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g; s/-)/--threads=0 -)/g; s/gzip/pigz/g; s/bzip2/pbzip2/g' /etc/makepkg.conf
 
 echo -e "$hostname" > /etc/hostname
-useradd -m -g users -G wheel,games,power,optical,storage,scanner,lp,audio,video,input,adm,users -s /bin/zsh $username
+useradd -g users -G wheel -m $username
 echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
 
