@@ -84,6 +84,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
     btrfs-progs \
     xfsprogs \
     neovim \
+	zram-generator \
     zsh
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
@@ -119,6 +120,14 @@ chown $username /home/$username/20-packages.sh
 systemctl enable NetworkManager.service fstrim.timer
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
+
+systemctl enable systemd-oomd --root=/mnt &>/dev/null
+
+bash -c 'cat > /mnt/etc/systemd/zram-generator.conf' <<END
+[zram0]
+zram-fraction = 1
+max-zram-size = 8192
+END
 
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
