@@ -41,4 +41,6 @@ sudo pacman -S --needed \
 	zsh-autosuggestions \
 	zsh-completions \
 
+chsh -s /bin/zsh $USER
+
 rm $0 # Self delete
