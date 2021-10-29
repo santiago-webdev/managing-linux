@@ -88,7 +88,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
     zsh
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
-arch-chroot /mnt /bin/bash << EOF
+# arch-chroot /mnt /bin/bash << EOF
 
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
@@ -121,12 +121,11 @@ systemctl enable NetworkManager.service fstrim.timer
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
-systemctl enable systemd-oomd --root=/mnt &>/dev/null
-
-bash -c 'cat > /mnt/etc/systemd/zram-generator.conf' <<END
+touch /etc/systemd/zram-generator.conf
+tee -a /etc/systemd/zram-generator.conf << END
 [zram0]
 zram-fraction = 1
-max-zram-size = 8192
+max-zram-size = 4096
 END
 
 touch /etc/sysctl.d/99-swappiness.conf
