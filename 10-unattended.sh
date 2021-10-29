@@ -82,13 +82,12 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
     networkmanager \
     efibootmgr \
     btrfs-progs \
-    xfsprogs \
     neovim \
 	zram-generator \
     zsh
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
-# arch-chroot /mnt /bin/bash << EOF
+arch-chroot /mnt /bin/bash << EOF
 
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
