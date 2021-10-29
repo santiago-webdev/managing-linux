@@ -5,17 +5,11 @@ set -e  # The script will not run if we CTRL + C, or in case of an error
 set -u  # Treat unset variables as an error when substituting
 
 ## This are the defaults, so it's easier to test the script
-# continent_city=US/Central
 # keymap=us
 # username=csjarchlinux  # Can only be lowercase and no signs
 # hostname=desktop
 # user_password=csjarchlinux
 # root_password=csjarchlinux
-
-read -p "Enter locale, or press enter to use defaults: " continent_city
-if [[ -z $continent_city ]]; then
-    continent_city=US/Central
-fi
 
 read -p "Enter keymap, or press enter to use defaults: " keymap
 if [[ -z $keymap ]]; then
@@ -96,7 +90,7 @@ genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
 
 timedatectl set-ntp true
-ln -sf /usr/share/zoneinfo/$continent_city /etc/localtime
+ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
 hwclock --systohc
 sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf

@@ -7,24 +7,24 @@ Basically boot to the arch live usb. Change layout, and connect to the Wi-Fi
 
 ## Change layout, and connect to the internet
 
-``` bash
+```bash
 loadkeys dvorak
 ```
 
-``` bash
+```bash
 iwctl
 station wlan0 connect (wifi-ssid)
 ```
 
 ## Getting the script
-``` bash
+```bash
 curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-unattended.sh
 chmod +x 10-unattended.sh
 ```
 
 ## Now run the script
 It will install everything on the NVMe at /dev/nvme0n1
-``` bash
+```bash
 ./10-unattended.sh && systemctl reboot
 ```
 
@@ -36,14 +36,14 @@ For this second script you should read before executing because it's pulling my
 dotfiles, so if you don't want that or the packages that I use just skip the
 script totally and install whatever that you want. There's a few other scripts
 that you may find useful so check them out.
-``` bash
+```bash
 ./20-packages.sh
 ```
 
 If you want to use paru (the 25-aur.sh script) and are picky as I am, make
 sure to export this variable before running it.
 
-``` bash
+```bash
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup  # You can put it in your .zshrc or .bashrc afterwards
 echo $RUSTUP_HOME  # To check if it was exported or not
 ```

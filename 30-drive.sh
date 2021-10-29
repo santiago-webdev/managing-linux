@@ -50,7 +50,7 @@ case "${1}" in
         ;;
     unmount)
         sudo umount /data
-        sudo cryptsetup luksClose /dev/mapper/crytdata
+        sudo cryptsetup luksClose /dev/mapper/cryptdata
         ;;
     add)
         sudo cryptsetup luksOpen /dev/sda1 cryptdata

@@ -10,7 +10,8 @@ if [[ $? -eq 1 ]]; then
 fi
 
 echo "Installing all you need"
-sudo pacman -S qemu qemu-arch-extra vde2 bridge-utils \
+sudo pacman -S \
+	qemu qemu-arch-extra vde2 bridge-utils \
     iptables-nft dnsmasq edk2-ovmf openbsd-netcat \
     virt-manager cockpit cockpit-machines cockpit-pcp pcp virt-viewer \
     packagekit packagekit-qt5

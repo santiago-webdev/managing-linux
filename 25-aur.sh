@@ -8,8 +8,7 @@ makepkg -si
 cd
 
 paru -S \
-    brave-bin \
-    zsh-fast-syntax-highlighting \
-    zsh-autopair-git \
+	brave-bin \
+	nvm \
 
 rm $0 # Self delete
