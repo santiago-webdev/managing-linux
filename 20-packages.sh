@@ -21,6 +21,7 @@ sudo pacman -S --needed \
 	firejail \
 	firewalld \
 	gnome-keyring \
+	git \
 	gwenview \
 	hunspell-en_us  \
 	hunspell-es_ar \
@@ -86,6 +87,7 @@ sudo pacman -S --needed \
 	polkit-kde-agent \
 	power-profiles-daemon \
 	powerdevil \
+	rsync \
 	sddm \
 	sddm-kcm \
 	spectacle \
