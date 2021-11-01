@@ -102,7 +102,8 @@ sudo pacman -S --needed \
 
 sudo sysctl dev.i915.perf_stream_paranoid=0 # For the browser
 
-systemctl enable bluetooth.service sddm.service apparmor.service firewalld.service
+systemctl enable bluetooth.service sddm.service apparmor.service
+systemctl enable --now firewalld.service
 
 sudo firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent
 sudo firewall-cmd --zone=home --add-service kdeconnect --permanent
