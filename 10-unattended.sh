@@ -83,7 +83,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
     efibootmgr \
     btrfs-progs \
     neovim \
-	zram-generator \
+    zram-generator \
     zsh
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
