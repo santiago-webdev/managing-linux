@@ -107,6 +107,9 @@ systemctl enable bluetooth.service sddm.service apparmor.service firewalld.servi
 sudo firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent
 sudo firewall-cmd --zone=home --add-service kdeconnect --permanent
 
+curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/21-morepackages.sh
+chmod +x 21-morepackages.sh
+
 curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/25-aur.sh
 chmod +x 25-aur.sh
 
