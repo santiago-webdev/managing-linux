@@ -10,6 +10,7 @@ sudo pacman -S --needed \
 	exa \
 	fzf \
 	git \
+	hdparm \
 	jdk-openjdk \
 	linux-lts \
 	linux-zen \
@@ -17,7 +18,6 @@ sudo pacman -S --needed \
 	make \
 	meson \
 	mpv \
-	neovim \
 	ninja \
 	nodejs \
 	npm \
@@ -37,10 +37,9 @@ sudo pacman -S --needed \
 	unzip \
 	wget \
 	youtube-dl \
-	zsh \
 	zsh-autosuggestions \
 	zsh-completions \
 
-chsh -s /bin/zsh $USER
+./Dotfiles/not-home.sh
 
 rm $0 # Self delete

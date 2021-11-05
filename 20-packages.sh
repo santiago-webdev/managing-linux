@@ -7,27 +7,22 @@ set -e
 sudo pacman -S --needed \
 	apparmor \
 	ark \
-	base \
-	base-devel \
 	bluedevil \
 	bluez \
 	bluez-utils \
 	breeze \
 	breeze-gtk \
-	btrfs-progs \
 	dolphin \
-	efibootmgr \
 	filelight \
 	firejail \
 	firewalld \
-	gnome-keyring \
 	git \
+	gnome-keyring \
 	gwenview \
 	hunspell-en_us  \
 	hunspell-es_ar \
 	imagemagick \
 	intel-media-driver \
-	intel-ucode \
 	inter-font \
 	kactivitymanagerd \
 	kalarm \
@@ -59,11 +54,8 @@ sudo pacman -S --needed \
 	libkscreen \
 	libksysguard \
 	libvdpau-va-gl \
-	linux \
-	linux-firmware \
 	man \
 	milou \
-	networkmanager \
 	noto-fonts-cjk \
 	noto-fonts-emoji \
 	ntfs-3g \
@@ -101,6 +93,7 @@ sudo pacman -S --needed \
 	wl-clipboard \
 	xdg-desktop-portal \
 	xdg-desktop-portal-kde \
+	zsh \
 
 sudo sysctl dev.i915.perf_stream_paranoid=0 # For the browser
 
@@ -116,10 +109,13 @@ chmod +x 21-morepackages.sh
 curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/25-aur.sh
 chmod +x 25-aur.sh
 
+chsh -s /bin/zsh $USER
+
+cd
 git clone --depth=1 https://github.com/santigo-zero/Dotfiles.git
 rsync --recursive --verbose --exclude '.git' --exclude 'backup.sh' --exclude 'README.md' --exclude 'not-home.sh' Dotfiles/ $HOME
-cd Dotfiles && ./not-home.sh
-cd
-rm -rf Dotfiles
+cd Dotfiles
+
+echo -e "Now you should log out and run 21-morepackage.sh"
 
 rm $0 # Self delete
