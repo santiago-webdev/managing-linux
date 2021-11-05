@@ -114,7 +114,6 @@ chsh -s /bin/zsh $USER
 cd
 git clone --depth=1 https://github.com/santigo-zero/Dotfiles.git
 rsync --recursive --verbose --exclude '.git' --exclude 'backup.sh' --exclude 'README.md' --exclude 'not-home.sh' Dotfiles/ $HOME
-cd Dotfiles
 
 echo -e "Now you should log out and run 21-morepackage.sh"
 
