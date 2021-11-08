@@ -23,7 +23,6 @@ sudo pacman -S --needed \
 	hunspell-es_ar \
 	imagemagick \
 	intel-media-driver \
-	inter-font \
 	kactivitymanagerd \
 	kalarm \
 	kate \
@@ -56,8 +55,6 @@ sudo pacman -S --needed \
 	libvdpau-va-gl \
 	man \
 	milou \
-	noto-fonts-cjk \
-	noto-fonts-emoji \
 	ntfs-3g \
 	okular \
 	otf-overpass \
@@ -84,11 +81,6 @@ sudo pacman -S --needed \
 	sddm-kcm \
 	spectacle \
 	systemsettings \
-	ttc-iosevka \
-	ttf-dejavu \
-	ttf-fira-code \
-	ttf-jetbrains-mono \
-	ttf-nerd-fonts-symbols \
 	vulkan-intel \
 	wl-clipboard \
 	xdg-desktop-portal \
