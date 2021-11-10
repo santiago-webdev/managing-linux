@@ -9,6 +9,7 @@ sudo pacman -S --needed \
 	ctags \
 	curl \
 	exa \
+	flatpak \
 	fzf \
 	git \
 	gst-libav \
@@ -64,7 +65,6 @@ sudo pacman -S --needed \
 	youtube-dl \
 	zsh-autosuggestions \
 	zsh-completions \
-
 
 ./Dotfiles/not-home.sh
 

@@ -6,6 +6,7 @@ set -e
 
 sudo pacman -S --needed \
 	apparmor \
+	appmenu-gtk-module \
 	ark \
 	bluedevil \
 	bluez \
@@ -14,7 +15,6 @@ sudo pacman -S --needed \
 	breeze-gtk \
 	dolphin \
 	filelight \
-	firejail \
 	firewalld \
 	git \
 	gnome-keyring \
