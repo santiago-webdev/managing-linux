@@ -73,7 +73,7 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # P
 read -p "Do you want to update and sync the mirrors before proceeding?" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-    reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist
+    reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c US --ipv6
     pacman -Syy
 fi
 
