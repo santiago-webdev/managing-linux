@@ -99,6 +99,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
     btrfs-progs \
     neovim \
     zram-generator \
+    nvidia \
     zsh
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
@@ -145,15 +146,20 @@ END
 touch /etc/sysctl.d/99-swappiness.conf
 echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
 
-touch /etc/udev/rules.d/backlight.rules
-tee -a /etc/udev/rules.d/backlight.rules << END
-RUN+="/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
-RUN+="/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
-END
-
-touch /etc/udev/rules.d/81-backlight.rules
-tee -a /etc/udev/rules.d/81-backlight.rules << END
-SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="intel_backlight", ATTR{brightness}="9000"
+touch /etc/pacman.d/hooks/nvidia.hook
+tee -a /etc/pacman.d/hooks/nvidia.hook << END
+  
+[Trigger]
+Operation=Install
+Operation=Upgrade
+Operation=Remove
+Type=Package
+Target=nvidia
+Target=linux
+[Action]
+Depends=mkinitcpio
+When=PostTransaction
+Exec=/usr/bin/mkinitcpio -p linux
 END
 
 mkdir -p /etc/pacman.d/hooks/
@@ -171,7 +177,7 @@ Exec = /usr/bin/bootctl update
 END
 
 sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
-sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
+sed -i 's/^MODULES.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/' /etc/mkinitcpio.conf
 mkinitcpio -P
 bootctl --path=/boot/ install
 
@@ -189,7 +195,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-zen.conf
@@ -198,7 +204,7 @@ title Arch Linux Zen
 linux /vmlinuz-linux-zen
 initrd /intel-ucode.img
 initrd /initramfs-linux-zen.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-lts.conf
@@ -207,7 +213,7 @@ title Arch Linux LTS
 linux /vmlinuz-linux-lts
 initrd /intel-ucode.img
 initrd /initramfs-linux-lts.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nvidia-drm.modeset=1 nmi_watchdog=0 quiet rw
 END
 
 EOF
