@@ -81,13 +81,6 @@ mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cr
 chattr +C /mnt/var  # Copy on write disabled
 mount ${part_boot} /mnt/boot  # Mount the boot partition
 
-echo desired swap file size in MiB                                              # ask for size of swap file
-read swap                                                                       # gets swap size input
-dd if=/dev/zero of=/mnt/swapfile bs=1M count=$swap status=progress              # creates swap file
-chmod 600 /mnt/swapfile                                                         # changes perms for swap file
-mkswap /mnt/swapfile                                                            # makes files into swap
-swapon /mnt/swapfile                                                            # turns on swap file
-
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
