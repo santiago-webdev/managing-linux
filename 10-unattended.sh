@@ -189,7 +189,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_boot})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-zen.conf
@@ -198,7 +198,7 @@ title Arch Linux Zen
 linux /vmlinuz-linux-zen
 initrd /intel-ucode.img
 initrd /initramfs-linux-zen.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_boot})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-lts.conf
@@ -207,7 +207,7 @@ title Arch Linux LTS
 linux /vmlinuz-linux-lts
 initrd /intel-ucode.img
 initrd /initramfs-linux-lts.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_boot})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
 
 EOF
