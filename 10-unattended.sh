@@ -36,15 +36,30 @@ if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
+
 timedatectl set-ntp true  # Synchronize motherboard clock
-sgdisk --zap-all /dev/nvme0n1  # Delete tables
-printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk /dev/nvme0n1  # Format the drive
+
+pacman -Sy dialog --noconfirm                                                                  #install dialog for selecting disk
+devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)                 #gets disk info for selection
+drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1       #chose which drive to format
+clear           # clears blue screen from 
+lsblk           # shows avalable drives
+echo ${drive}   # confirms drive selection
+
+sgdisk --zap-all ${drive}  # Delete tables
+printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
+
+part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"     #finds boot partion
+part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"     #finds root partion 
+
+echo ${part_boot} # confirms boot partion selection
+echo ${part_root} # confirms root partion selection
 
 mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
-cryptsetup luksFormat --type luks2 /dev/nvme0n1p2
-cryptsetup luksOpen /dev/nvme0n1p2 cryptroot  # Open the mapper
+cryptsetup luksFormat --type luks2 ${part_root}
+cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
 
-mkfs.vfat -F32 /dev/nvme0n1p1  # Format the EFI partition
+mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
 mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
 
 mount /dev/mapper/cryptroot /mnt
@@ -64,7 +79,14 @@ mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cr
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
 mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
 chattr +C /mnt/var  # Copy on write disabled
-mount /dev/nvme0n1p1 /mnt/boot  # Mount the boot partition
+mount ${part_boot} /mnt/boot  # Mount the boot partition
+
+echo desired swap file size in MiB                                              # ask for size of swap file
+read swap                                                                       # gets swap size input
+dd if=/dev/zero of=/mnt/swapfile bs=1M count=$swap status=progress              # creates swap file
+chmod 600 /mnt/swapfile                                                         # changes perms for swap file
+mkswap /mnt/swapfile                                                            # makes files into swap
+swapon /mnt/swapfile                                                            # turns on swap file
 
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
