@@ -72,7 +72,7 @@ fi
 
 timedatectl set-ntp true  # Synchronize motherboard clock
 
-if $part=no; then
+if [[ $part == "no" ]]; then
     mount /dev/mapper/cryptroot /mnt
     # clearing non home data
     btrfs subvolume delete /mnt/@
@@ -154,7 +154,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 fi
 
 
-if $cpu=amd; then
+if [[ $cpu == "amd" ]]; then
   pacstrap -i /mnt base base-devel linux linux-firmware amd-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
   
 else
