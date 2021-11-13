@@ -15,7 +15,7 @@ set -u  # Treat unset variables as an error when substituting
 # root_password=csjarchlinux
 # cpu=intel
 
-read -p "do you want to wipe full drive, or press enter to use defaults: " part
+read -p "do you want to wipe full drive yes or no, or press enter to use defaults: " part
 if [[ -z $part ]]; then
     part=yes
 fi
@@ -72,7 +72,7 @@ fi
 
 timedatectl set-ntp true  # Synchronize motherboard clock
 
-if part=yes; then
+if $part=no; then
     mount /dev/mapper/cryptroot /mnt
     # clearing non home data
     btrfs subvolume delete /mnt/@
