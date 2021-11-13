@@ -73,12 +73,21 @@ fi
 timedatectl set-ntp true  # Synchronize motherboard clock
 
 if [[ $part == "no" ]]; then
+    pacman -Sy dialog --noconfirm                                                                  #install dialog for selecting disk
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)                 #gets disk info for selection
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1       #chose which drive to format
+    clear           # clears blue screen from
+    lsblk           # shows avalable drives
+    echo ${drive}   # confirms drive selection
+    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"     #finds boot partion
+    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"     #finds root partion
+    cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
     mount /dev/mapper/cryptroot /mnt
     # clearing non home data
     btrfs subvolume delete /mnt/@
     btrfs subvolume delete /mnt/@pkg
     btrfs subvolume delete /mnt/@var
-    btrfs subvolume delete /mnt/srv
+    btrfs subvolume delete /mnt/@srv
     btrfs subvolume delete /mnt/@tmp
     #creating new subvolumes
     btrfs subvolume create /mnt/@
