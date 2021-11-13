@@ -23,12 +23,6 @@ if [[ -z $countrycode ]]; then
     countrycode=US
 fi
 
-read -p "Do you have ipv6, or press enter to use defaults: " yes
-if [[ -z $yes ]] || [[ $yes = 'yes' ]]; then
-    ipv=ipv6 ;
-    else ipv=ipv4 ;
-fi
-
 read -p "Enter user name, or press enter to use defaults: " username
 if [[ -z $username ]]; then
     username=csjarchlinux
@@ -49,7 +43,11 @@ if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
-
+# this if lines check for ipv6 connection by pinging google via googles ipv6 address if that fails checks to see if their is an internet connection.
+# after the quick check it then sets ipv4 or ipv6 for relfector.
+if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then ipv=ipv6 else
+  if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then ipv=ipv4 else
+  echo not online fi fi
 
 timedatectl set-ntp true  # Synchronize motherboard clock
 
