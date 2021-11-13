@@ -155,11 +155,10 @@ fi
 
 
 if $cpu=amd; then
-  #pacstrap -i /mnt base base-devel linux linux-firmware amd-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
-  echo amd
+  pacstrap -i /mnt base base-devel linux linux-firmware amd-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
+  
 else
-#pacstrap -i /mnt base base-devel linux linux-firmware intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
-echo intel
+pacstrap -i /mnt base base-devel linux linux-firmware intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
 fi
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
