@@ -13,7 +13,6 @@ set -u  # Treat unset variables as an error when substituting
 # hostname=desktop
 # user_password=csjarchlinux
 # root_password=csjarchlinux
-# cpu=intel
 
 read -p "do you want to wipe full drive yes or no, or press enter to use defaults: " part
 if [[ -z $part ]]; then
@@ -52,20 +51,25 @@ fi
 
 clear
 
-read -p "do you have intel or amd cpu, or press enter to use defaults: " cpu
-if [[ -z $cpu ]]; then
-    cpu=intel
+# Cpu detection
+lscpu | grep 'GenuineIntel' &> /dev/null
+if [[ $? -eq 0 ]]; then
+	cpu_model="intel"
+else
+	cpu_model="amd"
 fi
+echo -e "Your CPU is $cpu_model"
 
-# This if lines check for ipv6 connection by pinging google via googles ipv6 address if that fails checks to see if their is an internet connection.
-# after the quick check it then sets ipv4 or ipv6 for relfector.
+# This lines check for ipv6 connection by pinging Google via Googles ipv6 address, if that
+# fails check to see if their is an internet connection. after the quick check it then
+# sets ipv4 or ipv6 for relfector.
 if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
 	ipv=ipv6
 else
 	if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
 		ipv=ipv4
 	else
-		echo "not online"
+		echo "Not online"
 	fi
 fi
 
@@ -107,9 +111,7 @@ if [[ $part == "no" ]]; then
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
 	mount ${part_boot} /mnt/boot  # Mount the boot partition
-
 else
-
 	pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
     drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
@@ -163,12 +165,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 	pacman -Syy
 fi
 
-
-if [[ $cpu == "amd" ]]; then
-	pacstrap -i /mnt base base-devel linux linux-firmware amd-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
-else
-	pacstrap -i /mnt base base-devel linux linux-firmware intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
-fi
+pacstrap -i /mnt base base-devel linux linux-firmware \
+	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
+	${cpu_model}-ucode
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -251,16 +250,12 @@ console-mode max
 editor no
 END
 
-
-
-
-
 mkdir -p /boot/loader/entries/
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch.conf << END
 title Arch Linux
 linux /vmlinuz-linux
-initrd /$cpu-ucode.img
+initrd /$cpu_model-ucode.img
 initrd /initramfs-linux.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
@@ -269,7 +264,7 @@ touch /boot/loader/entries/arch-zen.conf
 tee -a /boot/loader/entries/arch-zen.conf << END
 title Arch Linux Zen
 linux /vmlinuz-linux-zen
-initrd /$cpu-ucode.img
+initrd /$cpu_model-ucode.img
 initrd /initramfs-linux-zen.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
@@ -278,17 +273,9 @@ touch /boot/loader/entries/arch-lts.conf
 tee -a /boot/loader/entries/arch-lts.conf << END
 title Arch Linux LTS
 linux /vmlinuz-linux-lts
-initrd /$cpu-ucode.img
+initrd /$cpu_model-ucode.img
 initrd /initramfs-linux-lts.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
-
-
-
-
-
-
-
 EOF
-umount -R /mnt
