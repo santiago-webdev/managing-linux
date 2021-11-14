@@ -5,6 +5,7 @@ set -e  # The script will not run if we CTRL + C, or in case of an error
 set -u  # Treat unset variables as an error when substituting
 
 ## This are the defaults, so it's easier to test the script
+# part=yes
 # keymap=us
 # countrycode=US
 # ipv=ipv6
@@ -12,6 +13,12 @@ set -u  # Treat unset variables as an error when substituting
 # hostname=desktop
 # user_password=csjarchlinux
 # root_password=csjarchlinux
+# cpu=intel
+
+read -p "do you want to wipe full drive yes or no, or press enter to use defaults: " part
+if [[ -z $part ]]; then
+    part=yes
+fi
 
 read -p "Enter keymap, or press enter to use defaults: " keymap
 if [[ -z $keymap ]]; then
@@ -43,6 +50,13 @@ if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
+clear
+
+read -p "do you have intel or amd cpu, or press enter to use defaults: " cpu
+if [[ -z $cpu ]]; then
+    cpu=intel
+fi
+
 # this if lines check for ipv6 connection by pinging google via googles ipv6 address if that fails checks to see if their is an internet connection.
 # after the quick check it then sets ipv4 or ipv6 for relfector.
     
@@ -58,67 +72,103 @@ fi
 
 timedatectl set-ntp true  # Synchronize motherboard clock
 
-pacman -Sy dialog --noconfirm                                                                  #install dialog for selecting disk
-devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)                 #gets disk info for selection
-drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1       #chose which drive to format
-clear           # clears blue screen from 
-lsblk           # shows avalable drives
-echo ${drive}   # confirms drive selection
-
-sgdisk --zap-all ${drive}  # Delete tables
-printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
-
-part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"     #finds boot partion
-part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"     #finds root partion 
-
-echo ${part_boot} # confirms boot partion selection
-echo ${part_root} # confirms root partion selection
-
-mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
-cryptsetup luksFormat --type luks2 ${part_root}
-cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
-
-mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
-mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
-
-mount /dev/mapper/cryptroot /mnt
-btrfs subvolume create /mnt/@
-btrfs subvolume create /mnt/@home
-btrfs subvolume create /mnt/@pkg
-btrfs subvolume create /mnt/@var
-btrfs subvolume create /mnt/@srv
-btrfs subvolume create /mnt/@tmp
-umount /mnt
-
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
-mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
-chattr +C /mnt/var  # Copy on write disabled
-mount ${part_boot} /mnt/boot  # Mount the boot partition
+if [[ $part == "no" ]]; then
+    pacman -Sy dialog --noconfirm                                                                  #install dialog for selecting disk
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)                 #gets disk info for selection
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1       #chose which drive to format
+    clear           # clears blue screen from
+    lsblk           # shows avalable drives
+    echo ${drive}   # confirms drive selection
+    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"     #finds boot partion
+    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"     #finds root partion
+    cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
+    mount /dev/mapper/cryptroot /mnt
+    # clearing non home data
+    btrfs subvolume delete /mnt/@
+    btrfs subvolume delete /mnt/@pkg
+    btrfs subvolume delete /mnt/@var
+    btrfs subvolume delete /mnt/@srv
+    btrfs subvolume delete /mnt/@tmp
+    #creating new subvolumes
+    btrfs subvolume create /mnt/@
+    btrfs subvolume create /mnt/@pkg
+    btrfs subvolume create /mnt/@var
+    btrfs subvolume create /mnt/@srv
+    btrfs subvolume create /mnt/@tmp
+    umount /mnt
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+    mkdir -p /mnt2/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+    chattr +C /mnt/var  # Copy on write disabled
+    mount ${part_boot} /mnt/boot  # Mount the boot partition
+    
+    else
+    
+    pacman -Sy dialog --noconfirm                                                                  #install dialog for selecting disk
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)                 #gets disk info for selection
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1       #chose which drive to format
+    clear           # clears blue screen from 
+    lsblk           # shows avalable drives
+    echo ${drive}   # confirms drive selection
+    sgdisk --zap-all ${drive}  # Delete tables
+    printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
+    
+    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"     #finds boot partion
+    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"     #finds root partion
+    
+    echo ${part_boot} # confirms boot partion selection
+    echo ${part_root} # confirms root partion selection
+    
+    mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
+    cryptsetup luksFormat --type luks2 ${part_root}
+    cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
+    
+    mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
+    mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
+    
+    mount /dev/mapper/cryptroot /mnt
+    btrfs subvolume create /mnt/@
+    btrfs subvolume create /mnt/@home
+    btrfs subvolume create /mnt/@pkg
+    btrfs subvolume create /mnt/@var
+    btrfs subvolume create /mnt/@srv
+    btrfs subvolume create /mnt/@tmp
+    umount /mnt
+    
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+    mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
+    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+    chattr +C /mnt/var  # Copy on write disabled
+    mount ${part_boot} /mnt/boot  # Mount the boot partition
+    
+fi
 
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
-read -p "Do you want to update and sync the mirrors before proceeding?" -n 1 -r
+read -p "Do you want to update and sync the mirrors before proceeding? type y for yes" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c $countrycode --$ipv
     pacman -Syy
 fi
 
-pacstrap -i /mnt base base-devel linux linux-firmware \
-    intel-ucode \
-    networkmanager \
-    efibootmgr \
-    btrfs-progs \
-    neovim \
-    zram-generator \
-    zsh
+
+if [[ $cpu == "amd" ]]; then
+  pacstrap -i /mnt base base-devel linux linux-firmware amd-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
+  
+else
+pacstrap -i /mnt base base-devel linux linux-firmware intel-ucode networkmanager efibootmgr btrfs-progs neovim zram-generator zsh
+fi
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -201,33 +251,44 @@ console-mode max
 editor no
 END
 
+
+
+
+
 mkdir -p /boot/loader/entries/
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch.conf << END
 title Arch Linux
 linux /vmlinuz-linux
-initrd /intel-ucode.img
+initrd /$cpu-ucode.img
 initrd /initramfs-linux.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-zen.conf
 tee -a /boot/loader/entries/arch-zen.conf << END
 title Arch Linux Zen
 linux /vmlinuz-linux-zen
-initrd /intel-ucode.img
+initrd /$cpu-ucode.img
 initrd /initramfs-linux-zen.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-lts.conf
 tee -a /boot/loader/entries/arch-lts.conf << END
 title Arch Linux LTS
 linux /vmlinuz-linux-lts
-initrd /intel-ucode.img
+initrd /$cpu-ucode.img
 initrd /initramfs-linux-lts.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
+
+
+
+
+
+
+
 
 EOF
 umount -R /mnt
