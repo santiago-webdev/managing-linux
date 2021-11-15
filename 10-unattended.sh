@@ -7,7 +7,6 @@ set -u  # Treat unset variables as an error when substituting
 ## This are the defaults, so it's easier to test the script
 # part=yes
 # keymap=us
-# countrycode=US
 # ipv=ipv6
 # username=csjarchlinux  # Can only be lowercase and no signs
 # hostname=desktop
@@ -22,11 +21,6 @@ fi
 read -p "Enter keymap, or press enter to use defaults: " keymap
 if [[ -z $keymap ]]; then
     keymap=us
-fi
-
-read -p "Enter country code, or press enter to use defaults: " countrycode
-if [[ -z $countrycode ]]; then
-    countrycode=US
 fi
 
 read -p "Enter user name, or press enter to use defaults: " username
@@ -61,8 +55,8 @@ fi
 echo -e "Your CPU is $cpu_model"
 
 # This lines check for ipv6 connection by pinging Google via Googles ipv6 address, if that
-# fails check to see if their is an internet connection. after the quick check it then
-# sets ipv4 or ipv6 for relfector.
+# fails check to see if there's an internet connection. After the quick check it then sets
+# ipv4 or ipv6 for reflector.
 if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
 	ipv=ipv6
 else
@@ -161,7 +155,7 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # P
 read -p "Do you want to update and sync the mirrors before proceeding? type y for yes" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-	reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist -c $countrycode --$ipv
+	reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
 	pacman -Syy
 fi
 

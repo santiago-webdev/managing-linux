@@ -18,6 +18,7 @@ sudo pacman -S --needed \
 	gst-plugins-ugly \
 	gst-transcoder \
 	gstreamer-vaapi \
+	github-cli \
 	hdparm \
 	inter-font \
 	jdk-openjdk \
@@ -28,6 +29,7 @@ sudo pacman -S --needed \
 	make \
 	meson \
 	mpv \
+	neofetch \
 	ninja \
 	nodejs \
 	noto-fonts-cjk \
@@ -38,6 +40,7 @@ sudo pacman -S --needed \
 	python-pip \
 	python-wheel \
 	qbittorrent \
+	reflector \
 	ripgrep \
 	rsync \
 	rustup \
@@ -63,6 +66,7 @@ sudo pacman -S --needed \
 	unzip \
 	wget \
 	youtube-dl \
+	z \
 	zsh-autosuggestions \
 	zsh-completions \
 
