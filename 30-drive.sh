@@ -8,7 +8,7 @@ mkdir_datos() {
     if [[ ! -d "/data" ]]
     then
         sudo mkdir /data
-        sudo chown $USER /data
+        sudo chown "$USER" /data
         sudo chmod 750 /data
     else
         echo "The mount point /data has already been made"

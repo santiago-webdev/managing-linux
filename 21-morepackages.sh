@@ -72,4 +72,4 @@ sudo pacman -S --needed \
 
 ./Dotfiles/not-home.sh
 
-rm $0 # Self delete
+rm "$0" # Self delete

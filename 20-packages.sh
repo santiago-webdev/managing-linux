@@ -101,12 +101,12 @@ chmod +x 21-morepackages.sh
 curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/25-aur.sh
 chmod +x 25-aur.sh
 
-chsh -s /bin/zsh $USER
+chsh -s /bin/zsh "$USER"
 
 cd
 git clone --depth=1 https://github.com/santigo-zero/Dotfiles.git
-rsync --recursive --verbose --exclude '.git' --exclude 'backup.sh' --exclude 'README.md' --exclude 'not-home.sh' Dotfiles/ $HOME
+rsync --recursive --verbose --exclude ".git" --exclude "backup.sh" --exclude "README.md" --exclude "not-home.sh" Dotfiles/ "$HOME"
 
 echo -e "Now you should log out and run 21-morepackage.sh"
 
-rm $0 # Self delete
+rm "$0" # Self delete

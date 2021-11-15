@@ -13,11 +13,6 @@ set -u  # Treat unset variables as an error when substituting
 # user_password=csjarchlinux
 # root_password=csjarchlinux
 
-read -p "do you want to wipe full drive yes or no, or press enter to use defaults: " part
-if [[ -z $part ]]; then
-    part=yes
-fi
-
 read -p "Enter keymap, or press enter to use defaults: " keymap
 if [[ -z $keymap ]]; then
     keymap=us
@@ -43,31 +38,10 @@ if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
-clear
-
-# Cpu detection
-lscpu | grep 'GenuineIntel' &> /dev/null
-if [[ $? -eq 0 ]]; then
-	cpu_model="intel"
-else
-	cpu_model="amd"
+read -p "do you want to wipe full drive yes or no, or press enter to use defaults: " part
+if [[ -z $part ]]; then
+    part=yes
 fi
-echo -e "Your CPU is $cpu_model"
-
-# This lines check for ipv6 connection by pinging Google via Googles ipv6 address, if that
-# fails check to see if there's an internet connection. After the quick check it then sets
-# ipv4 or ipv6 for reflector.
-if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
-	ipv=ipv6
-else
-	if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
-		ipv=ipv4
-	else
-		echo "Not online"
-	fi
-fi
-
-timedatectl set-ntp true  # Synchronize motherboard clock
 
 if [[ $part == "no" ]]; then
     pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
@@ -110,7 +84,7 @@ else
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
     drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
     clear  # Clears blue screen from
-    lsblk  # Shows avalable drives
+    lsblk  # Shows available drives
     echo ${drive}  # Confirms drive selection
     sgdisk --zap-all ${drive}  # Delete tables
     printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
@@ -148,6 +122,8 @@ else
     mount ${part_boot} /mnt/boot  # Mount the boot partition
 fi
 
+timedatectl set-ntp true  # Synchronize motherboard clock
+
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
@@ -155,9 +131,31 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # P
 read -p "Do you want to update and sync the mirrors before proceeding? type y for yes" -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
+	# This lines check for ipv6 connection by pinging Google via Googles ipv6 address, if that
+	# fails check to see if there's an internet connection. After the quick check it then sets
+	# ipv4 or ipv6 for reflector.
+	if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
+		ipv=ipv6
+	else
+		if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+			ipv=ipv4
+		else
+			echo "Not online"
+		fi
+	fi
+
 	reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
 	pacman -Syy
 fi
+
+# Cpu detection
+lscpu | grep 'GenuineIntel' &> /dev/null
+if [[ $? -eq 0 ]]; then
+	cpu_model="intel"
+else
+	cpu_model="amd"
+fi
+echo -e "Your CPU is $cpu_model"
 
 pacstrap -i /mnt base base-devel linux linux-firmware \
 	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \

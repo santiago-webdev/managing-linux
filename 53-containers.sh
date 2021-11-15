@@ -29,4 +29,4 @@ fi
 
 # Rootless podman (This is also necessary for rootless toolbox)
 sudo touch /etc/subuid /etc/subgid
-sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 $USER
+sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 "$USER"

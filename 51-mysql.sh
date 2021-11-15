@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-cd $HOME
-
 case $1 in
     mariadb)
         # For MariaDB

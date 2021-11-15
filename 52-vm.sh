@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd $HOME
+cd "$HOME" || exit
 
 LC_ALL=C lscpu | grep Virtualization
 
@@ -20,7 +20,7 @@ echo "Enabling libvirtd"
 systemctl enable --now libvirtd
 
 echo "Adding your user to the libvirt group"
-sudo usermod -G libvirt -a $USER
+sudo usermod -G libvirt -a "$USER"
 
 systemctl enable --now cockpit.socket pmcd.service pmlogger
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cd $HOME
+cd "$HOME" || exit
 
 git clone git@github.com:santigo-zero/Neovim.git .config/nvim
 
@@ -18,4 +18,4 @@ sudo pacman -S vscode-html-languageserver	# HTML
 git clone https://github.com/wbthomason/packer.nvim\
  ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
-rm $0 # Self delete
+rm "$0" # Self delete
