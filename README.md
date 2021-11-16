@@ -5,6 +5,38 @@ feedback and issues are welcome*
 
 Basically boot to the arch live usb. Change layout, and connect to the Wi-Fi
 
+## What does the 10-unattended.sh script do
+The 10-unnattended.sh script does this:
+It will install Arch Linux in the drive that you selected to, with luks2 encryption, btrfs
+and it only works for UEFI systems:
+
+Partition | Size
+--- | ---
+/boot | 333Mb
+/ | The rest of the drive
+
+The subvolumes are mounted into
+
+Subvolume | Mountpoint
+--- | ---
+@ | /
+@home | /home
+@pkg | /var/cache/pacman/pkg
+@var | /var
+@srv | /srv
+@tmp | /tmp
+
+*Note that if you answered "no" when asked to wipe the drive your subvolume for @home will
+not be touched*. And for the bootloader we are using systemd-boot with systemd hooks since
+it's simpler. There's also a little 4Gb "partition" that you will see as [SWAP] if you do a
+quick lsblk, because we are using zram in case that you run out of RAM.
+
+Be aware that the keymap that you choose will be the one used for decrypting the drive
+
+For networking we are using NetworkManager
+
+Also the user that you created was just added to the wheel and users groups
+
 ## Change layout, and connect to the internet
 
 ```bash
@@ -16,17 +48,20 @@ iwctl
 station wlan0 connect (wifi-ssid)
 ```
 
-## Getting the script
+# Getting the script
 ```bash
 curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-unattended.sh
 chmod +x 10-unattended.sh
 ```
 
 ## Now run the script
-It will install everything on the NVMe at /dev/nvme0n1
+It will install everything on the selected drive
 ```bash
 ./10-unattended.sh && systemctl reboot
 ```
+
+And that's pretty much it, the next 20, 21, etc scripts are more personal scripts that you
+might find useful to set up your environment.
 
 ## After this your computer should reboot, now you need to execute the second script
 The 20-packages.sh script will be pulled by the first script and leave it on the home of the user that
@@ -57,10 +92,10 @@ cluttering it, if you export it, in this case it will get stored in
 shell rc so after an update you don't have it again in your $HOME.
 
 ### Things that I need to add to the project
-- [ ] Update the README with a description for each script.
+- [x] Update the README with a description for each script.
 - [ ] Add snapper for rollback functionality #2.
 - [ ] Add the boot entry creation of snapshots for systemd-boot
-- [ ] Make the 10-unattended.sh script able to handle different drive names.
+- [x] Make the 10-unattended.sh script able to handle different drive names.
 - [ ] Make the 10-unattended.sh script able to handle different filesystems.
 - [ ] Make the 10-unattended.sh script able to install Arch Linux without encryption
 - [ ] Move to systemd-networkd

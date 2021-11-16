@@ -38,7 +38,7 @@ if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
-read -p "do you want to wipe full drive yes or no, or press enter to use defaults: " part
+read -p "Do you want to wipe full drive yes or no, or press enter to use defaults: " part
 if [[ -z $part ]]; then
     part=yes
 fi
@@ -144,7 +144,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
 		fi
 	fi
 
-	reflector --latest 50 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
+	reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
 	pacman -Syy
 fi
 
