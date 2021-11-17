@@ -167,8 +167,8 @@ else
 fi
 echo -e "Your CPU is $cpu_model"
 
-pacstrap -i /mnt base base-devel linux linux-firmware \
-	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
+pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware \
+	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh snapper apparmor \
 	${cpu_model}-ucode
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
