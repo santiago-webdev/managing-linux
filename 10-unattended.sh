@@ -1,4 +1,4 @@
- #!/usr/bin/env bash
+#!/usr/bin/env bash
 
 clear   # Clear the TTY
 set -e  # The script will not run if we CTRL + C, or in case of an error
@@ -84,7 +84,6 @@ if [[ $part == "no" ]]; then
 
     umount /mnt
 
-    echo sucess
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
     mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
