@@ -249,7 +249,7 @@ title Arch Linux
 linux /vmlinuz-linux
 initrd /$cpu_model-ucode.img
 initrd /initramfs-linux.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-zen.conf
@@ -258,7 +258,7 @@ title Arch Linux Zen
 linux /vmlinuz-linux-zen
 initrd /$cpu_model-ucode.img
 initrd /initramfs-linux-zen.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-lts.conf
@@ -267,7 +267,7 @@ title Arch Linux LTS
 linux /vmlinuz-linux-lts
 initrd /$cpu_model-ucode.img
 initrd /initramfs-linux-lts.img
-options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 EOF

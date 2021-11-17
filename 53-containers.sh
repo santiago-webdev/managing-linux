@@ -14,7 +14,7 @@ fi
 pacman -Q podman toolbox firejail
 
 if [[ $? -eq 1 ]]; then
-	sudo pacman -S podman toolbox
+	sudo pacman -S podman toolbox docker
 fi
 
 
@@ -30,3 +30,6 @@ fi
 # Rootless podman (This is also necessary for rootless toolbox)
 sudo touch /etc/subuid /etc/subgid
 sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 "$USER"
+
+# Enable docker
+systemctl enable --now docker.service
