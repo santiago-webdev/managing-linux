@@ -194,9 +194,12 @@ echo -en "$user_password\n$user_password" | passwd $username
 curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh > /home/$username/20-packages.sh
 chmod +x /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
+
 systemctl enable NetworkManager.service fstrim.timer snapper-timeline.timer snapper-cleanup.timer apparmor
+
 snapper -c root --no-dbus create-config /
 snapper -c home --no-dbus create-config /home
+
 sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/root
@@ -209,7 +212,10 @@ sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/con
 sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
+
+
 journalctl --vacuum-size=100M --vacuum-time=2weeks
+
 touch /etc/systemd/zram-generator.conf
 tee -a /etc/systemd/zram-generator.conf << END
 [zram0]
@@ -249,6 +255,7 @@ default arch.conf
 console-mode max
 editor no
 END
+
 mkdir -p /boot/loader/entries/
 touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch.conf << END
@@ -258,6 +265,7 @@ initrd /$cpu_model-ucode.img
 initrd /initramfs-linux.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
+
 touch /boot/loader/entries/arch-zen.conf
 tee -a /boot/loader/entries/arch-zen.conf << END
 title Arch Linux Zen
@@ -266,6 +274,7 @@ initrd /$cpu_model-ucode.img
 initrd /initramfs-linux-zen.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
+
 touch /boot/loader/entries/arch-lts.conf
 tee -a /boot/loader/entries/arch-lts.conf << END
 title Arch Linux LTS
@@ -274,6 +283,7 @@ initrd /$cpu_model-ucode.img
 initrd /initramfs-linux-lts.img
 options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
+
 EOF
 
 read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
