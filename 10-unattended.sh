@@ -158,7 +158,7 @@ fi
 echo -e "Your CPU is $cpu_model"
 
 pacstrap -i /mnt base base-devel linux linux-firmware \
-	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
+	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh snapper apparmor \
 	${cpu_model}-ucode
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
@@ -191,7 +191,22 @@ curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packa
 chmod +x /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
 
-systemctl enable NetworkManager.service fstrim.timer
+systemctl enable NetworkManager.service fstrim.timer snapper-timeline.timer snapper-cleanup.timer apparmor
+
+snapper -c root create-config /
+snapper -c home create-config /home
+sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/root
+sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
