@@ -193,8 +193,9 @@ chown $username /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service fstrim.timer snapper-timeline.timer snapper-cleanup.timer apparmor
 
-snapper -c root create-config /
-snapper -c home create-config /home
+snapper -c root --no-dbus create-config /
+snapper -c home --no-dbus create-config /home
+
 sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/root
 sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/root
