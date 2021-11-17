@@ -7,7 +7,6 @@ set -u  # Treat unset variables as an error when substituting
 ## This are the defaults, so it's easier to test the script
 # part=yes
 # keymap=us
-# ipv=ipv6
 # username=csjarchlinux  # Can only be lowercase and no signs
 # hostname=desktop
 # user_password=csjarchlinux
