@@ -13,32 +13,32 @@ set -u  # Treat unset variables as an error when substituting
 # user_password=csjarchlinux
 # root_password=csjarchlinux
 
-read -p "Enter keymap, or press enter to use defaults: " keymap
+read -p "Enter keymap, or press enter to use defaults:"$'\n'  keymap
 if [[ -z $keymap ]]; then
     keymap=us
 fi
 
-read -p "Enter user name, or press enter to use defaults: " username
+read -p "Enter user name, or press enter to use defaults:"$'\n'  username
 if [[ -z $username ]]; then
     username=csjarchlinux
 fi
 
-read -p "Enter host name, or press enter to use defaults: " hostname
+read -p "Enter host name, or press enter to use defaults:"$'\n'  hostname
 if [[ -z $hostname ]]; then
     hostname=csjarchlinux
 fi
 
-read -s -p "Enter user password, or press enter to use defaults: " user_password
+read -s -p "Enter user password, or press enter to use defaults:"$'\n'  user_password
 if [[ -z $user_password ]]; then
     user_password=csjarchlinux
 fi
 
-read -s -p "Enter root password, or press enter to use defaults: " root_password
+read -s -p "Enter root password, or press enter to use defaults:"$'\n'  root_password
 if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
-read -p "Do you want to wipe full drive yes or no, or press enter to use defaults: " part
+read -p "Do you want to wipe full drive yes or no, or press enter to use defaults:"$'\n'  part
 if [[ -z $part ]]; then
     part=yes
 fi
@@ -287,3 +287,11 @@ options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${p
 END
 
 EOF
+
+read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+echo "thank you for using csjarchlinux installer script"
+reboot
+else echo "thank you for using csjarchlinux installer script"
+fi
