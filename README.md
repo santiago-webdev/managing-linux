@@ -27,7 +27,8 @@ Subvolume | Mountpoint
 @tmp | /tmp
 
 *Note that if you answered "no" when asked to wipe the drive your subvolume for @home will
-not be touched*. And for the bootloader we are using systemd-boot with systemd hooks since
+not be touched though recommened to backup existing snapshots if they exist in @home/.snapshot those will be lost.*
+And for the bootloader we are using systemd-boot with systemd hooks since
 it's simpler. There's also a little 4Gb "partition" that you will see as [SWAP] if you do a
 quick lsblk, because we are using zram in case that you run out of RAM.
 
