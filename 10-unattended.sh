@@ -271,3 +271,9 @@ options lsm=lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${p
 END
 
 EOF
+
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+echo "thank you for using csjarchlinux installer script"
+reboot
+else echo "thank you for using csjarchlinux installer script"
+fi
