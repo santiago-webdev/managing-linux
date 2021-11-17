@@ -57,7 +57,7 @@ chmod +x 10-unattended.sh
 ## Now run the script
 It will install everything on the selected drive
 ```bash
-./10-unattended.sh && systemctl reboot
+./10-unattended.sh
 ```
 
 And that's pretty much it, the next 20, 21, etc scripts are more personal scripts that you
