@@ -7,40 +7,46 @@ set -u  # Treat unset variables as an error when substituting
 ## This are the defaults, so it's easier to test the script
 # part=yes
 # keymap=us
-# ipv=ipv6
 # username=csjarchlinux  # Can only be lowercase and no signs
 # hostname=desktop
 # user_password=csjarchlinux
 # root_password=csjarchlinux
+# drive_password=csjarchlinux
 
-read -p "Enter keymap, or press enter to use defaults: " keymap
+read -p "Enter keymap, or press enter to use defaults:"$'\n'  keymap
 if [[ -z $keymap ]]; then
     keymap=us
 fi
 
-read -p "Enter user name, or press enter to use defaults: " username
+read -p "Enter user name, or press enter to use defaults:"$'\n'  username
 if [[ -z $username ]]; then
     username=csjarchlinux
 fi
 
-read -p "Enter host name, or press enter to use defaults: " hostname
+read -p "Enter host name, or press enter to use defaults:"$'\n'  hostname
 if [[ -z $hostname ]]; then
     hostname=csjarchlinux
 fi
 
-read -s -p "Enter user password, or press enter to use defaults: " user_password
+read -s -p "Enter user password, or press enter to use defaults:"$'\n'  user_password
 if [[ -z $user_password ]]; then
     user_password=csjarchlinux
 fi
 
-read -s -p "Enter root password, or press enter to use defaults: " root_password
+read -s -p "Enter root password, or press enter to use defaults:"$'\n'  root_password
 if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
-read -p "Do you want to wipe full drive yes or no, or press enter to use defaults: " part
+read -p "Do you want to wipe full drive yes or no, or press enter to use defaults:"$'\n'  part
 if [[ -z $part ]]; then
     part=yes
+fi
+
+
+read -s -p "Enter encryption password if not reformating enter drive password used for original encryption, or press enter to use defaults:"$'\n'  drive_password
+if [[ -z $drive_password ]]; then
+    drive_password=csjarchlinux
 fi
 
 if [[ $part == "no" ]]; then
@@ -52,15 +58,21 @@ if [[ $part == "no" ]]; then
     echo ${drive}  # Confirms drive selection
     part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
     part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
-    cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
+    mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
+    echo -n "$drive_password" | cryptsetup open ${part_root} cryptroot -d -  # Open the mapper
     mount /dev/mapper/cryptroot /mnt
 
     # Clearing non home data
-    btrfs subvolume delete /mnt/@
+
     btrfs subvolume delete /mnt/@pkg
+    btrfs subvolume delete /mnt/@var/lib/portables
+    btrfs subvolume delete /mnt/@var/lib/machines
     btrfs subvolume delete /mnt/@var
     btrfs subvolume delete /mnt/@srv
     btrfs subvolume delete /mnt/@tmp
+    btrfs subvolume delete /mnt/@/.snapshots
+    btrfs subvolume delete /mnt/@home/.snapshots
+    btrfs subvolume delete /mnt/@
 
     # Creating new subvolumes
     btrfs subvolume create /mnt/@
@@ -68,10 +80,12 @@ if [[ $part == "no" ]]; then
     btrfs subvolume create /mnt/@var
     btrfs subvolume create /mnt/@srv
     btrfs subvolume create /mnt/@tmp
+
+
     umount /mnt
 
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
-    mkdir -p /mnt2/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
+    mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
@@ -96,8 +110,8 @@ else
     echo ${part_root}  # Confirms root partion selection
 
     mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
-    cryptsetup luksFormat --type luks2 ${part_root}
-    cryptsetup luksOpen ${part_root} cryptroot  # Open the mapper
+    echo -n "$drive_password" | cryptsetup luksFormat --type luks2 ${part_root} -d -
+    echo -n "$drive_password" | cryptsetup open ${part_root} cryptroot -d -
 
     mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
     mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
@@ -128,25 +142,21 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
-read -p "Do you want to update and sync the mirrors before proceeding? type y for yes" -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-	# This lines check for ipv6 connection by pinging Google via Googles ipv6 address, if that
-	# fails check to see if there's an internet connection. After the quick check it then sets
-	# ipv4 or ipv6 for reflector.
-	if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
-		ipv=ipv6
-	else
-		if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
-			ipv=ipv4
-		else
-			echo "Not online"
-		fi
-	fi
 
-	reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
-	pacman -Syy
+if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
+	ipv=ipv6
+else
+    if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+        ipv=ipv4
+    else
+        echo "Not online"
+    fi
 fi
+
+reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
+pacman -Syy
+
+
 
 # Cpu detection
 lscpu | grep 'GenuineIntel' &> /dev/null
@@ -157,8 +167,8 @@ else
 fi
 echo -e "Your CPU is $cpu_model"
 
-pacstrap -i /mnt base base-devel linux linux-firmware \
-	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh \
+pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware \
+	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh snapper apparmor \
 	${cpu_model}-ucode
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
@@ -191,7 +201,25 @@ curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packa
 chmod +x /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
 
-systemctl enable NetworkManager.service fstrim.timer
+systemctl enable NetworkManager.service fstrim.timer snapper-timeline.timer snapper-cleanup.timer apparmor
+
+snapper -c root --no-dbus create-config /
+snapper -c home --no-dbus create-config /home
+
+sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/root
+sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/root
+sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
+sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
+chown -R :wheel /home/.snapshots/
+
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
@@ -271,3 +299,11 @@ options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o 
 END
 
 EOF
+
+read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+echo "thank you for using csjarchlinux installer script"
+reboot
+else echo "thank you for using csjarchlinux installer script"
+fi
