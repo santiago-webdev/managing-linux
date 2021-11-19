@@ -43,7 +43,7 @@ if [[ -z $part ]]; then
     part=yes
 fi
 
-read -r -s -p "Enter encryption password if not reformating enter drive password used for original encryption, or press enter to use defaults:"$'\n'  drive_password
+read -r -s -p "Enter drive password used for original encryption, enter encryption password if not reformatting, or press enter to use defaults:"$'\n'  drive_password
 if [[ -z $drive_password ]]; then
     drive_password=csjarchlinux
 fi
@@ -53,10 +53,10 @@ if [[ $part == "no" ]]; then
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
     drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 "${devicelist}") || exit 1  # Chose which drive to format
     clear  # Clears blue screen from
-    lsblk  # Shows avalable drives
+    lsblk  # Shows available drives
     echo "${drive}"  # Confirms drive selection
-    part_boot="$(ls "${drive}"* | grep -E "^${drive}p?1$")"  # Finds boot partion
-    part_root="$(ls "${drive}"* | grep -E "^${drive}p?2$")"  # Finds root partion
+    part_boot="$(ls "${drive}"* | grep -E "^${drive}p?1$")"  # Finds boot partition
+    part_root="$(ls "${drive}"* | grep -E "^${drive}p?2$")"  # Finds root partition
     mkfs.vfat -F32 "${part_boot}"  # Format the EFI partition
     echo -n "$drive_password" | cryptsetup open "${part_root}" cryptroot -d -  # Open the mapper
     mount /dev/mapper/cryptroot /mnt
@@ -99,11 +99,11 @@ else
     sgdisk --zap-all "${drive}"  # Delete tables
     printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk "${drive}"  # Format the drive
 
-    part_boot="$(ls "${drive}"* | grep -E "^${drive}p?1$")"  # Finds boot partion
-    part_root="$(ls "${drive}"* | grep -E "^${drive}p?2$")"  # Finds root partion
+    part_boot="$(ls "${drive}"* | grep -E "^${drive}p?1$")"  # Finds boot partition
+    part_root="$(ls "${drive}"* | grep -E "^${drive}p?2$")"  # Finds root partition
 
-    echo "${part_boot}"  # Confirms boot partion selection
-    echo "${part_root}"  # Confirms root partion selection
+    echo "${part_boot}"  # Confirms boot partition selection
+    echo "${part_root}"  # Confirms root partition selection
 
     mkdir -p /run/cryptsetup  # Change permission to root only
 	chmod 0700 /run/cryptsetup /run
