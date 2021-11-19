@@ -165,7 +165,7 @@ else
 fi
 printf 'Your CPU is %s\n' "$cpu_model"
 
-pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware \
+pacstrap -i /mnt base base-devel linux linux-firmware \
 	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh snapper apparmor \
 	${cpu_model}
 
