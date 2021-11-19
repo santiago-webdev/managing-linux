@@ -43,7 +43,6 @@ if [[ -z $part ]]; then
     part=yes
 fi
 
-
 read -s -p "Enter encryption password if not reformating enter drive password used for original encryption, or press enter to use defaults:"$'\n'  drive_password
 if [[ -z $drive_password ]]; then
     drive_password=csjarchlinux
@@ -63,7 +62,6 @@ if [[ $part == "no" ]]; then
     mount /dev/mapper/cryptroot /mnt
 
     # Clearing non home data
-
     btrfs subvolume delete /mnt/@pkg
     btrfs subvolume delete /mnt/@var/lib/portables
     btrfs subvolume delete /mnt/@var/lib/machines
@@ -80,8 +78,6 @@ if [[ $part == "no" ]]; then
     btrfs subvolume create /mnt/@var
     btrfs subvolume create /mnt/@srv
     btrfs subvolume create /mnt/@tmp
-
-
     umount /mnt
 
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
@@ -142,7 +138,6 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
-
 if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
 	ipv=ipv6
 else
@@ -155,8 +150,6 @@ fi
 
 reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
 pacman -Syy
-
-
 
 # Cpu detection
 lscpu | grep 'GenuineIntel' &> /dev/null
@@ -219,7 +212,6 @@ sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/co
 sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
 sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
 chown -R :wheel /home/.snapshots/
-
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
@@ -303,7 +295,8 @@ EOF
 read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-echo "thank you for using csjarchlinux installer script"
-reboot
-else echo "thank you for using csjarchlinux installer script"
+	echo "thank you for using csjarchlinux installer script"
+	reboot
+else
+	echo "thank you for using csjarchlinux installer script"
 fi
