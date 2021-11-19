@@ -158,13 +158,12 @@ else
 fi
 
 # Cpu detection
-lscpu | grep 'GenuineIntel' &> /dev/null
-if [[ $? -eq 0 ]]; then
-	cpu_model="intel-ucode"
+if lscpu | grep -q 'GenuineIntel'; then
+    cpu_model="intel-ucode"
 else
-	cpu_model="amd-ucode"
+    cpu_model="amd-ucode"
 fi
-echo -e "Your CPU is $cpu_model"
+printf 'Your CPU is %s\n' "$cpu_model"
 
 pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware \
 	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh snapper apparmor \
