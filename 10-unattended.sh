@@ -51,7 +51,7 @@ fi
 if [[ $part == "no" ]]; then
     pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 "${devicelist}") || exit 1  # Chose which drive to format
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
     clear  # Clears blue screen from
     lsblk  # Shows available drives
     echo "${drive}"  # Confirms drive selection
@@ -92,7 +92,7 @@ if [[ $part == "no" ]]; then
 else
 	pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 "${devicelist}") || exit 1  # Chose which drive to format
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
     clear  # Clears blue screen from
     lsblk  # Shows available drives
     echo "${drive}"  # Confirms drive selection
