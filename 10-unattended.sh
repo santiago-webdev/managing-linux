@@ -13,37 +13,37 @@ set -u  # Treat unset variables as an error when substituting
 # root_password=csjarchlinux
 # drive_password=csjarchlinux
 
-read -p "Enter keymap, or press enter to use defaults:"$'\n'  keymap
+read -r -p "Enter keymap, or press enter to use defaults:"$'\n'  keymap
 if [[ -z $keymap ]]; then
     keymap=us
 fi
 
-read -p "Enter user name, or press enter to use defaults:"$'\n'  username
+read -r -p "Enter user name, or press enter to use defaults:"$'\n'  username
 if [[ -z $username ]]; then
     username=csjarchlinux
 fi
 
-read -p "Enter host name, or press enter to use defaults:"$'\n'  hostname
+read -r -p "Enter host name, or press enter to use defaults:"$'\n'  hostname
 if [[ -z $hostname ]]; then
     hostname=csjarchlinux
 fi
 
-read -s -p "Enter user password, or press enter to use defaults:"$'\n'  user_password
+read -r -s -p "Enter user password, or press enter to use defaults:"$'\n'  user_password
 if [[ -z $user_password ]]; then
     user_password=csjarchlinux
 fi
 
-read -s -p "Enter root password, or press enter to use defaults:"$'\n'  root_password
+read -r -s -p "Enter root password, or press enter to use defaults:"$'\n'  root_password
 if [[ -z $root_password ]]; then
     root_password=csjarchlinux
 fi
 
-read -p "Do you want to wipe full drive yes or no, or press enter to use defaults:"$'\n'  part
+read -r -p "Do you want to wipe full drive yes or no, or press enter to use defaults:"$'\n'  part
 if [[ -z $part ]]; then
     part=yes
 fi
 
-read -s -p "Enter encryption password if not reformating enter drive password used for original encryption, or press enter to use defaults:"$'\n'  drive_password
+read -r -s -p "Enter encryption password if not reformating enter drive password used for original encryption, or press enter to use defaults:"$'\n'  drive_password
 if [[ -z $drive_password ]]; then
     drive_password=csjarchlinux
 fi
@@ -51,14 +51,14 @@ fi
 if [[ $part == "no" ]]; then
     pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 "${devicelist}") || exit 1  # Chose which drive to format
     clear  # Clears blue screen from
     lsblk  # Shows avalable drives
-    echo ${drive}  # Confirms drive selection
-    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
-    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
-    mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
-    echo -n "$drive_password" | cryptsetup open ${part_root} cryptroot -d -  # Open the mapper
+    echo "${drive}"  # Confirms drive selection
+    part_boot="$(ls "${drive}"* | grep -E "^${drive}p?1$")"  # Finds boot partion
+    part_root="$(ls "${drive}"* | grep -E "^${drive}p?2$")"  # Finds root partion
+    mkfs.vfat -F32 "${part_boot}"  # Format the EFI partition
+    echo -n "$drive_password" | cryptsetup open "${part_root}" cryptroot -d -  # Open the mapper
     mount /dev/mapper/cryptroot /mnt
 
     # Clearing non home data
@@ -88,28 +88,29 @@ if [[ $part == "no" ]]; then
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
-	mount ${part_boot} /mnt/boot  # Mount the boot partition
+	mount "${part_boot}" /mnt/boot  # Mount the boot partition
 else
 	pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
-    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
+    drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 "${devicelist}") || exit 1  # Chose which drive to format
     clear  # Clears blue screen from
     lsblk  # Shows available drives
-    echo ${drive}  # Confirms drive selection
-    sgdisk --zap-all ${drive}  # Delete tables
-    printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk ${drive}  # Format the drive
+    echo "${drive}"  # Confirms drive selection
+    sgdisk --zap-all "${drive}"  # Delete tables
+    printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk "${drive}"  # Format the drive
 
-    part_boot="$(ls ${drive}* | grep -E "^${drive}p?1$")"  # Finds boot partion
-    part_root="$(ls ${drive}* | grep -E "^${drive}p?2$")"  # Finds root partion
+    part_boot="$(ls "${drive}"* | grep -E "^${drive}p?1$")"  # Finds boot partion
+    part_root="$(ls "${drive}"* | grep -E "^${drive}p?2$")"  # Finds root partion
 
-    echo ${part_boot}  # Confirms boot partion selection
-    echo ${part_root}  # Confirms root partion selection
+    echo "${part_boot}"  # Confirms boot partion selection
+    echo "${part_root}"  # Confirms root partion selection
 
-    mkdir -p -m0700 /run/cryptsetup  # Change permission to root only
-    echo -n "$drive_password" | cryptsetup luksFormat --type luks2 ${part_root} -d -
-    echo -n "$drive_password" | cryptsetup open ${part_root} cryptroot -d -
+    mkdir -p /run/cryptsetup  # Change permission to root only
+	chmod 0700 /run/cryptsetup /run
+    echo -n "$drive_password" | cryptsetup luksFormat --type luks2 "${part_root}" -d -
+    echo -n "$drive_password" | cryptsetup open "${part_root}" cryptroot -d -
 
-    mkfs.vfat -F32 ${part_boot}  # Format the EFI partition
+    mkfs.vfat -F32 "${part_boot}"  # Format the EFI partition
     mkfs.btrfs /dev/mapper/cryptroot  # Format the encrypted partition
 
     mount /dev/mapper/cryptroot /mnt
@@ -129,7 +130,7 @@ else
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
-    mount ${part_boot} /mnt/boot  # Mount the boot partition
+    mount "${part_boot}" /mnt/boot  # Mount the boot partition
 fi
 
 timedatectl set-ntp true  # Synchronize motherboard clock
@@ -159,15 +160,15 @@ fi
 # Cpu detection
 lscpu | grep 'GenuineIntel' &> /dev/null
 if [[ $? -eq 0 ]]; then
-	cpu_model="intel"
+	cpu_model="intel-ucode"
 else
-	cpu_model="amd"
+	cpu_model="amd-ucode"
 fi
 echo -e "Your CPU is $cpu_model"
 
 pacstrap -i /mnt --noconfirm base base-devel linux linux-firmware \
 	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh snapper apparmor \
-	${cpu_model}-ucode
+	${cpu_model}
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -199,7 +200,9 @@ curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packa
 chmod +x /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
 
-systemctl enable NetworkManager.service fstrim.timer snapper-timeline.timer snapper-cleanup.timer apparmor
+systemctl enable NetworkManager.service fstrim.timer apparmor
+
+systemctl enable snapper-timeline.timer snapper-cleanup.timer
 
 snapper -c root --no-dbus create-config /
 snapper -c home --no-dbus create-config /home
@@ -272,27 +275,27 @@ touch /boot/loader/entries/arch.conf
 tee -a /boot/loader/entries/arch.conf << END
 title Arch Linux
 linux /vmlinuz-linux
-initrd /$cpu_model-ucode.img
+initrd /$cpu_model.img
 initrd /initramfs-linux.img
-options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-zen.conf
 tee -a /boot/loader/entries/arch-zen.conf << END
 title Arch Linux Zen
 linux /vmlinuz-linux-zen
-initrd /$cpu_model-ucode.img
+initrd /$cpu_model.img
 initrd /initramfs-linux-zen.img
-options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 touch /boot/loader/entries/arch-lts.conf
 tee -a /boot/loader/entries/arch-lts.conf << END
 title Arch Linux LTS
 linux /vmlinuz-linux-lts
-initrd /$cpu_model-ucode.img
+initrd /$cpu_model.img
 initrd /initramfs-linux-lts.img
-options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value ${part_root})=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard nmi_watchdog=0 quiet rw
 END
 
 EOF
