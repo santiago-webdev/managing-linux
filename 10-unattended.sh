@@ -138,18 +138,23 @@ sed -i "/#Color/a ILoveCandy" /etc/pacman.conf  # Making pacman prettier
 sed -i "s/#Color/Color/g" /etc/pacman.conf  # Add color to pacman
 sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # Parallel downloads
 
-if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
-	ipv=ipv6
+read -p "Do you want to retrieve the latest mirrors?"$'\n' -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+	if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
+		ipv=ipv6
+	else
+		if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+			ipv=ipv4
+		else
+			echo "Not online"
+		fi
+	fi
+	reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
+	pacman -Syy
 else
-    if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
-        ipv=ipv4
-    else
-        echo "Not online"
-    fi
+	pacman -Syy
 fi
-
-reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
-pacman -Syy
 
 # Cpu detection
 lscpu | grep 'GenuineIntel' &> /dev/null
