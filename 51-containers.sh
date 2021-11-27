@@ -21,6 +21,14 @@ else
 	sudo sysctl kernel.unprivileged_userns_clone=1
 fi
 
+# Adding configs to podman
+sudo sed -i '/An array/a unqualified-search-registries = ["registry.fedoraproject.org", "registry.access.redhat.com", "docker.io"]' /etc/containers/registries.conf
+sudo tee -a /etc/containers/registries.conf <<EOT                                                                                                                          ❰130❱ 
+[[registry]]
+location="localhost:5000"
+insecure=true
+EOT
+
 # Rootless podman (This is also necessary for rootless toolbox)
 sudo touch /etc/subuid /etc/subgid
 sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 "$USER"
