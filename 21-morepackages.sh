@@ -70,6 +70,9 @@ sudo pacman -S --needed \
 	zsh-autosuggestions \
 	zsh-completions \
 
+flatpak upgrade
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
 ./Dotfiles/not-home.sh
 
 rm "$0" # Self delete
