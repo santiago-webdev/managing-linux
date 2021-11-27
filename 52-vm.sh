@@ -13,16 +13,16 @@ echo "Installing all you need"
 sudo pacman -S \
 	qemu qemu-arch-extra vde2 bridge-utils \
     iptables-nft dnsmasq edk2-ovmf openbsd-netcat \
-    virt-manager cockpit cockpit-machines cockpit-pcp pcp virt-viewer \
+    virt-manager pcp virt-viewer \
     packagekit packagekit-qt5
 
 echo "Enabling libvirtd"
 systemctl enable --now libvirtd
 
-echo "Adding your user to the libvirt group"
+echo -e "Adding user $USER to the libvirt group"
 sudo usermod -G libvirt -a "$USER"
 
-systemctl enable --now cockpit.socket pmcd.service pmlogger
+systemctl enable --now pmcd.service pmlogger
 
 echo "Creating bridge and configuring for network in your VMs"
 touch .config/br10.xml

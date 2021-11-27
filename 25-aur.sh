@@ -7,9 +7,4 @@ cd paru || exit
 makepkg -si
 cd "$HOME" || exit
 
-paru -S \
-	brave-bin \
-	neovim-git \
-	nvm \
-
 rm "$0" # Self delete

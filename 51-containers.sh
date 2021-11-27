@@ -9,14 +9,9 @@ else
 	echo "Running as $USER"
 fi
 
-
-# Check packages are installed
-pacman -Q podman toolbox firejail
-
-if [[ $? -eq 1 ]]; then
-	sudo pacman -S podman toolbox docker
-fi
-
+sudo pacman -S podman toolbox
+# sudo pacman -S docker
+# systemctl enable --now docker.service
 
 # Check if running unprivileged user is possible
 KERNEL_PRIVILEGES=$( sysctl kernel.unprivileged_userns_clone | awk '{ printf  "%10s\n", $3 }' )
@@ -26,10 +21,6 @@ else
 	sudo sysctl kernel.unprivileged_userns_clone=1
 fi
 
-
 # Rootless podman (This is also necessary for rootless toolbox)
 sudo touch /etc/subuid /etc/subgid
 sudo usermod --add-subuids 100000-165535 --add-subgids 100000-165535 "$USER"
-
-# Enable docker
-systemctl enable --now docker.service
