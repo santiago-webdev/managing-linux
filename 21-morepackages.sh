@@ -47,6 +47,7 @@ sudo pacman -S --needed \
 	shellcheck \
 	sshfs \
 	terminus-font \
+	tlp \
 	ttc-iosevka \
 	ttf-bitstream-vera \
 	ttf-dejavu \
