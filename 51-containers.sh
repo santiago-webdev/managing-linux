@@ -3,10 +3,10 @@
 # Check if the script is being runned as root
 WHOAMI=$(id -u)
 if [[ $WHOAMI -eq 0 ]]; then
-	echo 'Run this as your normal user'
-	exit
+    echo 'Run this as your normal user'
+    exit
 else
-	echo "Running as $USER"
+    echo "Running as $USER"
 fi
 
 sudo pacman -S podman toolbox
@@ -16,9 +16,9 @@ sudo pacman -S podman toolbox
 # Check if running unprivileged user is possible
 KERNEL_PRIVILEGES=$( sysctl kernel.unprivileged_userns_clone | awk '{ printf  "%10s\n", $3 }' )
 if [[ $KERNEL_PRIVILEGES -eq 1 ]]; then
-	echo 'You have the right privileges, skipping'
+    echo 'You have the right privileges, skipping'
 else
-	sudo sysctl kernel.unprivileged_userns_clone=1
+    sudo sysctl kernel.unprivileged_userns_clone=1
 fi
 
 # Adding configs to podman

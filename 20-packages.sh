@@ -57,7 +57,6 @@ sudo pacman -S --needed \
 	milou \
 	ntfs-3g \
 	okular \
-	otf-overpass \
 	partitionmanager \
 	pipewire \
 	pipewire-alsa \

@@ -88,9 +88,9 @@ if [[ $part == "no" ]]; then
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
     mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
-	mount "${part_boot}" /mnt/boot  # Mount the boot partition
+    mount "${part_boot}" /mnt/boot  # Mount the boot partition
 else
-	pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
+    pacman -Sy dialog --noconfirm  # Install dialog for selecting disk
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)  # Gets disk info for selection
     drive=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1  # Chose which drive to format
     clear  # Clears blue screen from
@@ -106,7 +106,7 @@ else
     echo "${part_root}"  # Confirms root partition selection
 
     mkdir -p /run/cryptsetup  # Change permission to root only
-	chmod 0700 /run/cryptsetup /run
+    chmod 0700 /run/cryptsetup /run
     echo -n "$drive_password" | cryptsetup luksFormat --type luks2 "${part_root}" -d -
     echo -n "$drive_password" | cryptsetup open "${part_root}" cryptroot -d -
 
@@ -142,19 +142,19 @@ sed -i "s/#ParallelDownloads = 5/ParallelDownloads = 10/g" /etc/pacman.conf  # P
 read -p "Do you want to retrieve the latest mirrors?"$'\n' -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-	if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
-		ipv=ipv6
-	else
-		if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
-			ipv=ipv4
-		else
-			echo "Not online"
-		fi
-	fi
-	reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
-	pacman -Syy
+    if ping -q -c 1 -W 1 2001:4860:4860::8888 >/dev/null; then
+        ipv=ipv6
+    else
+        if ping -q -c 1 -W 1 8.8.8.8 >/dev/null; then
+            ipv=ipv4
+        else
+            echo "Not online"
+        fi
+    fi
+    reflector --latest 25 --verbose --protocol https --sort rate --save /etc/pacman.d/mirrorlist --$ipv
+    pacman -Syy
 else
-	pacman -Syy
+    pacman -Syy
 fi
 
 # Cpu detection
@@ -166,8 +166,8 @@ fi
 printf 'Your CPU is %s\n' "$cpu_model"
 
 pacstrap -i /mnt base base-devel linux linux-firmware \
-	networkmanager efibootmgr btrfs-progs neovim zram-generator zsh snapper apparmor \
-	${cpu_model}
+    networkmanager efibootmgr btrfs-progs zram-generator \
+    ${cpu_model}
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
@@ -199,26 +199,7 @@ curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packa
 chmod +x /home/$username/20-packages.sh
 chown $username /home/$username/20-packages.sh
 
-systemctl enable NetworkManager.service fstrim.timer apparmor
-
-systemctl enable snapper-timeline.timer snapper-cleanup.timer
-
-snapper -c root --no-dbus create-config /
-snapper -c home --no-dbus create-config /home
-
-sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/root
-sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/root
-sed -i 's/ALLOW_GROUPS=""/ALLOW_GROUPS="wheel"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_HOURLY="10"/TIMELINE_LIMIT_HOURLY="16"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_DAILY="10"/TIMELINE_LIMIT_DAILY="7"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_WEEKLY="0"/TIMELINE_LIMIT_WEEKLY="4"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_MONTHLY="10"/TIMELINE_LIMIT_MONTHLY="1"'/g /etc/snapper/configs/home
-sed -i 's/TIMELINE_LIMIT_YEARLY="10"/TIMELINE_LIMIT_YEARLY="0"'/g /etc/snapper/configs/home
-chown -R :wheel /home/.snapshots/
+systemctl enable NetworkManager.service fstrim.timer
 
 journalctl --vacuum-size=100M --vacuum-time=2weeks
 
@@ -302,8 +283,8 @@ EOF
 read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
 echo
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-	echo "thank you for using csjarchlinux installer script"
-	reboot
+    echo "thank you for using csjarchlinux installer script"
+    reboot
 else
-	echo "thank you for using csjarchlinux installer script"
+    echo "thank you for using csjarchlinux installer script"
 fi
