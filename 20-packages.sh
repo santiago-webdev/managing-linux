@@ -36,7 +36,6 @@ sudo pacman -S --needed \
     kdialog \
     khotkeys \
     kinfocenter \
-    kitty \
     kmenuedit \
     kscreen \
     kscreenlocker \
@@ -81,6 +80,7 @@ sudo pacman -S --needed \
     spectacle \
     systemsettings \
     vulkan-intel \
+    wezterm \
     wl-clipboard \
     xdg-desktop-portal \
     xdg-desktop-portal-kde \

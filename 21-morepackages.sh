@@ -12,7 +12,6 @@ sudo pacman -S --needed \
     flatpak \
     fzf \
     git \
-    github-cli \
     gst-libav \
     gst-plugins-bad \
     gst-plugins-good \
@@ -71,9 +70,6 @@ sudo pacman -S --needed \
     z \
     zsh-autosuggestions \
     zsh-completions \
-
-flatpak upgrade
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
 ./Dotfiles/not-home.sh
 
