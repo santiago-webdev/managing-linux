@@ -170,10 +170,10 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
     ${cpu_model}
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
-arch-chroot /mnt /bin/bash << EOF
+# arch-chroot /mnt /bin/bash << EOF
 
 timedatectl set-ntp true
-ln -sf /usr/share/zoneinfo/$(curl -s http://ip-api.com/line?fields=timezone) /etc/localtime &>/dev/null
+ln -sf /usr/share/zoneinfo/"$(curl -s http://ip-api.com/line?fields=timezone)" /etc/localtime &>/dev/null
 hwclock --systohc
 sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
 echo "LANG=en_US.UTF-8" > /etc/locale.conf
@@ -194,10 +194,6 @@ echo -e "$hostname" > /etc/hostname
 useradd -g users -G wheel -m $username
 echo -en "$root_password\n$root_password" | passwd
 echo -en "$user_password\n$user_password" | passwd $username
-
-curl https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/20-packages.sh > /home/$username/20-packages.sh
-chmod +x /home/$username/20-packages.sh
-chown $username /home/$username/20-packages.sh
 
 systemctl enable NetworkManager.service fstrim.timer
 
@@ -278,7 +274,7 @@ initrd /initramfs-linux-lts.img
 options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
 
-EOF
+# EOF
 
 read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
 echo

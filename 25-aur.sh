@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-rustup default stable
+sudo pacman -S rustup
 
-git clone https://aur.archlinux.org/paru.git
+rustup default stable
+rustup self upgrade-data
+
+git clone --depth=1 https://aur.archlinux.org/paru.git
 cd paru || exit
 makepkg -si
-cd "$HOME" || exit
-
-rm "$0" # Self delete
