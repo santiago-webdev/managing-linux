@@ -188,7 +188,10 @@ echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
 echo "Defaults !tty_tickets" >> /etc/sudoers
 sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
 sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
-sed -i 's/#MAKEFLAGS="-j2"/MAKEFLAGS="-j$(nproc)"/g; s/-)/--threads=0 -)/g; s/gzip/pigz/g; s/bzip2/pbzip2/g' /etc/makepkg.conf
+sed -i "s/# MAKEFLAGS=\"-j2\"/MAKEFLAGS=\"-j$(nproc)\"/g" /etc/makepkg.conf
+sed -i "s/-)/--threads=0 -)/g" /etc/makepkg.conf
+sed -i "s/gzip/pigz/g" /etc/makepkg.conf
+sed -i "s/bzip2/pbzip2/g" /etc/makepkg.conf
 
 echo -e "$hostname" > /etc/hostname
 useradd -g users -G wheel -m $username
