@@ -170,7 +170,7 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
     ${cpu_model}
 
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
-# arch-chroot /mnt /bin/bash << EOF
+arch-chroot /mnt /bin/bash << EOF
 
 timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/"$(curl -s http://ip-api.com/line?fields=timezone)" /etc/localtime &>/dev/null
@@ -277,7 +277,7 @@ initrd /initramfs-linux-lts.img
 options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
 END
 
-# EOF
+EOF
 
 read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
 echo
