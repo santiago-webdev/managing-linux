@@ -23,7 +23,7 @@ fi
 
 # Adding configs to podman
 sudo sed -i '/An array/a unqualified-search-registries = ["registry.fedoraproject.org", "registry.access.redhat.com", "docker.io"]' /etc/containers/registries.conf
-sudo tee -a /etc/containers/registries.conf <<EOT                                                                                                                          ❰130❱ 
+sudo tee -a /etc/containers/registries.conf <<EOT
 [[registry]]
 location="localhost:5000"
 insecure=true
