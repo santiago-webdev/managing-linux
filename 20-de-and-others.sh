@@ -4,18 +4,11 @@ set -e
 
 sudo pacman -S --needed \
     apparmor \
-    bat \
     bluedevil \
     bluez \
     breeze breeze-gtk kde-gtk-config \
     dolphin ark \
-    exa \
     firewalld \
-    fzf \
-    git \
-    gnome-keyring \
-    gwenview \
-    hdparm \
     hunspell-en_us  \
     hunspell-es_ar \
     intel-media-driver \
@@ -28,9 +21,6 @@ sudo pacman -S --needed \
     kscreen \
     kwallet kwalletmanager \
     libappindicator-gtk2 libappindicator-gtk3 \
-    linux-zen \
-    man \
-    noto-fonts-emoji \
     okular \
     pipewire-alsa pipewire-pulse \
     plasma-browser-integration \
@@ -43,24 +33,16 @@ sudo pacman -S --needed \
     plasma-workspace \
     power-profiles-daemon \
     powerdevil \
-    python python-pip \
-    ripgrep \
-    rsync \
     sddm-kcm sddm \
     spectacle \
     ttc-iosevka \
     ttf-jetbrains-mono \
     unclutter \
-    unzip zip \
     vulkan-intel \
-    wget \
-    wl-clipboard \
     xdg-desktop-portal xdg-desktop-portal-kde \
-    zsh \
-
-chsh -s /bin/zsh "$USER"
 
 systemctl enable sddm.service apparmor.service bluetooth.service
 
-systemctl enable --now firewalld.service
-sudo firewall-cmd --zone=home --change-interface=wlp0s20f3 --permanent
+# kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,toggleDisplay"
+kwriteconfig5 --file ~/.config/kwinrc --group Windows --key BorderlessMaximizedWindows true
+# qdbus org.kde.KWin /KWin reconfigure # Apply settings to plasma
