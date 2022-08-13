@@ -172,7 +172,6 @@ pacstrap -i /mnt base base-devel linux linux-firmware \
 genfstab -U /mnt >> /mnt/etc/fstab  # Generate the entries for fstab
 arch-chroot /mnt /bin/bash << EOF
 
-timedatectl set-ntp true
 ln -sf /usr/share/zoneinfo/"$(curl -s http://ip-api.com/line?fields=timezone)" /etc/localtime &>/dev/null
 hwclock --systohc
 sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
