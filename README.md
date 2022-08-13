@@ -21,7 +21,7 @@ and it only works for UEFI systems:
 
 Partition | Size
 --- | ---
-/boot | 333Mb
+/boot | 800Mb
 / | The rest of the drive
 
 The subvolumes are mounted into

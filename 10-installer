@@ -97,7 +97,7 @@ else
     lsblk  # Shows available drives
     echo "${drive}"  # Confirms drive selection
     sgdisk --zap-all "${drive}"  # Delete tables
-    printf "n\n1\n\n+333M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk "${drive}"  # Format the drive
+    printf "n\n1\n\n+800M\nef00\nn\n2\n\n\n\nw\ny\n" | gdisk "${drive}"  # Format the drive
 
     part_boot="$(ls "${drive}"* | grep -E "^${drive}p?1$")"  # Finds boot partition
     part_root="$(ls "${drive}"* | grep -E "^${drive}p?2$")"  # Finds root partition
