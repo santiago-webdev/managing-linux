@@ -8,13 +8,6 @@ curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-in
 chmod +x 10-installer # Make it executable
 ```
 
-## Run the script
-The 10-installer script is interactive, there's also a simplified version, which
-you should read before running, inside 5-simplified there's more instructions.
-```bash
-./10-installer # Or ./5-simplified
-```
-
 ## What will the 10-installer script do:
 It will install Arch Linux in the drive that you selected, with luks2 encryption, btrfs
 and it only works for UEFI systems:
@@ -49,3 +42,10 @@ Also the user that you created was just added to the wheel and users groups
 
 And that's pretty much it, the rest of scripts are more personal scripts that you
 might find useful to set up your environment.
+
+## Run the script
+The 10-installer script is interactive, there's also a simplified version, which
+you should read before running, inside 5-simplified there's more instructions.
+```bash
+./10-installer # Or ./5-simplified
+```
