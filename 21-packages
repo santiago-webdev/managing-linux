@@ -13,12 +13,15 @@ sudo pacman -S --noconfirm --needed \
     gnome-keyring \
     gwenview \
     hdparm \
+    inter-font \
     linux-zen \
     man \
     noto-fonts-emoji \
     python python-pip \
     ripgrep \
     rsync \
+    ttc-iosevka \
+    ttf-jetbrains-mono \
     unzip zip \
     vi \
     wget \
