@@ -21,7 +21,7 @@ sudo pacman -S --noconfirm --needed \
     ripgrep \
     rsync \
     ttc-iosevka \
-    ttf-jetbrains-mono \
+    ttf-nerd-fonts-symbols \
     unzip zip \
     vi \
     wget \
