@@ -3,29 +3,34 @@
 set -e
 
 sudo pacman -S --noconfirm --needed \
-    bat \
-    cmake \
-    exa \
-    firefox-developer-edition \
-    fuse \
-    fzf \
-    git \
-    gnome-keyring \
-    gwenview \
-    hdparm \
-    inter-font \
-    linux-zen \
-    man \
-    noto-fonts-emoji \
-    python python-pip \
-    ripgrep \
-    rsync \
-    ttc-iosevka \
-    ttf-nerd-fonts-symbols \
-    unzip zip \
-    vi \
-    wget \
-    wl-clipboard \
-    zsh \
+  adobe-source-han-sans-otc-fonts \
+  bat \
+  cmake \
+  exa \
+  firefox-developer-edition \
+  fuse \
+  fzf \
+  git \
+  gnome-keyring \
+  gwenview \
+  hdparm \
+  inter-font \
+  linux-zen \
+  man \
+  noto-fonts-cjk \
+  noto-fonts-emoji \
+  python python-pip \
+  ripgrep \
+  rsync \
+  ttc-iosevka \
+  ttf-nerd-fonts-symbols-2048-em \
+  unzip zip \
+  vi \
+  wget \
+  wl-clipboard \
+  zsh
 
-chsh -s /bin/zsh "$USER"
+# This changes the default shell to zsh.
+if [[ ! $(basename "$SHELL") == 'zsh' ]]; then
+  chsh -s /bin/zsh "$USER"
+fi
