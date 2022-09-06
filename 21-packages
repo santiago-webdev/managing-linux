@@ -15,6 +15,7 @@ sudo pacman -S --noconfirm --needed \
   gwenview \
   hdparm \
   inter-font \
+  kitty \
   linux-zen \
   man \
   noto-fonts-cjk \
