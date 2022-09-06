@@ -2,7 +2,8 @@
 
 # Check if the script is being runned as root
 WHOAMI=$(id -u)
-if [[ $WHOAMI -eq 0 ]]; then
+if [[ $WHOAMI -eq 0 ]]
+then
     echo 'Run this as your normal user'
     exit
 else
@@ -15,7 +16,8 @@ sudo pacman -S podman toolbox
 
 # Check if running unprivileged user is possible
 KERNEL_PRIVILEGES=$( sysctl kernel.unprivileged_userns_clone | awk '{ printf  "%10s\n", $3 }' )
-if [[ $KERNEL_PRIVILEGES -eq 1 ]]; then
+if [[ $KERNEL_PRIVILEGES -eq 1 ]]
+then
     echo 'You have the right privileges, skipping'
 else
     sudo sysctl kernel.unprivileged_userns_clone=1

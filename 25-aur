@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # Install and configure rustup if the binary is not found
-if [[ ! $(hash rustup) ]]; then
+if [[ ! $(hash rustup) ]]
+then
   sudo pacman -S rustup
-
   rustup default stable
   rustup self upgrade-data
 fi
