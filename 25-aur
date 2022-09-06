@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-sudo pacman -S rustup
+# Install and configure rustup if the binary is not found
+if [[ ! $(hash rustup) ]]; then
+  sudo pacman -S rustup
 
-rustup default stable
-rustup self upgrade-data
+  rustup default stable
+  rustup self upgrade-data
+fi
 
 git clone --depth=1 https://aur.archlinux.org/paru.git
 cd paru || exit
