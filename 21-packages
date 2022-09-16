@@ -23,6 +23,7 @@ sudo pacman -S --noconfirm --needed \
   python python-pip \
   ripgrep \
   rsync \
+  tree-sitter \
   ttc-iosevka \
   ttf-nerd-fonts-symbols-2048-em \
   unzip zip \
