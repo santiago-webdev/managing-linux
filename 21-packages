@@ -18,6 +18,7 @@ sudo pacman -S --noconfirm --needed \
   kitty \
   linux-zen \
   man \
+  ninja \
   noto-fonts-cjk \
   noto-fonts-emoji \
   python python-pip \
