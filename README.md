@@ -4,7 +4,7 @@ This are my personal scripts to install Arch Linux
 # How to get the script
 From the booted liveiso you can simply do this
 ```bash
-curl -O https://raw.githubusercontent.com/santigo-zero/csjarchlinux/master/10-installer
+curl -O https://raw.githubusercontent.com/santigo-zero/csj-archlinux/master/10-installer
 chmod +x 10-installer # Make it executable
 ```
 
