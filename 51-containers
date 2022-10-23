@@ -10,9 +10,8 @@ else
     echo "Running as $USER"
 fi
 
-sudo pacman -S podman toolbox
-# sudo pacman -S docker
-# systemctl enable --now docker.service
+sudo pacman -S podman toolbox docker
+systemctl enable --now docker.service
 
 # Check if running unprivileged user is possible
 KERNEL_PRIVILEGES=$( sysctl kernel.unprivileged_userns_clone | awk '{ printf  "%10s\n", $3 }' )
