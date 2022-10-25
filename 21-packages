@@ -16,6 +16,7 @@ sudo pacman -S --noconfirm --needed \
   gwenview \
   hdparm \
   inter-font \
+  linux-lts \
   linux-zen \
   man \
   ninja \
