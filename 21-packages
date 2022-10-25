@@ -15,7 +15,6 @@ sudo pacman -S --noconfirm --needed \
   gwenview \
   hdparm \
   inter-font \
-  kitty \
   linux-zen \
   man \
   ninja \
@@ -25,8 +24,6 @@ sudo pacman -S --noconfirm --needed \
   ripgrep \
   rsync \
   tree-sitter \
-  ttc-iosevka \
-  ttf-nerd-fonts-symbols-2048-em \
   unzip zip \
   vi \
   wget \
