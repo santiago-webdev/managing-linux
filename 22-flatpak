@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+set -e
+
+# If `flatpak` is available we stop right there.
+if [[ $(hash flatpak) ]]
+then
+  exit
+fi
+
+# Install flatpak
+sudo pacman -S flatpak
+
+# Add flathub repo
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+flatpak install --assumeyes flathub \
+  com.discordapp.Discord \
+  com.github.tchx84.Flatseal \
+  im.riot.Riot \
+  us.zoom.Zoom
