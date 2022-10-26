@@ -19,6 +19,7 @@ sudo pacman -S --noconfirm --needed \
   linux-lts \
   linux-zen \
   man \
+  mpv \
   ninja \
   noto-fonts-cjk \
   noto-fonts-emoji \

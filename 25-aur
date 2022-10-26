@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Install and configure rustup if the binary is not found
-if [[ ! $(hash rustup) ]]
+if [[ ! $(command -v rustup) ]]
 then
   sudo pacman -S rustup
   rustup default stable
