@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+echo "This script assumes that certain environment variables are present"
+echo "you can find which ones I'm using on my dotfiles"
+echo "at https://github.com/santigo-zero/dotfiles/blob/master/.zshenv"
+
+# Rustup
+# https://rustup.rs/
+if [[ ! $(command -v rustup) ]]
+then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  # rustup default stable
+  # rustup self upgrade-data
+fi
+
+echo 'Installing stylua'
+cargo install stylua
+
+echo 'Installing fnm'
+cargo install fnm
+
+echo 'Installing paru'
+cargo install paru
+
+# SDKMAN!
+# https://sdkman.io/install
+if [[ ! $(command -v sdk) ]]
+then
+  curl -s "https://get.sdkman.io?rcupdate=false" | bash
+fi
+
+source "${HOME}/.local/lib/sdkman/bin/sdkman-init.sh" # SDKMAN!
+
+echo 'Installing java'
+sdk install java
+
+echo 'Installing maven'
+sdk install maven
+
+# TODO
+# # GHCup
+# # https://www.haskell.org/ghcup/
+# if [[ ! $(command -v sdk) ]]
+# then
+#   curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
+# fi

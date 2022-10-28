@@ -30,11 +30,4 @@ sudo pacman -S --noconfirm --needed \
   unzip zip \
   vi \
   wget \
-  wl-clipboard \
-  zsh
-
-# This changes the default shell to zsh.
-if [[ ! $(basename "$SHELL") == 'zsh' ]]
-then
-  chsh -s /bin/zsh "$USER"
-fi
+  wl-clipboard

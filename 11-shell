@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+sudo pacman -Syu --noconfirm --needed zsh
+
+# This changes the default shell to zsh.
+if [[ ! $(basename "$SHELL") == 'zsh' ]]
+then
+  chsh -s /bin/zsh "$USER"
+fi
