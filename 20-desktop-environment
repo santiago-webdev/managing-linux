@@ -40,7 +40,6 @@ sudo pacman -S --needed \
   sddm \
   sddm-kcm \
   spectacle \
-  unclutter \
   vulkan-intel \
   xdg-desktop-portal \
   xdg-desktop-portal-kde
