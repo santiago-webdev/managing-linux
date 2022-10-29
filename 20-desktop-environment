@@ -36,6 +36,7 @@ sudo pacman -S --needed \
   plasma-workspace \
   power-profiles-daemon \
   powerdevil \
+  qt5-imageformats \
   sddm \
   sddm-kcm \
   spectacle \
