@@ -3,7 +3,4 @@
 sudo pacman -Syu --noconfirm --needed zsh
 
 # This changes the default shell to zsh.
-if [[ ! $(basename "$SHELL") == 'zsh' ]]
-then
-  chsh -s /bin/zsh "$USER"
-fi
+[[ ! $(basename "$SHELL") == 'zsh' ]] && chsh -s /bin/zsh "$USER"

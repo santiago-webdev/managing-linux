@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-echo "This script assumes that certain environment variables are present"
-echo "you can find which ones I'm using on my dotfiles"
-echo "at https://github.com/santigo-zero/dotfiles/blob/master/.zshenv"
-
 # Rustup
 # https://rustup.rs/
 if [[ ! $(command -v rustup) ]]
@@ -13,13 +9,8 @@ then
   # rustup self upgrade-data
 fi
 
-echo 'Installing stylua'
 cargo install stylua
-
-echo 'Installing fnm'
 cargo install fnm
-
-echo 'Installing paru'
 cargo install paru
 
 # SDKMAN!
@@ -36,11 +27,3 @@ sdk install java
 
 echo 'Installing maven'
 sdk install maven
-
-# TODO
-# # GHCup
-# # https://www.haskell.org/ghcup/
-# if [[ ! $(command -v sdk) ]]
-# then
-#   curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
-# fi

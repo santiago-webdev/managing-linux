@@ -2,20 +2,19 @@
 
 set -e
 
-# If `flatpak` is available we stop right there.
-if [[ $(hash flatpak) ]]
-then
-  exit
-fi
-
 # Install flatpak
-sudo pacman -S flatpak
+sudo pacman -S --noconfirm --needed flatpak
 
 # Add flathub repo
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak --user remote-add --if-not-exists kdeapps --from https://distribute.kde.org/kdeapps.flatpakrepo
+
+flatpak --user update --appstream
+flatpak --user -y upgrade
 
 flatpak install --assumeyes flathub \
   com.discordapp.Discord \
-  com.github.tchx84.Flatseal \
   im.riot.Riot \
-  us.zoom.Zoom
+  com.obsproject.Studio \
+  com.brave.Browser \
+  com.google.Chrome \

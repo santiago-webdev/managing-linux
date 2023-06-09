@@ -2,7 +2,7 @@
 
 set -e
 
-sudo pacman -S --needed \
+sudo pacman -S --noconfirm --needed \
   apparmor \
   bluedevil \
   bluez \
@@ -46,6 +46,8 @@ sudo pacman -S --needed \
 
 systemctl enable sddm.service apparmor.service bluetooth.service
 
+# Open krunner using Meta
 kwriteconfig5 --file kwinrc --group ModifierOnlyShortcuts --key Meta "org.kde.krunner,/App,,toggleDisplay"
+# Don't use title bars in maximized windows
 kwriteconfig5 --file ~/.config/kwinrc --group Windows --key BorderlessMaximizedWindows true
 # qdbus org.kde.KWin /KWin reconfigure # This hot-reloads most settings in Plasma.
