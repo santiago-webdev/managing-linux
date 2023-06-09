@@ -12,7 +12,7 @@ flatpak --user remote-add --if-not-exists kdeapps --from https://distribute.kde.
 flatpak --user update --appstream
 flatpak --user -y upgrade
 
-flatpak install --assumeyes flathub \
+flatpak install --user --assumeyes flathub \
   com.discordapp.Discord \
   im.riot.Riot \
   com.obsproject.Studio \
