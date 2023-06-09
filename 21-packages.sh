@@ -8,7 +8,6 @@ sudo pacman -S --noconfirm --needed \
   cmake \
   exa \
   firefox \
-  foot \
   fuse \
   fzf \
   git \

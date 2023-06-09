@@ -1,17 +1,33 @@
 #!/usr/bin/env bash
 
-# Rustup
-# https://rustup.rs/
-if [[ ! $(command -v rustup) ]]
+set -e
+
+# Rustup if [[ ! $(command -v rustup) ]]
+if ! command -v rustup &> /dev/null
 then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  # rustup default stable
-  # rustup self upgrade-data
 fi
 
 cargo install stylua
-cargo install fnm
 cargo install paru
+
+# fnm
+if ! command -v fnm &> /dev/null
+then
+  cargo install fnm
+
+  export PATH="/home/st/.local/share/fnm:$PATH"
+  eval "$(fnm env)"
+  fnm install --lts
+fi
+
+# pnpm
+if ! command -v pnpm &> /dev/null
+then
+  corepack enable
+  corepack prepare pnpm@latest --activate
+  pnpm setup
+fi
 
 # SDKMAN!
 # https://sdkman.io/install
@@ -21,9 +37,4 @@ then
 fi
 
 source "${HOME}/.local/lib/sdkman/bin/sdkman-init.sh" # SDKMAN!
-
-echo 'Installing java'
 sdk install java
-
-echo 'Installing maven'
-sdk install maven
