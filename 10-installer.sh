@@ -25,6 +25,8 @@ read -r -s -p $'Enter root password: \n' root_password
 root_password=${root_password:-arch}
 read -r -p "Do you want to wipe the full drive? (YES/no): " part
 part=${part:-yes}
+read -r -s -p $'Enter drive password: \n' drive_password
+drive_password=${drive_password:-arch}
 
 echo -e "\n\n"
 read -n 1 -r -p "Do you want to print the variables on the screen? (y/N): " print_variables
@@ -36,6 +38,7 @@ if [[ $print_variables =~ ^[Yy]$ ]]; then
   echo "User Password -> $user_password"
   echo "Root Password -> $root_password"
   echo "Wipe Full Drive -> $part"
+  echo "Drive Password -> $drive_password"
 fi
 
 if [[ $part == "no" ]]; then
@@ -168,107 +171,104 @@ pacstrap -i /mnt \
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-# arch-chroot
-{
-  ln -sf /usr/share/zoneinfo/"$(curl -s http://ip-api.com/line?fields=timezone)" /etc/localtime &>/dev/null
-  hwclock --systohc
-  sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
-  echo "LANG=en_US.UTF-8" > /etc/locale.conf
-  locale-gen
+arch-chroot /mnt ln -sf /usr/share/zoneinfo/"$(curl -s http://ip-api.com/line?fields=timezone)" /etc/localtime &>/dev/null
+arch-chroot /mnt hwclock --systohc
+arch-chroot /mnt sed -i "s/#en_US/en_US/g; s/#es_AR/es_AR/g" /etc/locale.gen
+arch-chroot /mnt echo "LANG=en_US.UTF-8" > /etc/locale.conf
+arch-chroot /mnt locale-gen
 
-  echo -e "127.0.0.1\tlocalhost" > /etc/hosts
-  echo -e "::1\t\tlocalhost" >> /etc/hosts
-  echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
+arch-chroot /mnt echo -e "127.0.0.1\tlocalhost" > /etc/hosts
+arch-chroot /mnt echo -e "::1\t\tlocalhost" >> /etc/hosts
+arch-chroot /mnt echo -e "127.0.1.1\t$hostname.localdomain\t$hostname" >> /etc/hosts
 
-  echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
-  echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
-  echo "Defaults !tty_tickets" >> /etc/sudoers
-  sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
-  sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
+arch-chroot /mnt echo -e "KEYMAP=$keymap" > /etc/vconsole.conf
+arch-chroot /mnt echo "%wheel ALL=(ALL) ALL" >> /etc/sudoers
+arch-chroot /mnt echo "Defaults !tty_tickets" >> /etc/sudoers
+arch-chroot /mnt sed -i "/#Color/a ILoveCandy" /etc/pacman.conf
+arch-chroot /mnt sed -i "s/#Color/Color/g; s/#ParallelDownloads = 5/ParallelDownloads = 6/g; s/#UseSyslog/UseSyslog/g; s/#VerbosePkgLists/VerbosePkgLists/g" /etc/pacman.conf
 
-  echo -e "$hostname" > /etc/hostname
-  useradd -g users -G wheel -m $username
-  echo -en "$root_password\n$root_password" | passwd
-  echo -en "$user_password\n$user_password" | passwd $username
+arch-chroot /mnt echo -e "$hostname" > /etc/hostname
+arch-chroot /mnt useradd -g users -G wheel -m $username
+arch-chroot /mnt echo -en "$root_password\n$root_password" | passwd
+arch-chroot /mnt echo -en "$user_password\n$user_password" | passwd $username
 
-  systemctl enable NetworkManager.service fstrim.timer
+arch-chroot /mnt systemctl enable NetworkManager.service fstrim.timer
 
-  journalctl --vacuum-size=100M --vacuum-time=2weeks
+arch-chroot /mnt journalctl --vacuum-size=100M --vacuum-time=2weeks
 
-  touch /etc/systemd/zram-generator.conf
-  tee -a /etc/systemd/zram-generator.conf << END
-  [zram0]
-  zram-fraction = 1
-  max-zram-size = 4096
-  END
+arch-chroot /mnt touch /etc/systemd/zram-generator.conf
+arch-chroot /mnt tee -a /etc/systemd/zram-generator.conf << END
+[zram0]
+zram-fraction = 1
+max-zram-size = 4096
+END
 
-  touch /etc/sysctl.d/99-swappiness.conf
-  echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
+arch-chroot /mnt touch /etc/sysctl.d/99-swappiness.conf
+arch-chroot /mnt echo 'vm.swappiness=20' > /etc/sysctl.d/99-swappiness.conf
 
-  touch /etc/udev/rules.d/backlight.rules
-  tee -a /etc/udev/rules.d/backlight.rules << END
-  ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video $sys$devpath/brightness", RUN+="/bin/chmod g+w $sys$devpath/brightness"
-  END
+arch-chroot /mnt touch /etc/udev/rules.d/backlight.rules
+arch-chroot /mnt tee -a /etc/udev/rules.d/backlight.rules << END
+ACTION=="add", SUBSYSTEM=="backlight", RUN+="/bin/chgrp video $sys$devpath/brightness", RUN+="/bin/chmod g+w $sys$devpath/brightness"
+END
 
-  touch /etc/udev/rules.d/81-backlight.rules
-  tee -a /etc/udev/rules.d/81-backlight.rules << END
-  SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="intel_backlight", ATTR{brightness}="9000"
-  END
+arch-chroot /mnt touch /etc/udev/rules.d/81-backlight.rules
+arch-chroot /mnt tee -a /etc/udev/rules.d/81-backlight.rules << END
+SUBSYSTEM=="backlight", ACTION=="add", KERNEL=="intel_backlight", ATTR{brightness}="9000"
+END
 
-  mkdir -p /etc/pacman.d/hooks/
-  touch /etc/pacman.d/hooks/100-systemd-boot.hook
-  tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
-  [Trigger]
-  Type = Package
-  Operation = Upgrade
-  Target = systemd
+arch-chroot /mnt mkdir -p /etc/pacman.d/hooks/
+arch-chroot /mnt touch /etc/pacman.d/hooks/100-systemd-boot.hook
+arch-chroot /mnt tee -a /etc/pacman.d/hooks/100-systemd-boot.hook << END
+[Trigger]
+Type = Package
+Operation = Upgrade
+Target = systemd
 
-  [Action]
-  Description = Updating systemd-boot
-  When = PostTransaction
-  Exec = /usr/bin/bootctl update
-  END
+[Action]
+Description = Updating systemd-boot
+When = PostTransaction
+Exec = /usr/bin/bootctl update
+END
 
-  sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
-  sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
-  mkinitcpio -P
-  bootctl --path=/boot/ install
+arch-chroot /mnt sed -i "s/^HOOKS.*/HOOKS=(base systemd keyboard autodetect sd-vconsole modconf block sd-encrypt btrfs filesystems fsck)/g" /etc/mkinitcpio.conf
+arch-chroot /mnt sed -i 's/^MODULES.*/MODULES=(intel_agp i915)/' /etc/mkinitcpio.conf
+arch-chroot /mnt mkinitcpio -P
+arch-chroot /mnt bootctl --path=/boot/ install
 
-  mkdir -p /boot/loader/
-  tee -a /boot/loader/loader.conf << END
-  default arch.conf
-  console-mode max
-  editor no
-  END
+arch-chroot /mnt mkdir -p /boot/loader/
+arch-chroot /mnt tee -a /boot/loader/loader.conf << END
+default arch.conf
+console-mode max
+editor no
+END
 
-  mkdir -p /boot/loader/entries/
-  touch /boot/loader/entries/arch.conf
-  tee -a /boot/loader/entries/arch.conf << END
-  title Arch Linux
-  linux /vmlinuz-linux
-  initrd /$cpu_model.img
-  initrd /initramfs-linux.img
-  options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
-  END
+arch-chroot /mnt mkdir -p /boot/loader/entries/
+arch-chroot /mnt touch /boot/loader/entries/arch.conf
+arch-chroot /mnt tee -a /boot/loader/entries/arch.conf << END
+title Arch Linux
+linux /vmlinuz-linux
+initrd /$cpu_model.img
+initrd /initramfs-linux.img
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+END
 
-  touch /boot/loader/entries/arch-zen.conf
-  tee -a /boot/loader/entries/arch-zen.conf << END
-  title Arch Linux Zen
-  linux /vmlinuz-linux-zen
-  initrd /$cpu_model.img
-  initrd /initramfs-linux-zen.img
-  options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
-  END
+arch-chroot /mnt touch /boot/loader/entries/arch-zen.conf
+arch-chroot /mnt tee -a /boot/loader/entries/arch-zen.conf << END
+title Arch Linux Zen
+linux /vmlinuz-linux-zen
+initrd /$cpu_model.img
+initrd /initramfs-linux-zen.img
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+END
 
-  touch /boot/loader/entries/arch-lts.conf
-  tee -a /boot/loader/entries/arch-lts.conf << END
-  title Arch Linux LTS
-  linux /vmlinuz-linux-lts
-  initrd /$cpu_model.img
-  initrd /initramfs-linux-lts.img
-  options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
-  END
-} | arch-chroot /mnt
+arch-chroot /mnt touch /boot/loader/entries/arch-lts.conf
+arch-chroot /mnt tee -a /boot/loader/entries/arch-lts.conf << END
+title Arch Linux LTS
+linux /vmlinuz-linux-lts
+initrd /$cpu_model.img
+initrd /initramfs-linux-lts.img
+options lsm=landlock,lockdown,yama,apparmor,bpf rd.luks.name=$(blkid -s UUID -o value "${part_root}")=cryptroot root=/dev/mapper/cryptroot rootflags=subvol=@ rd.luks.options=discard i915.fastboot=1 i915.enable_fbc=1 i915.enable_guc=2 nmi_watchdog=0 quiet rw
+END
 
 read -n 1 -r -p "Do you wish to reboot? (y/N)"
 [[ $REPLY =~ ^[Yy]$ ]] && reboot
