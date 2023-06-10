@@ -10,6 +10,9 @@ sudo pacman -S --noconfirm --needed \
   breeze-gtk \
   dolphin ark \
   firewalld \
+  gnome-settings-daemon \
+  gsettings-desktop-schemas \
+  gsettings-qt \
   hunspell-en_us  \
   hunspell-es_ar \
   intel-media-driver \
