@@ -7,45 +7,35 @@ set -u  # Treat unset variables as an error when substituting
 ## This are the defaults, so it's easier to test the script
 # part=yes
 # keymap=us
-# username=csjarchlinux  # Can only be lowercase and no signs
+# username=arch  # Can only be lowercase and no signs
 # hostname=desktop
-# user_password=csjarchlinux
-# root_password=csjarchlinux
-# drive_password=csjarchlinux
+# user_password=arch
+# root_password=arch
+# drive_password=arch
 
-read -r -p "Enter keymap, or press enter to use defaults:"$'\n'  keymap
-if [[ -z $keymap ]]; then
-    keymap=us
-fi
+read -r -p "Enter keymap: " keymap
+keymap=${keymap:-us}
+read -r -p "Enter user name: " username
+username=${username:-arch}
+read -r -p "Enter host name: " hostname
+hostname=${hostname:-arch}
+read -r -s -p $'Enter user password: \n' user_password
+user_password=${user_password:-arch}
+read -r -s -p $'Enter root password: \n' root_password
+root_password=${root_password:-arch}
+read -r -p "Do you want to wipe the full drive? (YES/no): " part
+part=${part:-yes}
 
-read -r -p "Enter user name, or press enter to use defaults:"$'\n'  username
-if [[ -z $username ]]; then
-    username=csjarchlinux
-fi
-
-read -r -p "Enter host name, or press enter to use defaults:"$'\n'  hostname
-if [[ -z $hostname ]]; then
-    hostname=csjarchlinux
-fi
-
-read -r -s -p "Enter user password, or press enter to use defaults:"$'\n'  user_password
-if [[ -z $user_password ]]; then
-    user_password=csjarchlinux
-fi
-
-read -r -s -p "Enter root password, or press enter to use defaults:"$'\n'  root_password
-if [[ -z $root_password ]]; then
-    root_password=csjarchlinux
-fi
-
-read -r -p "Do you want to wipe full drive yes or no, or press enter to use defaults:"$'\n'  part
-if [[ -z $part ]]; then
-    part=yes
-fi
-
-read -r -s -p "Enter drive password used for original encryption, enter encryption password if not reformatting, or press enter to use defaults:"$'\n'  drive_password
-if [[ -z $drive_password ]]; then
-    drive_password=csjarchlinux
+echo -e "\n\n"
+read -n 1 -r -p "Do you want to print the variables on the screen? (y/N): " print_variables
+echo -e "\n\n"
+if [[ $print_variables =~ ^[Yy]$ ]]; then
+  echo "Keymap -> $keymap"
+  echo "Username -> $username"
+  echo "Hostname -> $hostname"
+  echo "User Password -> $user_password"
+  echo "Root Password -> $root_password"
+  echo "Wipe Full Drive -> $part"
 fi
 
 if [[ $part == "no" ]]; then
@@ -273,11 +263,5 @@ END
 
 EOF
 
-read -p "Do you wish to reboot? type y for yes"$'\n' -n 1 -r
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    echo "thank you for using csjarchlinux installer script"
-    reboot
-else
-    echo "thank you for using csjarchlinux installer script"
-fi
+read -n 1 -r -p "Do you wish to reboot? (y/N)"
+[[ $REPLY =~ ^[Yy]$ ]] && reboot
