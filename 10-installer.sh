@@ -70,13 +70,13 @@ if [[ $part == "no" ]]; then
     btrfs subvolume create /mnt/@tmp
     umount /mnt
 
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
     mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
     mount "${part_boot}" /mnt/boot
 else
@@ -112,13 +112,13 @@ else
     btrfs subvolume create /mnt/@tmp
     umount /mnt
 
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@ /dev/mapper/cryptroot /mnt
     mkdir -p /mnt/{home,var/cache/pacman/pkg,var,srv,tmp,boot}  # Create directories for each subvolume
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
-    mount -o noatime,compress-force=zstd:1,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@home /dev/mapper/cryptroot /mnt/home
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@pkg /dev/mapper/cryptroot /mnt/var/cache/pacman/pkg
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@var /dev/mapper/cryptroot /mnt/var
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@srv /dev/mapper/cryptroot /mnt/srv
+    mount -o noatime,compress-force=zstd:3,space_cache=v2,subvol=@tmp /dev/mapper/cryptroot /mnt/tmp
     chattr +C /mnt/var  # Copy on write disabled
     mount "${part_boot}" /mnt/boot
 fi
@@ -155,9 +155,16 @@ else
 fi
 printf 'Your CPU is %s\n' "$cpu_model"
 
-pacstrap -i /mnt base base-devel linux linux-firmware \
-    networkmanager efibootmgr btrfs-progs zram-generator \
-    ${cpu_model}
+pacstrap -i /mnt \
+  base \
+  base-devel \
+  linux \
+  linux-firmware \
+  networkmanager \
+  efibootmgr \
+  btrfs-progs \
+  zram-generator \
+  ${cpu_model}
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
