@@ -9,6 +9,8 @@ sudo pacman -S --noconfirm --needed \
   breeze \
   breeze-gtk \
   dolphin ark \
+  ffmpegthumbnailer \
+  ffmpegthumbs \
   firewalld \
   gnome-settings-daemon \
   gsettings-desktop-schemas \

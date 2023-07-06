@@ -17,15 +17,17 @@ sudo pacman -S --noconfirm --needed \
   inter-font \
   linux-lts \
   linux-zen \
+  luacheck \
+  make \
   man \
   mpv \
-  make \
   ninja \
   noto-fonts-cjk \
   noto-fonts-emoji \
   python python-pip \
   ripgrep \
   rsync \
+  shellcheck \
   tree-sitter \
   unzip zip \
   vi \

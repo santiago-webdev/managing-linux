@@ -7,10 +7,17 @@ sudo pacman -S --needed \
   cockpit-machines \
   cockpit-pcp \
   cockpit-podman \
-  iptables-nft \
+  cockpit-storaged \
+  udisks2 \
   dnsmasq \
-  openbsd-netcat \
+  iptables-nft \
   libvirt \
+  dmidecode \
+  openbsd-netcat \
+  virt-install \
+  virt-viewer \
+  qemu-full \
+  qemu-emulators-full \
 
 if ! systemctl is-active --quiet cockpit.socket; then
     systemctl enable --now cockpit.socket
@@ -23,8 +30,16 @@ fi
 # Check if user is part of the libvirt group
 if ! groups "$USER" | grep -q '\blibvirt\b'; then
     sudo usermod -aG libvirt "$USER"
-    echo -e "User $USER has been added to the libvirt group"
 fi
 
-echo "Opening your browser at https://localhost:9090/"
+if ! groups "$USER" | grep -q '\bkvm\b'; then
+    sudo usermod -aG kvm "$USER"
+fi
+
+sudo virsh net-define /etc/libvirt/qemu/networks/default.xml
+sudo virsh net-start default
+sudo virsh net-autostart default
+
 xdg-open "https://localhost:9090/"
+
+echo "Don't forget to chmod o+rx the directory containing your images"
