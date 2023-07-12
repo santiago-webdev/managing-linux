@@ -12,4 +12,6 @@ flatpak --user remote-add --if-not-exists kdeapps --from https://distribute.kde.
 flatpak --user update --appstream
 flatpak --user -y upgrade
 
-flatpak install --user --assumeyes flathub com.google.Chrome
+flatpak install --user --assumeyes flathub \
+  com.google.Chrome \
+  im.riot.Riot

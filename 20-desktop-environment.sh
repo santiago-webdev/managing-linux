@@ -16,7 +16,6 @@ sudo pacman -S --noconfirm --needed \
   gsettings-desktop-schemas \
   gsettings-qt \
   hunspell-en_us  \
-  hunspell-es_ar \
   intel-media-driver \
   kde-gtk-config \
   kdegraphics-thumbnailers \
