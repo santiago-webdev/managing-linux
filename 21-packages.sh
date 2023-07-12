@@ -24,6 +24,7 @@ sudo pacman -S --noconfirm --needed \
   ninja \
   noto-fonts-cjk \
   noto-fonts-emoji \
+  pass \
   python python-pip \
   ripgrep \
   rsync \
