@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
-# This script just installs cockpit on Arch Linux
+cd "$HOME" || exit
+
+LC_ALL=C lscpu | grep Virtualization
+
+if [[ $? -eq 1 ]]
+then
+    echo "Your machine doesn't support Virtualization, check your BIOS"
+    exit
+fi
 
 sudo pacman -S --needed \
   cockpit \
