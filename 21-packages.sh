@@ -6,6 +6,7 @@ sudo pacman -S --noconfirm --needed \
   adobe-source-han-sans-otc-fonts \
   bat \
   cmake \
+  element-desktop \
   exa \
   firefox \
   fuse \

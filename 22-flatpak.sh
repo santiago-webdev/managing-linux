@@ -3,7 +3,7 @@
 set -e
 
 # Install flatpak
-sudo pacman -S --noconfirm --needed flatpak
+sudo pacman -S --noconfirm --needed flatpak flatpak-kcm
 
 # Add flathub repo
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
