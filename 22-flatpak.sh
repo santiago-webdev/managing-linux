@@ -14,4 +14,6 @@ flatpak --user -y upgrade
 
 flatpak install --user --assumeyes flathub \
   com.google.Chrome \
-  im.riot.Riot
+  com.brave.Browser \
+  com.discordapp.Discord \
+  us.zoom.Zoom \

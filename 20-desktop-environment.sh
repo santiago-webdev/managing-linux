@@ -45,6 +45,7 @@ sudo pacman -S --noconfirm --needed \
   sddm-kcm \
   spectacle \
   vulkan-intel \
+  wireplumber \
   xdg-desktop-portal \
   xdg-desktop-portal-kde
 

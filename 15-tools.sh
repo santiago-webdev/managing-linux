@@ -8,18 +8,18 @@ then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 
+cargo install sccache
+cargo install du-dust
+cargo install fd-find
 cargo install stylua
 cargo install paru
+cargo install fnm
 
-# fnm
-if ! command -v fnm &> /dev/null
-then
-  cargo install fnm
+paru -S brave-bin
 
-  export PATH="/home/st/.local/share/fnm:$PATH"
-  eval "$(fnm env)"
-  fnm install --lts
-fi
+export PATH="/home/st/.local/share/fnm:$PATH"
+eval "$(fnm env)"
+fnm install --lts
 
 # pnpm
 if ! command -v pnpm &> /dev/null

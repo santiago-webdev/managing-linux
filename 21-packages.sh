@@ -7,15 +7,18 @@ sudo pacman -S --noconfirm --needed \
   bat \
   cmake \
   element-desktop \
+  thunderbird \
   exa \
-  firefox \
+  firefox-developer-edition \
   fuse \
   fzf \
   git \
   gnome-keyring \
   gwenview \
   hdparm \
+  imagemagick \
   inter-font \
+  libwebp \
   linux-lts \
   linux-zen \
   luacheck \
