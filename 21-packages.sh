@@ -7,7 +7,6 @@ sudo pacman -S --noconfirm --needed \
   bat \
   cmake \
   element-desktop \
-  thunderbird \
   exa \
   firefox-developer-edition \
   fuse \
@@ -29,12 +28,16 @@ sudo pacman -S --noconfirm --needed \
   noto-fonts-cjk \
   noto-fonts-emoji \
   pass \
+  pass-otp \
   python python-pip \
   ripgrep \
   rsync \
   shellcheck \
+  thunderbird \
   tree-sitter \
   unzip zip \
   vi \
+  vlc \
   wget \
   wl-clipboard
+  zbar \
