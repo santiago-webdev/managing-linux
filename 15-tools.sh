@@ -12,10 +12,8 @@ cargo install sccache
 cargo install du-dust
 cargo install fd-find
 cargo install stylua
-cargo install paru
+# cargo install paru
 cargo install fnm
-
-paru -S brave-bin
 
 export PATH="/home/st/.local/share/fnm:$PATH"
 eval "$(fnm env)"
@@ -27,6 +25,7 @@ then
   corepack enable
   corepack prepare pnpm@latest --activate
   pnpm setup
+  pnpm install --global prettier
 fi
 
 # SDKMAN!

@@ -2,8 +2,8 @@
 
 set -e
 
-# Install flatpak
-sudo pacman -S --noconfirm --needed flatpak flatpak-kcm
+# # Install flatpak
+# sudo pacman -S --noconfirm --needed flatpak flatpak-kcm
 
 # Add flathub repo
 flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -19,5 +19,6 @@ flatpak install --user --assumeyes flathub \
   org.mozilla.Thunderbird \
   com.discordapp.Discord \
   im.riot.Riot \
+  md.obsidian.Obsidian \
 
   # us.zoom.Zoom \

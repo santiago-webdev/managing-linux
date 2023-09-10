@@ -33,6 +33,8 @@ RUN zypper --non-interactive install -y \
   fuse \
   fuse-devel \
   fzf \
+  fzf-zsh-completion \
+  gawk \
   gcc \
   gcc-c++ \
   gettext-tools \
@@ -42,9 +44,11 @@ RUN zypper --non-interactive install -y \
   jq \
   kde-cli-tools5 \
   libnotify-tools \
+  libopenssl-devel \
   libtool \
   make \
   ninja \
+  password-store \
   python \
   ripgrep \
   rsync \
@@ -59,7 +63,12 @@ RUN zypper --non-interactive install -y \
   xdg-user-dirs \
   xdg-user-dirs-gtk \
   xdg-utils \
+  zip \
   zsh
+
+# StyLua \
+# fd \
+# dust \
 
 RUN zypper clean
 
