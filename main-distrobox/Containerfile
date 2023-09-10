@@ -1,39 +1,97 @@
-FROM docker.io/library/archlinux:base-devel
+FROM registry.opensuse.org/opensuse/distrobox-packaging:latest
+
+LABEL maintainer="santiagogonzalezbogado@gmail.com"
+LABEL version="0.0.6"
+LABEL description="Main container for the maintainer"
+
+FROM opensuse/tumbleweed:latest
 
 # main-distrobox is a WIP, hopefully I'll not be using distrobox in the future
 # and I'll just use podman alone like in:
 # https://github.com/akdev1l/devenv
 # https://github.com/akdev1l/etbox
 
-LABEL maintainer="santiagogonzalezbogado@gmail.com"
-LABEL version="0.0.3"
+MAINTAINER Santiago Gonzalez "santiagogonzalezbogado@gmail.com"
+
+LABEL version="0.0.1"
 LABEL description="Main container for the maintainer"
 
-RUN pacman -Syu --noconfirm
-RUN pacman -S --noconfirm \
+RUN zypper --non-interactive update
+
+RUN zypper --non-interactive install -y \
+  ShellCheck \
+  autoconf \
+  automake \
   bat \
   cmake \
+  curl \
   exa \
+  ffmpeg-4 \
+  flatpak \
+  flatpak-spawn \
+  flatpak-xdg-utils \
+  fuse \
+  fuse-devel \
   fzf \
+  gcc \
+  gcc-c++ \
+  gettext-tools \
   git \
-  luacheck \
+  go \
+  gzip \
+  jq \
+  kde-cli-tools5 \
+  libnotify-tools \
+  libtool \
   make \
-  man \
   ninja \
-  pass \
   python \
-  python-pip \
   ripgrep \
   rsync \
-  shellcheck \
+  tar \
   tree-sitter \
-  unzip zip \
-  vi \
-  wget \
+  unzip \
   wl-clipboard \
+  xdg-desktop-portal \
+  xdg-desktop-portal-gtk \
+  xdg-desktop-portal-kde \
+  xdg-menu \
+  xdg-user-dirs \
+  xdg-user-dirs-gtk \
+  xdg-utils \
   zsh
 
-RUN usermod -s /bin/zsh root
-RUN chsh -s /bin/zsh root
+RUN zypper clean
 
-CMD /bin/bash
+RUN usermod -s /bin/zsh root
+
+CMD /bin/zsh
+
+# RUN pacman -Syu --noconfirm
+# RUN pacman -S --noconfirm \
+#   bat \
+#   cmake \
+#   exa \
+#   fzf \
+#   git \
+#   luacheck \
+#   make \
+#   man \
+#   ninja \
+#   pass \
+#   python \
+#   python-pip \
+#   ripgrep \
+#   rsync \
+#   shellcheck \
+#   tree-sitter \
+#   unzip zip \
+#   vi \
+#   wget \
+#   wl-clipboard \
+#   zsh
+
+# RUN usermod -s /bin/zsh root
+# RUN chsh -s /bin/zsh root
+#
+# CMD /bin/bash
