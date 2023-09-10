@@ -15,5 +15,8 @@ flatpak --user -y upgrade
 flatpak install --user --assumeyes flathub \
   com.google.Chrome \
   com.brave.Browser \
+  org.mozilla.firefox \
+  org.mozilla.Thunderbird \
   com.discordapp.Discord \
-  us.zoom.Zoom \
+
+  # us.zoom.Zoom \
