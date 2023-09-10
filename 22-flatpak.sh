@@ -18,5 +18,6 @@ flatpak install --user --assumeyes flathub \
   org.mozilla.firefox \
   org.mozilla.Thunderbird \
   com.discordapp.Discord \
+  im.riot.Riot \
 
   # us.zoom.Zoom \
