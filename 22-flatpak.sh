@@ -13,12 +13,13 @@ flatpak --user update --appstream
 flatpak --user -y upgrade
 
 flatpak install --user --assumeyes flathub \
-  com.google.Chrome \
   com.brave.Browser \
-  org.mozilla.firefox \
-  org.mozilla.Thunderbird \
   com.discordapp.Discord \
+  com.google.Chrome \
   im.riot.Riot \
   md.obsidian.Obsidian \
+  org.mozilla.Thunderbird \
+  org.mozilla.firefox \
+  org.qbittorrent.qBittorrent \
 
   # us.zoom.Zoom \
