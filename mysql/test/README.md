@@ -1,20 +1,11 @@
 # How to test
-Create python virtual environment.
-```bash
-python -m venv .venv
-```
 
-Activate the virtual environment.
 ```bash
-source ./.venv/bin/activate
-```
+python -m venv .venv # Create python virtual environment.
 
-Install dependencies.
-```bash
-pip install -r requirements.txt
-```
+source ./.venv/bin/activate # Activate the virtual environment.
 
-Run test.
-```bash
-python ./test.py
+pip install -r requirements.txt # Install dependencies.
+
+python ./test.py # Run test.
 ```
