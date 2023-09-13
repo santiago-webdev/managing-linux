@@ -1,0 +1,15 @@
+FROM mysql
+
+MAINTAINER Santiago Gonzalez "santiagogonzalezbogado@gmail.com"
+
+LABEL version="0.0.1"
+LABEL description="MySQL Container image for testing purposes"
+
+ENV MYSQL_ROOT_PASSWORD testing-password
+ENV MYSQL_PASSWORD testing-password
+ENV MYSQL_USER testing-user
+ENV MYSQL_DATABASE DevelopmentDB
+
+ADD DevelopmentDB.sql /docker-entrypoint-initdb.d
+
+EXPOSE 3306
