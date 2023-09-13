@@ -64,7 +64,8 @@ RUN zypper --non-interactive install -y \
   xdg-user-dirs-gtk \
   xdg-utils \
   zip \
-  zsh
+  zsh \
+  zstd
 
 # StyLua \
 # fd \
