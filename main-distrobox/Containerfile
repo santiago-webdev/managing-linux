@@ -25,7 +25,6 @@ RUN zypper --non-interactive install -y \
   bat \
   cmake \
   curl \
-  exa \
   ffmpeg-4 \
   flatpak \
   flatpak-spawn \
@@ -67,41 +66,8 @@ RUN zypper --non-interactive install -y \
   zsh \
   zstd
 
-# StyLua \
-# fd \
-# dust \
-
 RUN zypper clean
 
 RUN usermod -s /bin/zsh root
 
 CMD /bin/zsh
-
-# RUN pacman -Syu --noconfirm
-# RUN pacman -S --noconfirm \
-#   bat \
-#   cmake \
-#   exa \
-#   fzf \
-#   git \
-#   luacheck \
-#   make \
-#   man \
-#   ninja \
-#   pass \
-#   python \
-#   python-pip \
-#   ripgrep \
-#   rsync \
-#   shellcheck \
-#   tree-sitter \
-#   unzip zip \
-#   vi \
-#   wget \
-#   wl-clipboard \
-#   zsh
-
-# RUN usermod -s /bin/zsh root
-# RUN chsh -s /bin/zsh root
-#
-# CMD /bin/bash
