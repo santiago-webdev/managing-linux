@@ -9,14 +9,15 @@ then
 fi
 
 cargo install sccache
-cargo install du-dust
-cargo install fd-find
-cargo install stylua
-cargo install exa
-cargo install ripgrep
-# cargo install paru
-cargo install bat
-cargo install fnm
+RUSTC_WRAPPER="${CARGO_HOME}/bin/sccache" cargo install \
+   du-dust \
+   fd-find \
+   stylua \
+   exa \
+   ripgrep \
+   bat \
+   fnm
+# paru
 
 export PATH="/home/st/.local/share/fnm:$PATH"
 eval "$(fnm env)"
