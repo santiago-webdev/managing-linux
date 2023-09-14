@@ -49,7 +49,6 @@ RUN zypper --non-interactive install -y \
   ninja \
   password-store \
   python \
-  ripgrep \
   rsync \
   tar \
   tree-sitter \

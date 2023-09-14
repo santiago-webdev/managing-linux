@@ -13,6 +13,7 @@ cargo install du-dust
 cargo install fd-find
 cargo install stylua
 cargo install exa
+cargo install ripgrep
 # cargo install paru
 cargo install fnm
 
