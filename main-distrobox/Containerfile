@@ -22,7 +22,6 @@ RUN zypper --non-interactive install -y \
   ShellCheck \
   autoconf \
   automake \
-  bat \
   cmake \
   curl \
   ffmpeg-4 \

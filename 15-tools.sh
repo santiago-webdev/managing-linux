@@ -15,6 +15,7 @@ cargo install stylua
 cargo install exa
 cargo install ripgrep
 # cargo install paru
+cargo install bat
 cargo install fnm
 
 export PATH="/home/st/.local/share/fnm:$PATH"
