@@ -10,14 +10,14 @@ fi
 
 cargo install sccache
 RUSTC_WRAPPER="${CARGO_HOME}/bin/sccache" cargo install \
-   du-dust \
-   fd-find \
-   stylua \
-   eza \
-   ripgrep \
    bat \
-   fnm
-# paru
+   cargo-update \
+   du-dust \
+   eza \
+   fd-find \
+   fnm \
+   ripgrep \
+   stylua
 
 export PATH="/home/st/.local/share/fnm:$PATH"
 eval "$(fnm env)"
