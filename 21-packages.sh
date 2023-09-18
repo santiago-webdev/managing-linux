@@ -7,7 +7,6 @@ sudo pacman -S --noconfirm --needed \
   bat \
   cmake \
   element-desktop \
-  exa \
   firefox-developer-edition \
   fuse \
   fzf \

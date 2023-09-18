@@ -13,7 +13,7 @@ RUSTC_WRAPPER="${CARGO_HOME}/bin/sccache" cargo install \
    du-dust \
    fd-find \
    stylua \
-   exa \
+   eza \
    ripgrep \
    bat \
    fnm
