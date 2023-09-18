@@ -1,7 +1,6 @@
 FROM mysql
 
-MAINTAINER Santiago Gonzalez "santiagogonzalezbogado@gmail.com"
-
+LABEL maintainer="santiagogonzalezbogado@gmail.com"
 LABEL version="0.0.1"
 LABEL description="MySQL Container image for testing purposes"
 
