@@ -48,6 +48,7 @@ RUN zypper --non-interactive install -y \
   xdg-user-dirs \
   xdg-user-dirs-gtk \
   xdg-utils \
+  yt-dlp \
   zip \
   zsh \
   zstd
