@@ -18,10 +18,11 @@ flatpak install --user --assumeyes flathub \
   com.google.Chrome \
   im.riot.Riot \
   md.obsidian.Obsidian \
+  org.freedesktop.Platform.ffmpeg-full \
   org.kde.gwenview \
   org.kde.okular \
   org.mozilla.Thunderbird \
   org.mozilla.firefox \
-  org.qbittorrent.qBittorrent \
+  org.qbittorrent.qBittorrent
 
   # us.zoom.Zoom \

@@ -1,0 +1,25 @@
+FROM kinoite:39
+
+RUN rpm-ostree override remove \
+   firefox \
+   firefox-langpacks \
+   kwrite \
+   toolbox
+
+RUN rpm-ostree install \
+    https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+    https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# Install packages
+RUN rpm-ostree install \
+   distrobox \
+   intel-media-driver
+
+RUN sed -i 's/#AutomaticUpdatePolicy.*/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf
+
+# https://universal-blue.org/local-testing/#local-testing
+# Copy the local.conf file to the desired location
+COPY local.conf /etc/containers/registries.conf.d/local.conf
+
+RUN rpm-ostree cleanup -m
+RUN ostree container commit
