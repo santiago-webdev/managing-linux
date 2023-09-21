@@ -1,0 +1,6 @@
+---
+- name: start base image configuration
+  hosts: localhost
+  tasks:
+    - import_tasks: ./tasks/auto-updates.yml
+    - import_tasks: ./tasks/packages.yml

@@ -1,0 +1,15 @@
+---
+- name: remove or hide packages from base image
+  community.general.rpm_ostree_pkg:
+    state: absent
+    name:
+      - firefox
+      - firefox-langpacks
+      - kwrite
+      - toolbox
+
+- name: install packages with rpm-ostree
+  community.general.rpm_ostree_pkg:
+    state: present
+    name:
+      - distrobox
