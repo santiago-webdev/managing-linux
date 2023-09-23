@@ -3,11 +3,11 @@ ARG FEDORA_MAJOR_VERSION
 FROM ${SOURCE_IMAGE}:${FEDORA_MAJOR_VERSION}
 
 COPY playbooks /tmp
-RUN rpm-ostree install -y ansible && \
-    ansible-galaxy install -r /tmp/requirements.yml && \
-    ansible-playbook /tmp/entrypoint.yml && \
-    rm -rf ~/.ansible /var/* ~/.* && \
-    ostree container commit
+RUN rpm-ostree install -y ansible
+RUN ansible-galaxy install -r /tmp/requirements.yml
+RUN ansible-playbook /tmp/entrypoint.yml
 
+RUN rm -rf ~/.ansible /var/* ~/.*
 RUN rpm-ostree cleanup -m
+
 RUN ostree container commit
