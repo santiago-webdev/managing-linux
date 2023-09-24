@@ -55,6 +55,8 @@ RUN zypper --non-interactive install -y \
 
 RUN zypper clean
 
-RUN usermod -s /bin/zsh root
+RUN ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman
+RUN ln -s /usr/bin/distrobox-host-exec /usr/bin/distrobox
 
+# chsh -s /bin/zsh
 CMD /bin/zsh
