@@ -28,6 +28,7 @@ RUN zypper --non-interactive install -y \
   go \
   gzip \
   jq \
+  just \
   kde-cli-tools5 \
   libnotify-tools \
   libopenssl-devel \

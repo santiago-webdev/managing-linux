@@ -21,6 +21,7 @@ flatpak install --user --assumeyes flathub \
   org.cockpit_project.CockpitClient \
   org.freedesktop.Platform.ffmpeg-full \
   org.kde.gwenview \
+  org.kde.kcalc \
   org.kde.okular \
   org.mozilla.Thunderbird \
   org.mozilla.firefox \
