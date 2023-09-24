@@ -19,6 +19,8 @@ RUSTC_WRAPPER="${CARGO_HOME}/bin/sccache" cargo install \
    ripgrep \
    stylua
 
+cargo install nu --locked --features=dataframe
+
 export PATH="/home/st/.local/share/fnm:$PATH"
 eval "$(fnm env)"
 fnm install --lts

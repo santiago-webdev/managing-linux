@@ -18,6 +18,7 @@ flatpak install --user --assumeyes flathub \
   com.google.Chrome \
   im.riot.Riot \
   md.obsidian.Obsidian \
+  org.cockpit_project.CockpitClient \
   org.freedesktop.Platform.ffmpeg-full \
   org.kde.gwenview \
   org.kde.okular \
