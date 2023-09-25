@@ -58,6 +58,7 @@ RUN zypper clean
 
 RUN ln -s /usr/bin/distrobox-host-exec /usr/local/bin/podman
 RUN ln -s /usr/bin/distrobox-host-exec /usr/bin/distrobox
+RUN ln -s /usr/bin/distrobox-host-exec /usr/bin/rpm-ostree
 
 # chsh -s /bin/zsh
 CMD /bin/zsh
