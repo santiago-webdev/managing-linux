@@ -21,5 +21,7 @@
       - distrobox
       - ffmpeg
       - ffmpegthumbs
+      - kdesdk-thumbnailers
+      - kdegraphics-thumbnailers
       - intel-media-driver
       - mesa-va-drivers-freeworld
