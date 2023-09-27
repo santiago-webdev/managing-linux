@@ -1,9 +1,6 @@
-# ARG SOURCE_IMAGE
-# ARG FEDORA_MAJOR_VERSION
-# FROM ${SOURCE_IMAGE}:${FEDORA_MAJOR_VERSION}
 FROM kinoite:39
 
-COPY playbooks /tmp
+COPY playbooks/install /tmp
 RUN rpm-ostree install -y ansible
 RUN ansible-galaxy install -r /tmp/requirements.yml
 RUN ansible-playbook /tmp/entrypoint.yml
