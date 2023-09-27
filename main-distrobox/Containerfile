@@ -8,6 +8,7 @@ RUN zypper --non-interactive update
 
 RUN zypper --non-interactive install -y \
   ShellCheck \
+  ansible \
   autoconf \
   automake \
   cmake \
