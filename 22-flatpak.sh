@@ -24,7 +24,6 @@ flatpak install --user --assumeyes flathub \
   org.kde.kcalc \
   org.kde.okular \
   org.mozilla.Thunderbird \
-  org.mozilla.firefox \
   org.qbittorrent.qBittorrent \
   org.videolan.VLC \
   us.zoom.Zoom
