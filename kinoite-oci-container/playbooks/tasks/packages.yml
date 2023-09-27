@@ -3,8 +3,14 @@
   community.general.rpm_ostree_pkg:
     state: absent
     name:
-      - firefox
-      - firefox-langpacks
+      - mesa-va-drivers
+      - libavcodec-free
+      - libavfilter-free
+      - libavformat-free
+      - libavutil-free
+      - libpostproc-free
+      - libswresample-free
+      - libswscale-free
       - kwrite
       - toolbox
 
@@ -13,3 +19,7 @@
     state: present
     name:
       - distrobox
+      - ffmpeg
+      - ffmpegthumbs
+      - intel-media-driver
+      - mesa-va-drivers-freeworld

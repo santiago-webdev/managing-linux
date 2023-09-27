@@ -3,4 +3,4 @@
   copy:
     src: rpm-ostreed.conf
     dest: /etc/rpm-ostreed.conf
-    mode: '0644'
+    mode: "0644"
