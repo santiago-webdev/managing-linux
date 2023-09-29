@@ -1,0 +1,17 @@
+---
+- name: Add Flatpak user update service
+  copy:
+    src: flatpak-user-update.service
+    dest: ~/.config/systemd/user/flatpak-user-update.service
+
+- name: Add Flatpak user update timer
+  copy:
+    src: flatpak-user-update.timer
+    dest: ~/.config/systemd/user/flatpak-user-update.timer
+
+- name: Enable Flatpak timer for auto-updating
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+    name: flatpak-user-update.timer
+    enabled: yes
+    scope: user
