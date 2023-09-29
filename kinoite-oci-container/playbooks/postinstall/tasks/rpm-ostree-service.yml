@@ -1,0 +1,4 @@
+- name: Enable timer for rpm-ostree updates
+  ansible.builtin.systemd_service:
+    name: rpm-ostreed-automatic.timer
+    enabled: true

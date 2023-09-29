@@ -1,0 +1,7 @@
+---
+- name: Post install configs
+  hosts: localhost
+  tasks:
+    # - import_tasks: ./tasks/flatpak-auto-update.yml
+    # - import_tasks: ./tasks/flatpak-packages.yml
+    - import_tasks: ./tasks/rpm-ostree-service.yml
