@@ -1,0 +1,30 @@
+- name: Add the flathub flatpak repository remote to the user installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://flathub.org/repo/flathub.flatpakrepo
+    method: user
+- name: Remove the fedora remote from the system installation
+  community.general.flatpak_remote:
+    name: fedora
+    state: absent
+    method: user
+- name: Install multiple packages
+  community.general.flatpak:
+    name:
+      - com.brave.Browser
+      - com.discordapp.Discord
+      - com.google.Chrome
+      - com.logseq.Logseq
+      - im.riot.Riot
+      - md.obsidian.Obsidian
+      - org.cockpit_project.CockpitClient
+      - org.freedesktop.Platform.ffmpeg-full
+      - org.kde.gwenview
+      - org.kde.kcalc
+      - org.kde.okular
+      - org.mozilla.Thunderbird
+      - org.qbittorrent.qBittorrent
+      - org.videolan.VLC
+      - us.zoom.Zoom
+    method: user
