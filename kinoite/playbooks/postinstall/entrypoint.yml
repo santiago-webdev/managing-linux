@@ -5,6 +5,11 @@
     - import_tasks: ./tasks/flatpak-auto-update.yml
     - import_tasks: ./tasks/flatpak-packages.yml
     - import_tasks: ./tasks/rpm-ostree-service.yml
+    - name: Start and enable SSH service
+      systemd:
+        name: sshd
+        state: started
+        enabled: yes
   handlers:
     - name: Reload user systemd services
       systemd:
