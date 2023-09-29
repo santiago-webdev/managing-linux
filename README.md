@@ -1,6 +1,6 @@
-# Managing Arch Linux
+# Managing Linux
 
-This are some scripts to help me install and configure Arch Linux.
+This repo has a few shell scripts and Ansible playbooks to automate various tasks, I've used a lot of distros and software so you'll find this configurations organized b directories.
 
 ## What will the 10-installer.sh script do:
 
@@ -45,7 +45,7 @@ more instructions inside the script.
 To get any of the scripts you can curl the raw file directly from github.
 
 ```bash
-curl -O https://raw.githubusercontent.com/santigo-zero/managing-archlinux/master/10-installer.sh
+curl -O https://raw.githubusercontent.com/santiagogonzalez-dev/managing-linux/master/arch-scripts/10-installer.sh
 chmod +x 10-installer.sh # Make it executable
 ./10-installer.sh # Run it
 ```
