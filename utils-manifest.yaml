@@ -4,8 +4,13 @@ metadata:
   name: utils-pod
 spec:
   containers:
-    - name: docserv
-      image: registry.opensuse.org/opensuse/microos-docserv:latest
-      ports:
-      - containerPort: 80
-        hostPort: 8080
+  - name: docserv
+    image: registry.opensuse.org/opensuse/microos-docserv:latest
+    ports:
+    - containerPort: 80
+      hostPort: 8080
+  - name: excalidraw
+    image: docker.io/excalidraw/excalidraw:latest
+    ports:
+    - containerPort: 80
+      hostPort: 8030
