@@ -1,0 +1,6 @@
+---
+- name: Add openSUSE registry to the config
+  copy:
+    src: registries.conf
+    dest: /etc/containers/registries.conf
+    mode: "0644"

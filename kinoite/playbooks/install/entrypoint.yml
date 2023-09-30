@@ -5,3 +5,4 @@
     - import_tasks: ./tasks/auto-updates.yml
     - import_tasks: ./tasks/rpmfusion-repos.yml
     - import_tasks: ./tasks/packages.yml
+    - import_tasks: ./tasks/podman-config.yml
