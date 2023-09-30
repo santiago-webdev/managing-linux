@@ -25,3 +25,4 @@
       - kdegraphics-thumbnailers
       - intel-media-driver
       - mesa-va-drivers-freeworld
+      - unclutter-xfixes
