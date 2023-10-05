@@ -37,6 +37,7 @@ RUN zypper --non-interactive install -y \
   make \
   ninja \
   password-store \
+  pipewire-jack \
   python \
   rsync \
   tar \
